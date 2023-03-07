@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/07 12:42:42 by abourdon         ###   ########.fr        #
+#    Updated: 2023/03/07 16:32:04 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,25 +17,27 @@ LIBFT_PATH = ./libft/
 LIBFT = libft/libft.a
 RM = rm -rf
 
-YELLOW=\033[0;33m
+GREEN=\033[33;32m
 BLUE=\033[0;34m
 BOLD=\033[1m
 RESET=\033[0m
 
-SRC = 
+SRC = src/minishell.c \
+	src/parsing/space.c \
+	src/parsing/parsing.c \
 
 OBJ = $(SRC:.c=.o)
 
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@ 
 
-$(NAME): $(OBJ) $(LIBFT) include/pipex.h
+$(NAME): $(OBJ) $(LIBFT) include/minishell.h
 	@echo "$(BLUE)$(BOLD)Compiling $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
-	@echo "$(YELLOW)$(BOLD)$(NAME) compiled!$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) -lreadline
+	@echo "$(GREEN)$(BOLD)$(NAME) compiled!$(RESET)"
 
 $(LIBFT):
-	@make -C $(LIBFT_PATH)
+	@make --no-print-directory -C $(LIBFT_PATH)
 
 	
 all: $(NAME)
@@ -43,7 +45,7 @@ all: $(NAME)
 clean:
 	@echo "$(BLUE)$(BOLD)Cleaning object files...$(RESET)"
 	@$(RM) $(OBJ)
-	@make clean -C $(LIBFT_PATH)
+	@make clean --no-print-directory -C $(LIBFT_PATH)
 
 fclean: clean
 	@echo "$(BLUE)$(BOLD)Cleaning $(NAME)...$(RESET)"

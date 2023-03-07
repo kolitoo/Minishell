@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 13:49:36 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/07 13:50:02 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:33:37 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,17 @@ int	countlen(char *str)
 char	*strspace_cpy(char *str, int i)
 {
 	int		j;
+	int		k;
 	char	*result;
 
 	j = 0;
+	k = 1;
 	result = malloc(sizeof(char *) * (countlen(str) + 1));
 	while (str[i] == ' ' && str[i] != '\0')
 		i++;
 	while (str[i] != '\0')
 	{
-		if (str[i] == ' ')
+		if (str[i] == ' ' && k > 0)
 		{
 			while ((str[i] == ' ') && str[i] != '\0')
 				i++;
@@ -60,8 +62,11 @@ char	*strspace_cpy(char *str, int i)
 			break ;
 		if (str[i] != '\0')
 			result[j++] = str[i];
+		if (str[i] == 34 || str[i] == 39)
+			k = k * -1;
 		i++;
 	}
+	free(str);
 	result[j] = '\0';
 	return (result);
 }
