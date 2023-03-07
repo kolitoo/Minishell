@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/07 12:40:17 by lgirault         ###   ########.fr       */
+/*   Created: 2022/11/22 11:44:14 by abourdon          #+#    #+#             */
+/*   Updated: 2023/01/19 11:53:57 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-
-#endif
+void	ft_putchar(char c, int *len)
+{
+	write (1, &c, 1);
+	*len = *len + 1;
+}

@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/07 12:40:17 by lgirault         ###   ########.fr       */
+/*   Created: 2022/11/16 15:42:19 by lgirault          #+#    #+#             */
+/*   Updated: 2022/11/21 11:18:45 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*a;
 
-#endif
+	a = malloc(sizeof(*a));
+	if (a == NULL)
+		return (NULL);
+	a->content = content;
+	a->next = NULL;
+	return (a);
+}

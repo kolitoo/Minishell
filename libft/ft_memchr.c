@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/07 12:40:17 by lgirault         ###   ########.fr       */
+/*   Created: 2022/11/09 12:19:13 by lgirault          #+#    #+#             */
+/*   Updated: 2022/11/21 11:18:52 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
+void	*ft_memchr(const void *memoryBlock, int c, size_t size)
+{
+	char	*str;
+	size_t	i;
 
-#endif
+	c = (char) c;
+	str = (char *) memoryBlock;
+	i = 0;
+	while (i < size)
+	{
+		if (str[i] == c)
+		{
+			return (str + i);
+		}
+		i++;
+	}
+	return (NULL);
+}
