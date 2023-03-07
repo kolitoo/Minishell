@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/07 19:03:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:58:01 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ typedef struct s_cmd_lst
 }t_cmd_lst;
 
 char	*strspace_cpy(char *str, int i);
-char	**parsing(char	*one_pipe);
+char	**parsing(char	*one_cmd);
+void	lstadd_back(t_cmd_lst **lst, t_cmd_lst *new);
+t_cmd_lst	*lstnew(char **double_tab, int fd);
+t_cmd_lst	*make_cmd_lst(t_ms *ms);
 
 #endif

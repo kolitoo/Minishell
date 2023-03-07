@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/07 19:16:04 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:49:17 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,42 +44,7 @@ int	check_cote(char *line, char c)
 	return (0);
 }
 
-t_cmd_lst	*lstnew(char **double_tab, int fd)
-{
-	t_cmd_lst	*a;
-	int	i;
-	int	j;
-
-	a = malloc(sizeof(*a));
-	if (a == NULL)
-		return (NULL);
-	a->cmd_option = double_tab;
-	a->fd = fd;
-	a->next = NULL;
-	return (a);
-}
-
-void	lstadd_back(t_cmd_lst **lst, t_cmd_lst *new)
-{
-	t_cmd_lst	*ptr;
-
-	ptr = *lst;
-	if (lst != NULL)
-	{
-		if (*lst != NULL)
-		{
-			while (ptr->next != NULL)
-			{
-				ptr = ptr->next;
-			}
-			ptr->next = new;
-		}
-		else
-			*lst = new;
-	}
-}
-
-t_cmd_lst	make_cmd_lst(t_ms *ms)
+t_cmd_lst	*make_cmd_lst(t_ms *ms)
 {
 	t_cmd_lst	*cmd_lst;
 	t_cmd_lst	*temp;
@@ -95,31 +60,34 @@ t_cmd_lst	make_cmd_lst(t_ms *ms)
 	cmd_lst = lstnew(double_tab, fd);
 	while (ms->split_pipe[i] != NULL)
 	{
+		//free(double_tab) ou pas ?
 		double_tab = parsing(ms->split_pipe[i]);
-		temp = lstnew(double_tab, fd);
+		temp = lstnew(double_tab, fd);//Proteger si pb
 		lstadd_back(&cmd_lst, temp);
 		i++;
 	}
-	
+	//free(double_tab) ou pas ?
+	return (cmd_lst);
 }
 
-char	**parsing(char	*one_pipe)
+char	**parsing(char	*one_cmd)
 {
 	char	**double_tab;
-	//Ici on travail avec chaque partie d'un pipe pour le mettre correctement en forme dans un
+	//Ici on travail avec chaque commande + option pour le mettre correctement en forme dans un
 	//double tableau
 
-	if (check_fine_cote(one_pipe, '\'') == 0 && check_fine_cote(one_pipe, '\"') == 0)
+	if (check_fine_cote(one_cmd, '\'') == 0 && check_fine_cote(one_cmd, '\"') == 0)
 	{
-		one_pipe = strspace_cpy(one_pipe, 0);
-		ft_printf("line = %s\n", one_pipe);
-		if (check_cote(one_pipe, '\'') == 0 && check_cote(one_pipe, '\"') == 0)
+		one_cmd = strspace_cpy(one_cmd, 0);
+		ft_printf("line = %s\n", one_cmd);
+		if (check_cote(one_cmd, '\'') == 0 && check_cote(one_cmd, '\"') == 0)//Pas de cote
 		{
-			
+			double_tab = ft_split(one_cmd, ' ');//split normal sur les espaces
 		}
-		else
+		else//Cote
 		{
-			
+			//split incurve sur tout les espaces sauf interieur des simple/double cotes
+			//ATTENTION juste pour echo cote ou pas cote plein espace ou 1 ca met juste un espace
 		}
 	}
 	else

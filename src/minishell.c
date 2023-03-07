@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/07 16:57:39 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:58:29 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	**set_env(char	**envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_ms	ms;
+	t_cmd_lst *cmd_lst;
 	(void)argc;
 	(void)argv;
 	ms.env = set_env(envp);
@@ -55,8 +56,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_printf("\033[36m \033[1m");
 		ms.line = readline("minishell → \033[0m");
-		parsing(&ms);
 		add_history(ms.line);
+		cmd_lst = make_cmd_lst(&ms);
 		free(ms.line);
 		//Peut etre clear_history
 	}
