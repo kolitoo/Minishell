@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/07 17:20:02 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:03:43 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,17 @@ typedef struct s_ms
 {
 	char	*line;
 	char	**env;
-	char	**
+	char	**split_pipe;
 }t_ms;
 
+typedef struct s_cmd_lst
+{
+	int	fd;
+	char	**cmd_option;
+	struct s_cmd_lst	*next;
+}t_cmd_lst;
+
 char	*strspace_cpy(char *str, int i);
-void	parsing(t_ms *ms);
+char	**parsing(char	*one_pipe);
 
 #endif
