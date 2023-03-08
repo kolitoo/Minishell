@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/07 16:32:04 by lgirault         ###   ########.fr        #
+#    Updated: 2023/03/08 13:37:07 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,9 @@ RESET=\033[0m
 SRC = src/minishell.c \
 	src/parsing/space.c \
 	src/parsing/parsing.c \
+	src/parsing/split_cote.c \
+	src/lst_fonction/lst_fonction.c \
+	src/utils/free.c \
 
 OBJ = $(SRC:.c=.o)
 
