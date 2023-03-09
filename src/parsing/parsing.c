@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/09 17:35:21 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:14:55 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	int	i;
 
 	i = 1;
-	//Ici on fait le split de '|' et on parse chaque commande comme il faut en gerant les cotes etc
-	//On met le tout dans un doubleau tableau
-	//Puis on cree et on met dans la liste
 	if (check_fine_cote(ms->line, '\'', '\"') == 1)
 	{
 		write(2, "dquote\n", 7);
@@ -88,19 +85,18 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 char	**parsing(char	*one_cmd)
 {
 	char	**double_tab;
-	//Ici on travail avec chaque commande + option pour le mettre correctement en forme dans un
-	//double tableau
+	//int	fd;//pour chevron
 	double_tab = NULL;
 	if (check_fine_cote(one_cmd, '\'', '\"') == 0)
 	{
+		//Gerer les chevron ici
 		one_cmd = strspace_cpy(one_cmd, 0);
 		if (check_cote(one_cmd, '\'') == 0 && check_cote(one_cmd, '\"') == 0)//Pas de cote
 		{
-			double_tab = ft_split(one_cmd, ' ');//split normal sur les espaces
+			double_tab = ft_split(one_cmd, ' ');
 		}
 		else//Cote
 		{
-			//split incurve sur tout les espaces sauf interieur des simple/double cotes
 			double_tab = split_incurve(one_cmd, ' ');
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/09 15:13:57 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:17:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(ms.line);
 			if (cmd_lst != NULL)
 			{
+				//envoie a pipex la liste
 				while (cmd_lst != NULL)
 				{
 					printf("CMD %d :\n", i);
