@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/09 11:19:18 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/09 17:35:21 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,12 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	//Ici on fait le split de '|' et on parse chaque commande comme il faut en gerant les cotes etc
 	//On met le tout dans un doubleau tableau
 	//Puis on cree et on met dans la liste
-	ms->split_pipe = split_cote(ms->line, '|');//PB split sur pipe mais pas si pipe est entre des cotes (faire un split_pipe)
-	printf("%s\n", ms->split_pipe[0]);
+	if (check_fine_cote(ms->line, '\'', '\"') == 1)
+	{
+		write(2, "dquote\n", 7);
+		return (NULL);
+	}
+	ms->split_pipe = split_incurve(ms->line, '|');//PB split sur pipe mais pas si pipe est entre des cotes (faire un split_pipe)
 	double_tab = parsing(ms->split_pipe[0]);//si pb cote ou pb dans la commande le double tab dans la liste = NULL
 	cmd_lst = lstnew(double_tab, 1); //modifier le fd
 	while (ms->split_pipe[i] != NULL)
@@ -97,7 +101,7 @@ char	**parsing(char	*one_cmd)
 		else//Cote
 		{
 			//split incurve sur tout les espaces sauf interieur des simple/double cotes
-			double_tab = split_cote(one_cmd, ' ');
+			double_tab = split_incurve(one_cmd, ' ');
 		}
 	}
 	else

@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/09 11:22:27 by lgirault         ###   ########.fr        #
+#    Updated: 2023/03/09 17:27:36 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,7 @@ RESET=\033[0m
 SRC = src/minishell.c \
 	src/parsing/space.c \
 	src/parsing/parsing.c \
-	src/parsing/split_cote.c \
-	src/parsing/split_pipe.c \
+	src/parsing/split_incurve.c \
 	src/lst_fonction/lst_fonction.c \
 	src/utils/free.c \
 
