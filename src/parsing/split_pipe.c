@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_cote.c                                       :+:      :+:    :+:   */
+/*   split_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 11:56:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/08 17:15:32 by lgirault         ###   ########.fr       */
+/*   Created: 2023/03/09 11:22:43 by lgirault          #+#    #+#             */
+/*   Updated: 2023/03/09 11:25:10 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	free_all(char **res, int j)
 	free(res);
 }
 
-char	**split_cote(char *str, char c)
+char	**split_pipe(char *str, char c)
 {
 	int	i;
 	int	j;

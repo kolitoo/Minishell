@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/08 16:32:46 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/09 11:11:34 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,50 @@ char	**set_env(char	**envp)
 
 void    print_map(char **map)
 {
-    while (*map)
-        printf("%s\n", *(map)++);
+	int	j;
+
+	j = 0;
+	if (map == NULL)
+	{
+		printf("NULL\n");
+		return ;
+	}
+	while (map[j] != NULL)
+	{
+       		printf("%s\n", map[j]);
+		j++;
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_ms	ms;
 	t_cmd_lst *cmd_lst;
-	//int	i;
+	int	i;
 	(void)argc;
 	(void)argv;
 	ms.env = set_env(envp);
-	//i = 1;
+	i = 1;
 	while (1)
 	{
 		ft_printf("\033[36m \033[1m");
 		ms.line = readline("minishell → \033[0m");
 		if (strcmp(ms.line, "exit") == 0)
 			break;
-		if (ms.line[0] != '\0')
+		if (ms.line[0] != '\0')//Si on appuie sur entree on lance juste une newline
 		{
 			add_history(ms.line);
 			cmd_lst = make_cmd_lst(&ms);
-			// while (cmd_lst != NULL)
-			// {
-			// 	printf("CMD %d :\n", i);
-			// 	print_map(cmd_lst->cmd_option);
-			// 	cmd_lst = cmd_lst->next;
-			// 	i++;
-			// }
+			while (cmd_lst != NULL)
+			{
+				printf("CMD %d :\n", i);
+				print_map(cmd_lst->cmd_option);
+				cmd_lst = cmd_lst->next;
+				i++;
+			}
 			lstclear(&cmd_lst);
 		}
-		//i = 0;
+		i = 0;
 		free(ms.line);
 		//Peut etre clear_history
 	}

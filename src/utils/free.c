@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:36:11 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/08 16:32:12 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/08 17:38:45 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	free_tab(char	**tab, int i)
 {
-	while (tab[i] != NULL)
+	if (tab != NULL)
 	{
-		free(tab[i]);
-		i++;
+		while (tab[i] != NULL)
+		{
+			free(tab[i]);
+			i++;
+		}
+		free(tab);
 	}
-	free(tab);
 }
