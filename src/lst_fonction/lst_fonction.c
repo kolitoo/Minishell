@@ -6,13 +6,13 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:45:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/08 16:32:55 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/10 12:46:54 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_cmd_lst	*lstnew(char **double_tab, int fd)
+t_cmd_lst	*lstnew(char **double_tab, char *infile_name, char *outfile_name)
 {
 	t_cmd_lst	*a;
 
@@ -20,7 +20,8 @@ t_cmd_lst	*lstnew(char **double_tab, int fd)
 	if (a == NULL)
 		return (NULL);
 	a->cmd_option = double_tab;
-	a->fd = fd;
+	a->infile_name = infile_name;
+	a->outfile_name = outfile_name;
 	a->next = NULL;
 	return (a);
 }
@@ -55,6 +56,8 @@ void	lstclear(t_cmd_lst **cmd_lst)
 		{
 			save = (*cmd_lst)->next;
 			free_tab((*cmd_lst)->cmd_option, 0);
+			free((*cmd_lst)->infile_name);
+			free((*cmd_lst)->outfile_name);
 			free(*cmd_lst);
 			(*cmd_lst) = save;
 		}
