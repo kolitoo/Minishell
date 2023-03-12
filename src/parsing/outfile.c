@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:04:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/10 14:05:01 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:04:46 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_len(char *str, int i)
 char	*find_outfile(char *str, int i)
 {
 	char	*outfile;
-	int	j;
+	int		j;
 
 	j = 0;
 	outfile = malloc(sizeof(char) * ft_len(str, i) + 1);
@@ -66,8 +66,8 @@ char	*find_outfile(char *str, int i)
 	return (NULL);
 }
 
-int	main(void)
-{
-	char	*str = ">test";
-	printf("%s\n", find_outfile(str, 0));
-}
+// int	main(void)
+// {
+// 	char	*str = ">test";
+// 	printf("%s\n", find_outfile(str, 0));
+// }

@@ -3,57 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/10 13:52:53 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:58:00 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	check_fine_cote(char *line, char c, char cote)
-{
-	int	i;
-	int	k;
-
-	i = 0;
-	k = 1;
-	while (line[i] != '\0')
-	{
-		if (line[i] == cote)
-			k = k * -1;
-		if (line[i] == c && k > 0)
-		{
-			i++;
-			while (line[i] != c)
-			{
-				i++;
-				if (line[i] == '\0')
-					return (1);
-			}
-		}
-		if (line[i] != '\0')
-			i++;
-	}
-	if (k < 0)
-		return (1);
-	return (0);
-}
-
-int	check_cote(char *line, char c)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 t_cmd_lst	*make_cmd_lst(t_ms *ms)
 {
@@ -63,7 +20,7 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	int	i;
 
 	i = 1;
-	if (check_fine_cote(ms->line, '\'', '\"') == 1)//check aussi si les chevrons sont valides
+	if (check_fine_cote(ms->line, '\'', '\"') == ERR)//check aussi si les chevrons sont valides
 	{
 		write(2, "dquote\n", 7);
 		return (NULL);
@@ -93,9 +50,9 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 	if (check_fine_cote(one_cmd, '\'', '\"') == 0)
 	{
 		one_cmd = strspace_cpy(one_cmd, 0);
-		if (exist_chevron(one_cmd) = 1)
+		if (exist_chevron(one_cmd) = ERR)
 		{
-			(*ms)->infile_name =
+			(*ms)->infile_name = 
 			(*ms)->outfile_name = find_outfile(one_cmd, 0)
 		}
 		else
@@ -108,7 +65,7 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 		//Et ensuite on regarde le nom du fichier qu'on stocke dans une chaine qui sera dans une
 		//structure (ms)
 		//Si << pas de nom de fichier on utilise here doc et le limiter et le mot juste apres <<
-		if (check_cote(one_cmd, '\'') == 0 && check_cote(one_cmd, '\"') == 0)//Pas de cote
+		if (check_cote(one_cmd, '\'') == ERR && check_cote(one_cmd, '\"') == ERR)//Pas de cote
 		{
 			double_tab = ft_split(one_cmd, ' ');
 		}

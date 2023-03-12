@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
+#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/10 12:42:28 by lgirault         ###   ########.fr        #
+#    Updated: 2023/03/11 16:57:10 by abourdon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,9 @@ SRC = src/minishell.c \
 	src/parsing/parsing.c \
 	src/parsing/split_incurve.c \
 	src/parsing/utils_chevron.c \
-	src/lst_fonction/lst_fonction.c \
+	src/parsing/utils_cote.c \
 	src/utils/free.c \
+	src/utils/lst_fonction.c \
 
 OBJ = $(SRC:.c=.o)
 
