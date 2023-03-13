@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/11 16:58:00 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:51:24 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,31 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	int	i;
 
 	i = 1;
+	ms->outfile_name = NULL;
+	ms->infile_name = NULL;
+	ms->boolean_infile = 0;
+	ms->boolean_outfile = 0;
 	if (check_fine_cote(ms->line, '\'', '\"') == ERR)//check aussi si les chevrons sont valides
 	{
 		write(2, "dquote\n", 7);
 		return (NULL);
 	}
-	
+	if (check_space_chevron(ms->line) == ERR)
+	{
+		write(2, "chevron\n", 8);
+		return (NULL);
+	}
 	ms->split_pipe = split_incurve(ms->line, '|');//PB split sur pipe mais pas si pipe est entre des cotes (faire un split_pipe)
 	double_tab = parsing(ms->split_pipe[0], &ms);//si pb cote ou pb dans la commande le double tab dans la liste = NULL
-	cmd_lst = lstnew(double_tab, ms->infile_name, ms->outfile_name);// open("chaine que renvoie parsing en fonction des chevron", Ouverture selon les chevron));//fd de -1 si rien a ouvris donc dans la liste on aura -1
+	cmd_lst = lstnew(double_tab, ms);// open("chaine que renvoie parsing en fonction des chevron", Ouverture selon les chevron));//fd de -1 si rien a ouvris donc dans la liste on aura -1
 	while (ms->split_pipe[i] != NULL)
 	{
+		ms->outfile_name = NULL;
+		ms->infile_name = NULL;
+		ms->boolean_infile = 0;
+		ms->boolean_outfile = 0;
 		double_tab = parsing(ms->split_pipe[i], &ms);
-		temp = lstnew(double_tab, ms->infile_name, ms->outfile_name);//Proteger si pb
+		temp = lstnew(double_tab, ms);//Proteger si pb
 		lstadd_back(&cmd_lst, temp);
 		i++;
 	}
@@ -40,7 +52,19 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	return (cmd_lst);
 }
 
+int	exist_chevron(char *str)
+{
+	int	i;
 
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if ((str[i] == '<' || str[i] == '>') && bool_cote(str, i) == 1)
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 char	**parsing(char	*one_cmd, t_ms **ms)
 {
@@ -50,10 +74,14 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 	if (check_fine_cote(one_cmd, '\'', '\"') == 0)
 	{
 		one_cmd = strspace_cpy(one_cmd, 0);
-		if (exist_chevron(one_cmd) = ERR)
+		if (exist_chevron(one_cmd) == SUC)
 		{
-			(*ms)->infile_name = 
-			(*ms)->outfile_name = find_outfile(one_cmd, 0)
+			rights_check(one_cmd, ms, '<');
+			rights_check(one_cmd, ms, '>');
+			one_cmd = find_infile(one_cmd, ms, 0);
+			one_cmd = find_outfile(one_cmd, ms, 0);;
+			if (one_cmd == NULL)
+				return (NULL);
 		}
 		else
 		{
@@ -65,7 +93,7 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 		//Et ensuite on regarde le nom du fichier qu'on stocke dans une chaine qui sera dans une
 		//structure (ms)
 		//Si << pas de nom de fichier on utilise here doc et le limiter et le mot juste apres <<
-		if (check_cote(one_cmd, '\'') == ERR && check_cote(one_cmd, '\"') == ERR)//Pas de cote
+		if (check_cote(one_cmd, '\'') == 0 && check_cote(one_cmd, '\"') == 0)//Pas de cote
 		{
 			double_tab = ft_split(one_cmd, ' ');
 		}

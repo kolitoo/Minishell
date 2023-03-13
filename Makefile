@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/11 16:57:10 by abourdon         ###   ########.fr        #
+#    Updated: 2023/03/13 17:01:05 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRC = src/minishell.c \
 	src/parsing/split_incurve.c \
 	src/parsing/utils_chevron.c \
 	src/parsing/utils_cote.c \
+	src/parsing/outfile.c \
+	src/parsing/infile.c \
 	src/utils/free.c \
 	src/utils/lst_fonction.c \
 

@@ -6,13 +6,13 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:45:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/10 12:46:54 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:06:56 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_cmd_lst	*lstnew(char **double_tab, char *infile_name, char *outfile_name)
+t_cmd_lst	*lstnew(char **double_tab, t_ms *ms)
 {
 	t_cmd_lst	*a;
 
@@ -20,8 +20,10 @@ t_cmd_lst	*lstnew(char **double_tab, char *infile_name, char *outfile_name)
 	if (a == NULL)
 		return (NULL);
 	a->cmd_option = double_tab;
-	a->infile_name = infile_name;
-	a->outfile_name = outfile_name;
+	a->outfile_mode = ms->boolean_outfile;
+	a->infile_mode = ms->boolean_infile;
+	a->infile_name = ms->infile_name;
+	a->outfile_name = ms->outfile_name;
 	a->next = NULL;
 	return (a);
 }
@@ -56,8 +58,10 @@ void	lstclear(t_cmd_lst **cmd_lst)
 		{
 			save = (*cmd_lst)->next;
 			free_tab((*cmd_lst)->cmd_option, 0);
-			free((*cmd_lst)->infile_name);
-			free((*cmd_lst)->outfile_name);
+			if ((*cmd_lst)->infile_name != NULL)
+				free((*cmd_lst)->infile_name);
+			if ((*cmd_lst)->outfile_name != NULL)
+				free((*cmd_lst)->outfile_name);
 			free(*cmd_lst);
 			(*cmd_lst) = save;
 		}

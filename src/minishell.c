@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/11 16:48:29 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:12:36 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,24 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_printf("\033[36m \033[1m");
 		ms.line = readline("minishell → \033[0m");
-		// if (strcmp(ms.line, "exit") == 0)//COMMENTER CAR BUG SUR MAC??
-		// 	break ;
+		if (strcmp(ms.line, "exit") == 0)//COMMENTER CAR BUG SUR MAC??//A recoder
+			break ;
 		if (ms.line[0] != '\0')//Si on appuie sur entree on lance juste une newline
 		{
 			cmd_lst = make_cmd_lst(&ms);
 			add_history(ms.line);
 			if (cmd_lst != NULL)
 			{
-				//envoie a pipex la liste
+				// envoie a pipex la liste
 				while (cmd_lst != NULL)
 				{
 					printf("CMD %d :\n", i);
 					print_map(cmd_lst->cmd_option);
+					printf("INFILE : %s\n", cmd_lst->infile_name);
+					printf("OUTFILE : %s\n", cmd_lst->outfile_name);
+					printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
+					printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
+					
 					cmd_lst = cmd_lst->next;
 					i++;
 				}
@@ -98,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 		free(ms.line);
 		//Peut etre clear_history
 	}
-	// rl_clear_history();//COMMENTER CAR BUG SUR MAC??
+	rl_clear_history(); //COMMENTER CAR BUG SUR MAC??
 	free(ms.line);
 	free_tab(ms.env, 0);
 }
