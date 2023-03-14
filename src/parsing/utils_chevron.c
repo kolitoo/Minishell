@@ -6,11 +6,31 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 12:40:25 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/13 14:41:07 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:38:22 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	nb_chevron(char *str, char c)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c && bool_cote(str, i) == 1)
+		{
+			if (str[i + 1] == c && bool_cote(str, i) == 1 && str[i + 1] != '\0')
+				i++;
+			count++;
+		}
+		i++;
+	}
+	return (count);
+}
 
 int	check_after_chevron(char *str)
 {

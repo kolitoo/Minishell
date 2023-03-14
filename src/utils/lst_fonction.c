@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:45:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/13 16:06:56 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:43:33 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd_lst	*lstnew(char **double_tab, t_ms *ms)
 	a->outfile_mode = ms->boolean_outfile;
 	a->infile_mode = ms->boolean_infile;
 	a->infile_name = ms->infile_name;
-	a->outfile_name = ms->outfile_name;
+	a->outfile_name = ms->split_chevron;
 	a->next = NULL;
 	return (a);
 }

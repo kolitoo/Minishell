@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/13 17:12:36 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:52:02 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ int	main(int argc, char **argv, char **envp)
 				{
 					printf("CMD %d :\n", i);
 					print_map(cmd_lst->cmd_option);
-					printf("INFILE : %s\n", cmd_lst->infile_name);
-					printf("OUTFILE : %s\n", cmd_lst->outfile_name);
+					printf("TAB OUTFILE %d :\n", i);
+					print_map(cmd_lst->outfile_name);
+					printf("TAB INFILE %d :\n", i);
+					print_map(cmd_lst->infile_name);
 					printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
 					printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
 					

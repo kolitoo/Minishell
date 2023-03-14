@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/13 17:51:24 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:11:12 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,33 +66,42 @@ int	exist_chevron(char *str)
 	return (1);
 }
 
+char	*parsing_chevron(char *one_cmd, t_ms **ms)
+{
+	int	i;
+
+	i = 0;
+	if (exist_chevron(one_cmd) == SUC)
+	{
+		rights_check(one_cmd, ms, '<');// prendre en compte les droit seulement du dernier fichier
+		rights_check(one_cmd, ms, '>');
+		//one_cmd = find_infile(one_cmd, ms, 0);//double tab pour les infile et oufile
+		if (nb_chevron(one_cmd, '>') == 1)
+			one_cmd = find_outfile_one(one_cmd, ms, 0);
+		else
+			one_cmd = find_outfile(one_cmd, ms);//one_cmd sera dans un des deux. et si on a cat > test < test1 one_cmd sera la ou il reste un chevron
+		if (one_cmd == NULL)
+			return (NULL);
+	}
+	else
+	{
+		(*ms)->infile_name = NULL;
+		(*ms)->outfile_name = NULL;
+	}
+	return (one_cmd);
+}
+
 char	**parsing(char	*one_cmd, t_ms **ms)
 {
 	char	**double_tab;
+	int	i;
 
+	i = 0;
 	double_tab = NULL;
 	if (check_fine_cote(one_cmd, '\'', '\"') == 0)
 	{
 		one_cmd = strspace_cpy(one_cmd, 0);
-		if (exist_chevron(one_cmd) == SUC)
-		{
-			rights_check(one_cmd, ms, '<');
-			rights_check(one_cmd, ms, '>');
-			one_cmd = find_infile(one_cmd, ms, 0);
-			one_cmd = find_outfile(one_cmd, ms, 0);;
-			if (one_cmd == NULL)
-				return (NULL);
-		}
-		else
-		{
-			(*ms)->infile_name = NULL;
-			(*ms)->outfile_name = NULL;
-		}
-		//Gerer les chevrons. Si entre cote on prend pas en compte. En fonction du sens
-		//on connait le mode d'ouverture qu'on stocke quleque part (structure ms).
-		//Et ensuite on regarde le nom du fichier qu'on stocke dans une chaine qui sera dans une
-		//structure (ms)
-		//Si << pas de nom de fichier on utilise here doc et le limiter et le mot juste apres <<
+		one_cmd = parsing_chevron(one_cmd, ms);
 		if (check_cote(one_cmd, '\'') == 0 && check_cote(one_cmd, '\"') == 0)//Pas de cote
 		{
 			double_tab = ft_split(one_cmd, ' ');
