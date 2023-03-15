@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:04:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/15 20:20:20 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/15 23:23:16 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**find_file(char *str, char c)
 	j = 0;
 	k = 0;
 	i = 0;
-	split_chevron = malloc(sizeof(char *) * (len_dbl_tab(str, c) + 1)); 
+	split_chevron = malloc(sizeof(char *) * (len_dbl_tab(str, c) + 1));//protect malloc
 	while (str[i] != '\0')
 	{
 		j = 0;
@@ -66,7 +66,7 @@ char	**find_file(char *str, char c)
 				str[i] = ' ';
 				i++;
 			}
-			split_chevron[k] = malloc(sizeof(char) * (len_file(str, i, c) + 1));
+			split_chevron[k] = malloc(sizeof(char) * (len_file(str, i, c) + 1));//protect malloc
 			while ((str[i] != ' ' && str[i] != c && str[i] != '\0') || bool_cote(str, i) == 0)
 			{
 				split_chevron[k][j] = str[i];
@@ -81,17 +81,21 @@ char	**find_file(char *str, char c)
 			i++;
 	}
 	split_chevron[k] = NULL;
+	if (k == 0)
+		split_chevron = NULL;
 	return (split_chevron);
 }
 
 void	rights_check(char *str, t_ms **ms, char c)
 {
 	int	i;
-	
+
 	i = 0;
-	while (str[i] != '\0')
+	while (str[i])
+		i++;
+	while (i >= 0)
 	{
-		if ((str[i] == c && bool_cote(str, i) == ERR) && (str[i + 1] == c && bool_cote(str, i + 1) == ERR))
+		if ((str[i] == c && bool_cote(str, i) == ERR) && (str[i - 1] == c && bool_cote(str, i - 1) == ERR))
 		{
 			if (c == '>')
 				(*ms)->boolean_outfile = 2;
@@ -107,6 +111,6 @@ void	rights_check(char *str, t_ms **ms, char c)
 				(*ms)->boolean_infile = 1;
 			break ;
 		}
-		i++;
+		i--;
 	}
 }

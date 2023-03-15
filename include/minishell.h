@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/15 20:18:08 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/15 23:05:12 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <fcntl.h>
+# include <string.h>
 
 typedef struct s_ms
 {

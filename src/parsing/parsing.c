@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/15 20:25:04 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/15 23:15:55 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ int	exist_chevron(char *str)
 
 char	*parsing_chevron(char *one_cmd, t_ms **ms)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	if (exist_chevron(one_cmd) == SUC)
 	{
-		rights_check(one_cmd, ms, '<');// prendre en compte les droit seulement du dernier fichier
+		rights_check(one_cmd, ms, '<');
 		rights_check(one_cmd, ms, '>');
 		(*ms)->split_chevron_out = find_file(one_cmd, '>');
 		(*ms)->split_chevron_in = find_file(one_cmd, '<');
@@ -88,9 +88,9 @@ char	*parsing_chevron(char *one_cmd, t_ms **ms)
 char	**parsing(char	*one_cmd, t_ms **ms)
 {
 	char	**double_tab;
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	double_tab = NULL;
 	if (check_fine_cote(one_cmd, '\'', '\"') == 0)
 	{
