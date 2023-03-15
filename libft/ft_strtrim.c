@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:59:09 by lgirault          #+#    #+#             */
-/*   Updated: 2022/11/23 11:28:10 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/15 11:31:18 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	end(char const *s1, char const *set)
 	return ((len(s1) - 1) - i - 1);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char *set)
 {
 	int				i;
 	int				j;
@@ -93,5 +93,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 		compt++;
 	}
 	str[j] = '\0';
+	free(s1);
 	return (str);
 }

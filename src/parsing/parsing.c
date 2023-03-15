@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/14 15:11:12 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/15 20:25:04 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	int	i;
 
 	i = 1;
-	ms->outfile_name = NULL;
-	ms->infile_name = NULL;
 	ms->boolean_infile = 0;
 	ms->boolean_outfile = 0;
 	if (check_fine_cote(ms->line, '\'', '\"') == ERR)//check aussi si les chevrons sont valides
@@ -39,8 +37,6 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	cmd_lst = lstnew(double_tab, ms);// open("chaine que renvoie parsing en fonction des chevron", Ouverture selon les chevron));//fd de -1 si rien a ouvris donc dans la liste on aura -1
 	while (ms->split_pipe[i] != NULL)
 	{
-		ms->outfile_name = NULL;
-		ms->infile_name = NULL;
 		ms->boolean_infile = 0;
 		ms->boolean_outfile = 0;
 		double_tab = parsing(ms->split_pipe[i], &ms);
@@ -75,18 +71,16 @@ char	*parsing_chevron(char *one_cmd, t_ms **ms)
 	{
 		rights_check(one_cmd, ms, '<');// prendre en compte les droit seulement du dernier fichier
 		rights_check(one_cmd, ms, '>');
-		//one_cmd = find_infile(one_cmd, ms, 0);//double tab pour les infile et oufile
-		if (nb_chevron(one_cmd, '>') == 1)
-			one_cmd = find_outfile_one(one_cmd, ms, 0);
-		else
-			one_cmd = find_outfile(one_cmd, ms);//one_cmd sera dans un des deux. et si on a cat > test < test1 one_cmd sera la ou il reste un chevron
+		(*ms)->split_chevron_out = find_file(one_cmd, '>');
+		(*ms)->split_chevron_in = find_file(one_cmd, '<');
+		one_cmd = strspace_cpy(one_cmd, 0);
 		if (one_cmd == NULL)
 			return (NULL);
 	}
 	else
 	{
-		(*ms)->infile_name = NULL;
-		(*ms)->outfile_name = NULL;
+		(*ms)->split_chevron_in = NULL;
+		(*ms)->split_chevron_out = NULL;
 	}
 	return (one_cmd);
 }

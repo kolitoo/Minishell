@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_fonction.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:45:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/14 13:43:33 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/15 14:43:10 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_cmd_lst	*lstnew(char **double_tab, t_ms *ms)
 	a->cmd_option = double_tab;
 	a->outfile_mode = ms->boolean_outfile;
 	a->infile_mode = ms->boolean_infile;
-	a->infile_name = ms->infile_name;
-	a->outfile_name = ms->split_chevron;
+	a->infile_name = ms->split_chevron_in;
+	a->outfile_name = ms->split_chevron_out;
 	a->next = NULL;
 	return (a);
 }
@@ -59,9 +59,11 @@ void	lstclear(t_cmd_lst **cmd_lst)
 			save = (*cmd_lst)->next;
 			free_tab((*cmd_lst)->cmd_option, 0);
 			if ((*cmd_lst)->infile_name != NULL)
-				free((*cmd_lst)->infile_name);
-			if ((*cmd_lst)->outfile_name != NULL)
-				free((*cmd_lst)->outfile_name);
+				// free((*cmd_lst)->infile_name);
+				free_tab((*cmd_lst)->infile_name, 0);// verif si bon
+			// if ((*cmd_lst)->outfile_name != NULL)
+			// free((*cmd_lst)->outfile_name);
+			free_tab((*cmd_lst)->outfile_name, 0);// verif si bon
 			free(*cmd_lst);
 			(*cmd_lst) = save;
 		}
