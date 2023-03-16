@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 13:49:36 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/13 14:53:46 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:25:33 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 int	countlen(char *str, int i, int k, int count)
 {
-	// int	i;
-	// int	k;
-	// int	count;
-	// i = 0;
-	// k = 0;
-	// count = 0;
 	while (str[i] == ' ' && str[i] != '\0')
 		i++;
 	while (str[i] != '\0')
@@ -47,11 +41,9 @@ int	countlen(char *str, int i, int k, int count)
 char	*strspace_cpy(char *str, int i)
 {
 	int		j;
-	// int		k;
 	char	*result;
 
 	j = 0;
-	// k = 0;
 	result = malloc(sizeof(char *) * (countlen(str, 0, 0, 0) + 1));
 	while (str[i] == ' ' && str[i] != '\0')
 		i++;

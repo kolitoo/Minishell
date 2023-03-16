@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/15 23:15:55 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:00:14 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,6 @@ int	exist_chevron(char *str)
 
 char	*parsing_chevron(char *one_cmd, t_ms **ms)
 {
-	// int	i;
-
-	// i = 0;
 	if (exist_chevron(one_cmd) == SUC)
 	{
 		rights_check(one_cmd, ms, '<');
@@ -88,15 +85,14 @@ char	*parsing_chevron(char *one_cmd, t_ms **ms)
 char	**parsing(char	*one_cmd, t_ms **ms)
 {
 	char	**double_tab;
-	// int	i;
 
-	// i = 0;
 	double_tab = NULL;
 	if (check_fine_cote(one_cmd, '\'', '\"') == 0)
 	{
 		one_cmd = strspace_cpy(one_cmd, 0);
 		one_cmd = parsing_chevron(one_cmd, ms);
-		if (check_cote(one_cmd, '\'') == 0 && check_cote(one_cmd, '\"') == 0)//Pas de cote
+		one_cmd = set_dollar(one_cmd, ms);
+		if (nb_cote(one_cmd) == 0)//Pas de cote//faire une fonction pour split_espace
 		{
 			double_tab = ft_split(one_cmd, ' ');
 		}
