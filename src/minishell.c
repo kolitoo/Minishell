@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/16 17:41:42 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:06:54 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,20 @@ $$/      $$/ $$$$$$/ $$/   $$/ $$$$$$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$$$$$$$/ $
 			if (cmd_lst != NULL)
 			{
 				//envoie a pipex la liste
-				// while (cmd_lst != NULL)
-				// {
-				// 	printf("CMD %d :\n", i);
-				// 	print_map(cmd_lst->cmd_option);
-				// 	printf("TAB OUTFILE %d :\n", i);
-				// 	print_map(cmd_lst->outfile_name);
-				// 	printf("TAB INFILE %d :\n", i);
-				// 	print_map(cmd_lst->infile_name);
-				// 	printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
-				// 	printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
+				while (cmd_lst != NULL)
+				{
+					printf("CMD %d :\n", i);
+					print_map(cmd_lst->cmd_option);
+					printf("TAB OUTFILE %d :\n", i);
+					print_map(cmd_lst->outfile_name);
+					printf("TAB INFILE %d :\n", i);
+					print_map(cmd_lst->infile_name);
+					printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
+					printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
 					
-				// 	cmd_lst = cmd_lst->next;
-				// 	i++;
-				// }
+					cmd_lst = cmd_lst->next;
+					i++;
+				}
 				lstclear(&cmd_lst);
 			}
 		}

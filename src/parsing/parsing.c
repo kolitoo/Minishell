@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/16 17:00:14 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:16:11 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,41 @@ char	*parsing_chevron(char *one_cmd, t_ms **ms)
 	return (one_cmd);
 }
 
+char	*put_space_cote(char *str)
+{
+	int	i;
+	int	j;
+	char	*newstr;
+
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if ((str[i] == '\'' || str[i] == '\"') && str[i - 1] != ' ')
+		{
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	j = 0;
+	newstr = malloc(sizeof(char) * (ft_strlen(str) + j + 1));
+	while (str[j] != '\0')
+	{
+		if ((str[j] == '\'' || str[j] == '\"') && (str[j - 1] != ' ' && bool_cote(str, j - 1) == ERR))
+		{
+			newstr[i] = ' ';
+			i++;
+		}
+		newstr[i] = str[j];
+		i++;
+		j++;
+	}
+	newstr[i] = '\0';
+	free(str);
+	return (newstr);
+}
+
 char	**parsing(char	*one_cmd, t_ms **ms)
 {
 	char	**double_tab;
@@ -92,6 +127,7 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 		one_cmd = strspace_cpy(one_cmd, 0);
 		one_cmd = parsing_chevron(one_cmd, ms);
 		one_cmd = set_dollar(one_cmd, ms);
+		one_cmd = put_space_cote(one_cmd);
 		if (nb_cote(one_cmd) == 0)//Pas de cote//faire une fonction pour split_espace
 		{
 			double_tab = ft_split(one_cmd, ' ');
