@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 13:58:40 by lgirault          #+#    #+#              #
-#    Updated: 2023/03/07 12:47:44 by lgirault         ###   ########.fr        #
+#    Updated: 2023/03/17 12:22:24 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRC =		ft_memcpy.c \
 	ft_putvoid.c \
 	get_next_line.c \
 	get_next_line_utils.c \
+	ft_strcmp.c \
 
 OBJ = $(SRC:.c=.o)
 

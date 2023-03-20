@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/16 17:00:14 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:22:40 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,95 @@ char	*parsing_chevron(char *one_cmd, t_ms **ms)
 	return (one_cmd);
 }
 
+char	*put_space_cote(char *str)
+{
+	int	i;
+	int	j;
+	char	*newstr;
+
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if ((str[j] == '\'' || str[j] == '\"') && (str[j + 1] != ' ' && str[j + 1] != '\'' && str[j + 1] != '\"' && str[j + 1] != '\0' && bool_cotev2(str, j + 1) == ERR))
+		{
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	j = 0;
+	newstr = malloc(sizeof(char) * (ft_strlen(str) + j + 1));
+	while (str[j] != '\0')
+	{
+		if ((str[j] == '\'' || str[j] == '\"') && (str[j - 1] != ' ' && bool_cotev2(str, j - 1) == ERR))
+		{
+			newstr[i] = ' ';
+			i++;
+		}
+		if ((str[j] == '\'' || str[j] == '\"') && (str[j + 1] != ' ' && str[j + 1] != '\'' && str[j + 1] != '\"' && str[j + 1] != '\0' && bool_cotev2(str, j + 1) == ERR))
+		{
+			newstr[i] = str[j];
+			newstr[i + 1] = ' ';
+			i = i + 2;
+			j++;
+		}
+		if (str[j] != '\0')
+		{
+			newstr[i] = str[j];
+			i++;
+			j++;
+		}
+	}
+	newstr[i] = '\0';
+	free(str);
+	return (newstr);
+}
+
+char	*delete_quote(char *str)
+{
+	int	i;
+	int	j;
+	int	len;
+	char	*newstr;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (str[j] != '\0')
+	{
+		if ((str[j] == '\'' || str[j] == '\"') && bool_cote(str, j) == ERR)
+		{
+			if ((str[j + 1] == '\'' || str[j + 1] == '\"') && bool_cotev2(str, j + 1) == ERR)
+				len = len + 2;
+		}
+		if (str[j] != '\0')
+			j++;
+	}
+	len = len + j;
+	j = 0;
+	newstr = malloc(sizeof(char) * (len + 1));
+	while (str[j] != '\0')
+	{
+		if ((str[j] == '\'' || str[j] == '\"') && bool_cote(str, j) == ERR)
+		{
+			if ((str[j + 1] == '\'' || str[j + 1] == '\"') && bool_cotev2(str, j + 1))
+				j = j + 2;
+		}
+		if (str[j] != '\0')
+		{
+			newstr[i] = str[j];
+			i++;
+			j++;
+		}
+	}
+	newstr[i] = '\0';
+	free(str);
+	return (newstr);
+}
+
+
+
 char	**parsing(char	*one_cmd, t_ms **ms)
 {
 	char	**double_tab;
@@ -92,6 +181,9 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 		one_cmd = strspace_cpy(one_cmd, 0);
 		one_cmd = parsing_chevron(one_cmd, ms);
 		one_cmd = set_dollar(one_cmd, ms);
+		//one_cmd = put_space_cote(one_cmd);
+		//printf("%s\n", one_cmd);
+		one_cmd = delete_quote(one_cmd);
 		if (nb_cote(one_cmd) == 0)//Pas de cote//faire une fonction pour split_espace
 		{
 			double_tab = ft_split(one_cmd, ' ');

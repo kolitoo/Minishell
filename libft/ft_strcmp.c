@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 13:36:11 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/17 10:13:51 by lgirault         ###   ########.fr       */
+/*   Created: 2023/02/16 14:43:24 by lgirault          #+#    #+#             */
+/*   Updated: 2023/02/17 17:42:30 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-
-void	free_tab(char	**tab, int i)
+int	ft_strcmp(char *str1, char *str2)
 {
-	if (tab != NULL)
+	int	i;
+
+	i = 0;
+	while (str1[i] != '\0' && str2[i] != '\0')
 	{
-		while (tab[i] != NULL)
-		{
-			free(tab[i]);
-			i++;
-		}
-		free(tab);
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
 	}
+	return (0);
 }

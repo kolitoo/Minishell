@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/16 18:04:06 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:51:33 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	init_tab(t_cmd *cmd)
 
 void	close_fd(t_cmd *cmd)
 {
-	if (cmd->fd_infile != -1)
+	if (cmd->fd_infile != -1 && cmd->fd_infile != 0)
 		if (close(cmd->fd_infile) == -1)
 			error_management(6, cmd);
-	if (cmd->fd_outfile != -1)
+	if (cmd->fd_outfile != -1 && cmd->fd_outfile != 0)
 		if (close(cmd->fd_outfile) == -1)
 			error_management(6, cmd);
 }

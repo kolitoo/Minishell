@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/16 17:29:20 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:06:52 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ char	*find_variable(char *str, int i)
 	k = 0;
 	i++;
 	j = i;
-	while (str[j] != ' ' && str[j] != '\0' && str[j] != '\"' && str[j] != '\'')
+	while (str[j] != ' ' && str[j] != '\0' && str[j] != '\"' && str[j] != '\'' && str[i] != '$')
 	{
 		len++;
 		j++;
 	}
 	variable = malloc(sizeof(char) * (len + 2));
-	while (str[i] != ' ' && str[i] != '\0' && str[i] != '\"' && str[i] != '\'')
+	while (str[i] != ' ' && str[i] != '\0' && str[i] != '\"' && str[i] != '\'' && str[i] != '$')
 	{
 		variable[k] = str[i];
 		k++;
@@ -160,6 +160,7 @@ char	*comp_env(char *str, t_ms **ms, int i)
 
 	variable = find_variable(str, i);//substr
 	j = 0;
+	printf("%s\n", variable);
 	while ((*ms)->env[j] != NULL)
 	{
 		if (strncmp((*ms)->env[j], variable, ft_strlen(variable)) == 0)
@@ -188,7 +189,7 @@ char	*set_dollar(char *str, t_ms **ms)
 			if (valid_cote(str, i, '\"') == SUC)
 			{
 				str = comp_env(str, ms, i);
-				break ;
+				i = 0;
 			}
 			i++;
 		}
@@ -197,7 +198,7 @@ char	*set_dollar(char *str, t_ms **ms)
 			if (str[i] == '$')
 			{
 				str = comp_env(str, ms, i);
-				break ;
+				i = 0;
 			}
 			i++;
 		}

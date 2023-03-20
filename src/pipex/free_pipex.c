@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:59:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/16 18:04:03 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:18:47 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,25 @@ void	error_management(int code_error, t_cmd *cmd)
 	exit(EXIT_FAILURE);
 }
 
-void	free_tab(char **tab_path)
-{
-	int	i;
+// void	free_tab(char **tab_path)
+// {
+// 	int	i;
 
-	i = 0;
-	while (tab_path[i] != NULL)
-	{
-		free(tab_path[i]);
-		i++;
-	}
-	free(tab_path);
-}
+// 	i = 0;
+// 	while (tab_path[i] != NULL)
+// 	{
+// 		free(tab_path[i]);
+// 		i++;
+// 	}
+// 	free(tab_path);
+// }
 
 void	free_cmd(t_cmd *cmd)
 {
 	if (cmd->cmd != NULL)
 		free(cmd->cmd);
 	if (cmd->options != NULL)
-		free_tab(cmd->options);
+		free_tab(cmd->options, 0);
 	if (cmd->pipefd != NULL)
 		free(cmd->pipefd);
 	if (cmd->pid != NULL)
@@ -64,7 +64,7 @@ void	free_cmd1(t_cmd *cmd)
 	if (cmd->cmd != NULL)
 		free(cmd->cmd);
 	if (cmd->options != NULL)
-		free_tab(cmd->options);
+		free_tab(cmd->options, 0);
 	if (cmd->pipefd != NULL)
 		free(cmd->pipefd);
 	if (cmd->pid != NULL)
@@ -76,7 +76,7 @@ void	free_cmd2(t_cmd *cmd)
 	if (cmd->cmd != NULL)
 		free(cmd->cmd);
 	if (cmd->options != NULL)
-		free_tab(cmd->options);
+		free_tab(cmd->options, 0);
 	if (cmd->pipefd != NULL)
 		free(cmd->pipefd);
 	if (cmd->pid)

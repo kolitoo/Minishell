@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:56:44 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/16 14:01:47 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:18:04 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,42 @@ int	bool_cote(char *str, int i)
 
 	one = valid_cote(str, i, '\'');
 	two = valid_cote(str, i, '\"');
+	if (one == ERR && two == SUC) //entre cote
+		return (SUC);
+	if (one == SUC && two == ERR) //entre cote
+		return (SUC);
+	if (one == SUC && two == SUC) //entre cote
+		return (SUC);
+	if (one == ERR && two == ERR) //pas entre cote
+		return (ERR);
+	return (ERR);
+}
+
+int	valid_cotev2(char *str, int i, char c)
+{
+	int	j;
+	int	k;
+
+	j = 0;
+	k = 0;
+	while (j <= i)
+	{
+		if (str[j] == c)
+			k++;
+		j++;
+	}
+	if ((k % 2) == 0) //pas entre cote
+		return (ERR);
+	return (SUC);
+}
+
+int	bool_cotev2(char *str, int i)
+{
+	int	one;
+	int	two;
+
+	one = valid_cotev2(str, i, '\'');
+	two = valid_cotev2(str, i, '\"');
 	if (one == ERR && two == SUC) //entre cote
 		return (SUC);
 	if (one == SUC && two == ERR) //entre cote

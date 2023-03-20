@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:22:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/16 18:04:12 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:14:10 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,26 @@ char	*make_str_path_2(char **envp, t_tab ijk)
 	return (str);
 }
 
-void	find_path(t_cmd *cmd, char **envp, char **argv)
+void	find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
 	char	*cmd_without_opti;
 
-	cmd->options = tab_option(argv[cmd->i + cmd->off]);
+	cmd->options = cmd_lst->cmd_option;//cmd->options = tab_option(argv[cmd->i + cmd->off]);//fichier make_tab_path peut etre inutile du coup
 	if (where(cmd->options[0]) == 1)
 	{
-		if (access(argv[cmd->i + cmd->off], F_OK | X_OK) == 0)
-			cmd->cmd = ft_strdup(argv[cmd->i + cmd->off]);
+		if (access(cmd_lst->cmd_option[0], F_OK | X_OK) == 0)
+			cmd->cmd = ft_strdup(cmd_lst->cmd_option[0]);
 		else
 		{
-			cmd_without_opti = ft_substr(argv[cmd->i + cmd->off],
-					first_space(argv[cmd->i + cmd->off]),
-					last_letter(argv[cmd->i + cmd->off]));
+			cmd_without_opti = ft_substr(cmd_lst->cmd_option[0],
+					first_space(cmd_lst->cmd_option[0]),//inutile
+					last_letter(cmd_lst->cmd_option[0]));//inutile
 			ft_printf("zsh: command not found: %s\n", cmd_without_opti);
 			free(cmd_without_opti);
 		}
 	}
 	else
-		cmd->cmd = find_good_path(envp, argv[cmd->i + cmd->off], cmd);
+		cmd->cmd = find_good_path(envp, cmd_lst->cmd_option[0], cmd);
 }
 
 char	*make_str_path(char **envp, char *cmd, t_cmd *cmd1)

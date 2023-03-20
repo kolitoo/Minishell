@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/16 18:05:07 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:18:46 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_cmd
 	char	*cmd;
 	char	**argv;
 	char	**options;
+	int		argc;
+	int		exit_status;
 	int		wpid;
 	int		off;
 	int		*pid;
@@ -98,7 +100,7 @@ char	*find_good_path(char **envp, char *cmd, t_cmd *cmd1);
 char	**tab_option(char *cmd);
 char	**make_tab_path(char **envp, char *cmd, t_cmd *cmd1);
 void	error_management(int code_error, t_cmd *cmd);
-void	free_tab(char **tab_path);
+//void	free_tab(char **tab_path);
 void	free_cmd(t_cmd *cmd);
 void	last_cmd(t_cmd *cmd, char **envp, char **argv, int argc);
 void	free_cmd2(t_cmd *cmd);
@@ -113,7 +115,10 @@ void	init_tab(t_cmd *cmd);
 int		first_space(char *cmd);
 int		last_letter(char *cmd);
 int		where(char *cmd);
-void	find_path(t_cmd *cmd, char **envp, char **argv);
-
+void	find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
+int	lstsize(t_cmd_lst *cmd_lst);
+int	pipex(t_cmd_lst *cmd_lst, char **envp);
+int	valid_cotev2(char *str, int i, char c);
+int	bool_cotev2(char *str, int i);
 
 #endif

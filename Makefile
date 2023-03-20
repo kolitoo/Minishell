@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/16 18:07:08 by lgirault         ###   ########.fr        #
+#    Updated: 2023/03/20 10:19:17 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ BLUE=\033[0;34m
 BOLD=\033[1m
 RESET=\033[0m
 
+	
 SRC = src/minishell.c \
 	src/parsing/space.c \
 	src/parsing/parsing.c \
@@ -32,13 +33,13 @@ SRC = src/minishell.c \
 	src/parsing/env_utils.c \
 	src/utils/free.c \
 	src/utils/lst_fonction.c \
-	src/pipex/find_good_path \
-	src/pipex/free \
-	src/pipex/here_doc \
-	src/pipex/make_tab_option \
-	src/pipex/make_tab_path \
-	src/pipex/pipex \
-	src/pipex/utils \
+	src/pipex/pipex.c \
+	src/pipex/find_good_path.c \
+	src/pipex/free_pipex.c \
+	src/pipex/here_doc.c \
+	src/pipex/make_tab_option.c \
+	src/pipex/make_tab_path.c \
+	src/pipex/utils.c \
 
 OBJ = $(SRC:.c=.o)
 

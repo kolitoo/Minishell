@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:59:05 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/15 11:15:57 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:46:13 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		free_line(char *line);
 int		check_cara(char *str, char c, int boole);
 int		no_new_line(char *buff, char **line, int fd, int *red);
 int		init_read(char *buff, char **line, int *red, int fd);
+int		ft_strcmp(char *str1, char *str2);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *s);
 char	*ft_strnstr(const char *big, const char *little, size_t len);

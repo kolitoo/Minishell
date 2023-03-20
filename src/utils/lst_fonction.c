@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_fonction.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:45:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/15 14:43:10 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:51:39 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,17 @@ void	lstclear(t_cmd_lst **cmd_lst)
 			(*cmd_lst) = save;
 		}
 	}
+}
+
+int	lstsize(t_cmd_lst *cmd_lst)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_lst != NULL)
+	{
+		cmd_lst = cmd_lst->next;
+		i++;
+	}
+	return (i);
 }

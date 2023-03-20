@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/16 17:41:42 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:52:22 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ $$/      $$/ $$$$$$/ $$/   $$/ $$$$$$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$$$$$$$/ $
 			if (cmd_lst != NULL)
 			{
 				//envoie a pipex la liste
+				pipex(cmd_lst, ms.env);
 				// while (cmd_lst != NULL)
 				// {
 				// 	printf("CMD %d :\n", i);
