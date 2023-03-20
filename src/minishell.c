@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/20 15:52:22 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:37:54 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ $$/      $$/ $$$$$$/ $$/   $$/ $$$$$$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$$$$$$$/ $
 				// 	printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
 				// 	printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
 					
-				// 	cmd_lst = cmd_lst->next;
-				// 	i++;
-				// }
+					cmd_lst = cmd_lst->next;
+					i++;
+				}
 				lstclear(&cmd_lst);
 			}
 		}

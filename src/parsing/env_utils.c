@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/17 12:06:52 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:38:31 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*replace_variable(char *str, char *envstring, char *variable)
 	j = 0;
 	new_variable = NULL;
 	new_variable = neww_variable(new_variable, variable, envstring);
-	newstr = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(variable) + ft_strlen(new_variable)) + 1);
+	newstr = malloc(sizeof(char) * (ft_strlen(str) - (ft_strlen(variable)- 1) + ft_strlen(new_variable)) + 1);
 	while (str[i] != '$')
 	{
 		newstr[i] = str[i];
@@ -103,7 +103,9 @@ char	*replace_variable(char *str, char *envstring, char *variable)
 		i++;
 		j++;
 	}
-	while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"')
+	if (str[k] == '$')
+		k++;
+	while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"' && str[k] != '$')
 		k++;
 	while (str[k] != '\0')
 	{
@@ -177,6 +179,17 @@ char	*comp_env(char *str, t_ms **ms, int i)
 	return (str);
 }
 
+int	check_next_cote(char *str, int i)
+{
+	while (str[i] != '\'' && str[i] != '\"')
+		i--;
+	if (str[i] == '\'')
+		return (0);
+	else
+		return (1);
+	return (0);
+}
+
 char	*set_dollar(char *str, t_ms **ms)
 {
 	int	i;
@@ -184,13 +197,15 @@ char	*set_dollar(char *str, t_ms **ms)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '$' && valid_cote(str, i, '\'') == SUC)
+		if (str[i] == '$' && valid_cote(str, i, '\'') == SUC && (valid_cote(str, i, '\"') == SUC))
 		{
-			if (valid_cote(str, i, '\"') == SUC)
+			if (check_next_cote(str, i) == 0)
 			{
 				str = comp_env(str, ms, i);
 				i = 0;
 			}
+			else
+				return (str);
 			i++;
 		}
 		else

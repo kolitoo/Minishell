@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/03/20 17:18:46 by lgirault         ###   ########.fr       */
+=======
+/*   Updated: 2023/03/17 12:06:37 by abourdon         ###   ########.fr       */
+>>>>>>> 6df5af4e6d74501c5fa04e16d112af47d50e3163
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +99,7 @@ t_cmd_lst	*lstnew(char **double_tab, t_ms *ms);
 void    print_map(char **map);
 char	**find_file(char *str, char c);
 
+<<<<<<< HEAD
 //Pipex
 char	*find_good_path(char **envp, char *cmd, t_cmd *cmd1);
 char	**tab_option(char *cmd);
@@ -120,5 +125,8 @@ int	lstsize(t_cmd_lst *cmd_lst);
 int	pipex(t_cmd_lst *cmd_lst, char **envp);
 int	valid_cotev2(char *str, int i, char c);
 int	bool_cotev2(char *str, int i);
+=======
+
+>>>>>>> 6df5af4e6d74501c5fa04e16d112af47d50e3163
 
 #endif
