@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/22 14:39:24 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:03:22 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 {
 	find_path(cmd, envp, cmd_lst);
 	if (cmd->cmd == NULL)
-		free_cmd2(cmd, envp, cmd_lst);
+		free_cmd(cmd, envp, cmd_lst);
 	redir(0, 1, cmd);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile == 0)
 		redir(cmd->fd_infile, 1, cmd);

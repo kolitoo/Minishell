@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/22 15:49:39 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 15:53:48 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,6 @@ char    *set_dollar(char *str, t_ms **ms)
         if (str[i] == '$' && str[i + 1] == '?')
         {
             str = warning_error(str, i, ms);
-            printf("%s\n", str);
             i = 0;
         }
         if (str[i] == '\"')
