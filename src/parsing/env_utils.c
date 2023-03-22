@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/22 13:33:11 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 15:49:39 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,19 +213,13 @@ char    *warning_error(char *str, int i, t_ms **ms)
                 j++;
                 k++;
             }
-            if (str[i] == '\0')
-                break;
         }
-        else
+        if (str[i] != '\0')
         {
-            if (str[i] != '\0')
-            {
-                new_str[j] = str[i];
-                j++;
-                i++;
-            }
+            new_str[j] = str[i];
+            j++;
+            i++;
         }
-        i++;
     }
     new_str[j] = '\0';
     free(str);
@@ -240,36 +234,43 @@ char    *set_dollar(char *str, t_ms **ms)
     i = 0;
     while (str[i] != '\0')
     {
-         if (str[i] == '$' && str[i + 1] == '?')
+        if (str[i] == '$' && str[i + 1] == '?')
+        {
+            str = warning_error(str, i, ms);
+            printf("%s\n", str);
+            i = 0;
+        }
+        if (str[i] == '\"')
+        {
+            i++;
+            while (str[i] != '\"')
             {
-                    str = warning_error(str, i, ms);
+                if (str[i] == '$')
+                {
+                    str = comp_env(str, ms, i);
                     i = 0;
+                    break ;
+                }
+                i++;
             }
-	// if (str[i] == '$' && valid_cote(str, i, '\'') == SUC)
-	// {
-	// 	printf("%d\n", i);
-	// 	i++;
-	// 	printf("%c\n", str[i]);
-	// }
-        if (str[i] == '$' && valid_cote(str, i, '\'') == ERR)
-        {
-		printf("%c\n", str[i]);
-        	// if (valid_cote(str, i, '\"') == SUC)
-		// {
-                // 	str = comp_env(str, ms, i);
-                // 	i = 0;
-        	// }
-            i++;
+            if (str[i] == '\"')
+                i++;
         }
-        else
+        if (str[i] == '\'')
         {
-            if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1] != '\'' && str[i + 1] != '\"' && str[i + 1] != '\0')
-            {
-                str = comp_env(str, ms, i);
-                i = 0;
-            }
             i++;
+            while (str[i] != '\'')
+                i++;
+            if (str[i] == '\'')
+                i++;
         }
+        if (str[i] == '$' && str[i + 1] != '\0' && str[i + 1] != ' ' && str[i + 1] != '\'' && str[i + 1] != '\"' )
+        {
+            str = comp_env(str, ms, i);
+            i = 0;
+        }
+        if (str[i] != '\0' && str[i] != '\'' && str[i] != '\"')
+            i++;   
     }
     return (str);
 }

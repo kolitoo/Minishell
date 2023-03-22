@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/22 13:02:39 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:31:44 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_ms
 	char	**split_chevron_out;
 	int	boolean_outfile;
 	int	boolean_infile;
+	int	code_erreur1;
 	int	code_erreur;
 }t_ms;
 

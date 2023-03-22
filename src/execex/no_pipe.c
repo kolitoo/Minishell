@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/22 13:02:51 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:39:24 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, char **envp)
 	cmd.wpid = waitpid(cmd.off, &status, 0);
 	if (cmd.wpid == -1)
 		error_management(8, &cmd);
-	if (cmd.i == (cmd.nbr_cmd - 1) && WIFEXITED(status) != 0)
+	if (WIFEXITED(status) != 0)
 		cmd.exit_status = WEXITSTATUS(status);
 	clear_lst(&cmd_lst);
 	return (cmd.exit_status);

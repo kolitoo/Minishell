@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/22 13:03:34 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:55:55 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ms.line[0] != '\0')
 		{
 			cmd_lst = make_cmd_lst(&ms);
+			ms.code_erreur1 = ms.code_erreur;
 			add_history(ms.line);
 			if (cmd_lst != NULL)
 			{

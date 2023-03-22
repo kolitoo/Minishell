@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/22 13:29:17 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 15:50:13 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char    *clear_quote(char    *str)
     return (newstr);
 }
 
-char    **clean_str(char **double_tab, t_ms **ms)
+char    **clean_str(char **double_tab)
 {
     int    j;
 
@@ -171,7 +171,6 @@ char    **clean_str(char **double_tab, t_ms **ms)
     {
         if (check_cote(double_tab[j], '\'') == ERR || check_cote(double_tab[j], '\"') == ERR)
             double_tab[j] = clear_quote(double_tab[j]);
-	double_tab[j] = set_dollar(double_tab[j], ms);
         j++;
     }
     return (double_tab);
@@ -186,6 +185,7 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 	{
 		one_cmd = strspace_cpy(one_cmd, 0);
 		one_cmd = parsing_chevron(one_cmd, ms);
+		one_cmd = set_dollar(one_cmd, ms);
 		if (nb_cote(one_cmd) == 0)//Pas de cote//faire une fonction pour split_espace
 		{
 			double_tab = ft_split(one_cmd, ' ');
@@ -194,7 +194,7 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 		{
 			double_tab = split_incurve(one_cmd, ' ');
 		}
-		double_tab = clean_str(double_tab, ms);
+		double_tab = clean_str(double_tab);
 	}
 	else
 	{
