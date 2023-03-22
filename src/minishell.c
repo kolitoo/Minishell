@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/20 15:52:22 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:03:34 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,8 @@ void    print_map(char **map)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+void	print_minishell(void)
 {
-	t_ms	ms;
-	t_cmd_lst *cmd_lst;
-	int	i;
-	(void)argc;
-	(void)argv;
-	ms.env = set_env(envp);
-	i = 1;
 		ft_printf("\033[32;1m __       __  ______  __    __  ______   ______   __    __  ________  __        __       \n\
 /  \\     /  |/      |/  \\  /  |/      | /      \\ /  |  /  |/        |/  |      /  |\n\
 $$  \\   /$$ |$$$$$$/ $$  \\ $$ |$$$$$$/ /$$$$$$  |$$ |  $$ |$$$$$$$$/ $$ |      $$ |\n\
@@ -80,20 +73,34 @@ $$ $$ $$/$$ |  $$ |  $$ $$ $$ |  $$ |   $$$$$$  |$$$$$$$$ |$$$$$/    $$ |      $
 $$ |$$$/ $$ | _$$ |_ $$ |$$$$ | _$$ |_ /  \\__$$ |$$ |  $$ |$$ |_____ $$ |_____ $$ |_____\n\
 $$ | $/  $$ |/ $$   |$$ | $$$ |/ $$   |$$    $$/ $$ |  $$ |$$       |$$       |$$       |\n\
 $$/      $$/ $$$$$$/ $$/   $$/ $$$$$$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$$$$$$$/ $$$$$$$$/ \n\n");
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_ms	ms;
+	t_cmd_lst *cmd_lst;
+	int	i;
+	(void)argc;
+	(void)argv;
+	ms.env = set_env(envp);
+	i = 1;
+	print_minishell();
 	while (1)
 	{
 		ft_printf("\033[36m \033[1m");
 		ms.line = readline("minishell → \033[0m");
 		if (strcmp(ms.line, "exit") == 0)//COMMENTER CAR BUG SUR MAC??//A recoder
 			break ;
-		if (ms.line[0] != '\0')//Si on appuie sur entree on lance juste une newline
+		if (ms.line[0] != '\0')
 		{
 			cmd_lst = make_cmd_lst(&ms);
 			add_history(ms.line);
 			if (cmd_lst != NULL)
 			{
-				//envoie a pipex la liste
-				pipex(cmd_lst, ms.env);
+				if (lstsize(cmd_lst) > 1)
+					ms.code_erreur = pipex(cmd_lst, ms.env);
+				else if (lstsize(cmd_lst) == 1)
+					ms.code_erreur = no_pipe(cmd_lst, ms.env);
 				// while (cmd_lst != NULL)
 				// {
 				// 	printf("CMD %d :\n", i);
@@ -108,12 +115,10 @@ $$/      $$/ $$$$$$/ $$/   $$/ $$$$$$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$$$$$$$/ $
 				// 	cmd_lst = cmd_lst->next;
 				// 	i++;
 				// }
-				lstclear(&cmd_lst);
 			}
 		}
 		i = 0;
 		free(ms.line);
-		//Peut etre clear_history
 	}
 	rl_clear_history(); //COMMENTER CAR BUG SUR MAC??
 	free(ms.line);

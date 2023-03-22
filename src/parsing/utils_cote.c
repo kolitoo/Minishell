@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:56:44 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/20 17:18:04 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:12:40 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ int	valid_cote(char *str, int i, char c)
 		if (str[j] == c)
 			k++;
 		j++;
+	}
+	if (str[j] == c)
+	{
+		if ((k % 2) == 1)
+			k++;
 	}
 	if ((k % 2) == 0) //pas entre cote
 		return (ERR);

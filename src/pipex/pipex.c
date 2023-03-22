@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/20 16:34:58 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:14:50 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 // 		file_error(cmd, 9);
 // }
 
-void	init(t_cmd *cmd, t_cmd_lst *cmd_lst)
+void	init(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 {
 	int	i;
 
@@ -96,13 +96,9 @@ void	init(t_cmd *cmd, t_cmd_lst *cmd_lst)
 	cmd->i = 0;
 	cmd->nbr_cmd = lstsize(cmd_lst);
 	cmd->off = 2;
-	// if (ft_strcmp(argv[1], "here_doc") == 0)
-	// 	cmd->off = 3;
-	// if (ft_strcmp(argv[1], "here_doc") == 0)
-	// 	cmd->nbr_cmd = argc - 4;
 	cmd->pipefd = malloc(sizeof * cmd->pid * ((cmd->nbr_cmd - 1) * 2));
 	if (cmd->pipefd == NULL)
-		free_cmd(cmd);
+		free_cmd(cmd, envp, cmd_lst);
 	while (i < cmd->nbr_cmd - 1)
 	{
 		if (pipe(cmd->pipefd + 2 * i) == -1)
@@ -111,7 +107,7 @@ void	init(t_cmd *cmd, t_cmd_lst *cmd_lst)
 	}
 	cmd->pid = malloc(sizeof(int) * cmd->nbr_cmd);
 	if (cmd->pid == NULL)
-		free_cmd(cmd);
+		free_cmd(cmd, envp, cmd_lst);
 }
 /*ON fait un pipe pour chaque paire de commande la
 premiere fois on fait un pipe de 2 * 0*/
@@ -120,9 +116,9 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
 	find_path(cmd, envp, cmd_lst);
 	if (cmd->i != 0 && cmd->cmd == NULL)
-		free_cmd(cmd);
+		free_cmd(cmd, envp, cmd_lst);
 	if (cmd->i == 0 && cmd->cmd == NULL)
-		free_cmd2(cmd);
+		free_cmd2(cmd, envp, cmd_lst);
 	if (cmd->i == 0)
 	{
 		redir(0, cmd->pipefd[1], cmd);
@@ -153,14 +149,6 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 		if (cmd->fd_infile != 0 && cmd->fd_outfile != 0)
 			redir(cmd->fd_infile, cmd->fd_outfile, cmd);
 	}
-		
-	// if (cmd->i == 0)
-	// 	redir(cmd->fd_infile, cmd->pipefd[1], cmd);
-	// else if (cmd->i == cmd->nbr_cmd - 1)
-	// 	redir(cmd->pipefd[(cmd->i * 2) - 2], cmd->fd_outfile, cmd);
-	// else
-	// 	redir(cmd->pipefd[(cmd->i - 1) * 2],
-	// 		cmd->pipefd[(cmd->i * 2) + 1], cmd);
 	close_all(cmd);
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
@@ -194,6 +182,20 @@ int	parent(t_cmd *cmd)
 	return (cmd->exit_status);
 }
 
+void	clear_lst(t_cmd_lst **cmd_lst)
+{
+	t_cmd_lst	*temp;
+
+	temp = (*cmd_lst)->next;
+	if ((*cmd_lst)->infile_name != NULL)
+		free_tab((*cmd_lst)->infile_name, 0);
+	if ((*cmd_lst)->outfile_name != NULL)
+		free_tab((*cmd_lst)->outfile_name, 0);
+	if ((*cmd_lst)->cmd_option != NULL)
+		free_tab((*cmd_lst)->cmd_option, 0);
+	free(*cmd_lst);
+	(*cmd_lst) = temp;
+}
 
 int	pipex(t_cmd_lst *cmd_lst, char **envp)
 {
@@ -203,16 +205,12 @@ int	pipex(t_cmd_lst *cmd_lst, char **envp)
 	cmd.argc = lstsize(cmd_lst);
 	if (cmd.argc > 1)
 	{
-		// if (ft_strcmp(argv[1], "here_doc") == 0)
-		// 	if (argc <= 5)
-		// 		error_management(3, &cmd);
-		init(&cmd, cmd_lst);
+		init(&cmd, cmd_lst, envp);
 		//here_doc(argc, argv, &cmd);
 		//check_fd(argv, argc, &cmd);
 		while (cmd_lst != NULL)//cmd.i < cmd.nbr_cmd
 		{
-			//printf("%d\n", for_open(cmd_lst, &cmd));
-			if (for_open(cmd_lst, &cmd) != 1)//envoie d'un seulement element de la liste
+			if (for_open(cmd_lst, &cmd) != 1)//envoie d'un seul element de la liste
 			{
 				cmd.pid[cmd.i] = fork();
 				if (cmd.pid[cmd.i] == -1)
@@ -220,7 +218,7 @@ int	pipex(t_cmd_lst *cmd_lst, char **envp)
 				if (cmd.pid[cmd.i] == 0)
 					child(&cmd, envp, cmd_lst);
 			}
-			cmd_lst = cmd_lst->next;
+			clear_lst(&cmd_lst);
 			cmd.i++;
 		}
 		parent(&cmd);

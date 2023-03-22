@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/20 17:18:46 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:02:39 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_ms
 	char	**split_chevron_out;
 	int	boolean_outfile;
 	int	boolean_infile;
+	int	code_erreur;
 }t_ms;
 
 typedef struct s_cmd_lst
@@ -100,10 +101,9 @@ char	*find_good_path(char **envp, char *cmd, t_cmd *cmd1);
 char	**tab_option(char *cmd);
 char	**make_tab_path(char **envp, char *cmd, t_cmd *cmd1);
 void	error_management(int code_error, t_cmd *cmd);
-//void	free_tab(char **tab_path);
-void	free_cmd(t_cmd *cmd);
+void	free_cmd(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void	last_cmd(t_cmd *cmd, char **envp, char **argv, int argc);
-void	free_cmd2(t_cmd *cmd);
+void	free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void	here_doc(int argc, char **argv, t_cmd *cmd);
 void	close_all(t_cmd *cmd);
 int		ft_strcmp_n(char *str1, char *str2);
@@ -120,5 +120,9 @@ int	lstsize(t_cmd_lst *cmd_lst);
 int	pipex(t_cmd_lst *cmd_lst, char **envp);
 int	valid_cotev2(char *str, int i, char c);
 int	bool_cotev2(char *str, int i);
+int	no_pipe(t_cmd_lst *cmd_lst, char **envp);
+int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd);
+void	clear_lst(t_cmd_lst **cmd_lst);
+
 
 #endif

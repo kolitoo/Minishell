@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:22:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/20 13:14:10 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:31:27 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,11 @@ char	*make_str_path(char **envp, char *cmd, t_cmd *cmd1)
 
 char	**make_tab_path(char **envp, char *cmd, t_cmd *cmd1)
 {
-	return (ft_split(make_str_path(envp, cmd, cmd1), ':'));
+	char	*str_path;
+	char	**split_path;
+
+	str_path = make_str_path(envp, cmd, cmd1);
+	split_path = ft_split(str_path, ':');
+	free(str_path);
+	return (split_path);
 }
