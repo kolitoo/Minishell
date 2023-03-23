@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/23 10:47:51 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:32:27 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void    print_map(char **map)
 	}
 	while (map[j] != NULL)
 	{
-       		printf("%s\n", map[j]);
+		if (map[j] == NULL)
+			printf("NULL\n");
+       		printf("%s$\n", map[j]);
 		j++;
 	}
 }
@@ -98,10 +100,6 @@ int	main(int argc, char **argv, char **envp)
 			add_history(ms.line);
 			if (cmd_lst != NULL)
 			{
-				if (lstsize(cmd_lst) > 1)
-					ms.code_erreur = pipex(cmd_lst, ms.env);
-				else if (lstsize(cmd_lst) == 1)
-					ms.code_erreur = no_pipe(cmd_lst, ms.env);
 				// while (cmd_lst != NULL)
 				// {
 				// 	printf("CMD %d :\n", i);
@@ -116,6 +114,19 @@ int	main(int argc, char **argv, char **envp)
 				// 	cmd_lst = cmd_lst->next;
 				// 	i++;
 				// }
+				// printf("TAB OUTFILE %d :\n", i);
+				// print_map(cmd_lst->outfile_name);
+				// printf("TAB INFILE %d :\n", i);
+				// print_map(cmd_lst->infile_name);
+				if (lstsize(cmd_lst) > 1)
+					ms.code_erreur = pipex(cmd_lst, ms.env);
+				else if (lstsize(cmd_lst) == 1)
+					ms.code_erreur = no_pipe(cmd_lst, ms.env);
+				else
+				{
+					free(cmd_lst);
+					lstclear(&cmd_lst);
+				}
 			}
 		}
 		i = 0;

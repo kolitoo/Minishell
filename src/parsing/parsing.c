@@ -6,11 +6,44 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/22 15:50:13 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:30:17 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int check_pipe(char *str)
+{
+    int i;
+    
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '|' && bool_cote(str, i) == ERR)
+        {
+            if ((str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '|') || (str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '\0'))
+                return (ERR);
+            i++;
+            while (str[i] != '|' && bool_cote(str, i) == ERR && str[i] != '\0')
+            {
+                while ((str[i] == ' ' || str[i] == '\'' || str[i] == '\"') && str[i] != '\0')
+                {
+                    if (str[i] == '\'' && str[i + 1] != '\'')
+                        return (SUC);
+                    if ((str[i] == '\"' && str[i + 1] != '\"'))
+                        return (SUC);
+                    i++;
+                }
+                if (str[i] == '\0' || (str[i] == '|' && bool_cote(str, i) == ERR))
+                    return (ERR);
+                i++;
+            }
+        }
+        if (str[i] != '\0')
+            i++;
+    }
+    return (SUC);
+}
 
 t_cmd_lst	*make_cmd_lst(t_ms *ms)
 {
@@ -32,6 +65,11 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 		write(2, "chevron\n", 8);
 		return (NULL);
 	}
+	if (check_pipe(ms->line) == ERR)
+  	{
+        	write(2, "dpipe\n", 7);
+        	return (NULL);
+    	}
 	ms->split_pipe = split_incurve(ms->line, '|');//PB split sur pipe mais pas si pipe est entre des cotes (faire un split_pipe)
 	double_tab = parsing(ms->split_pipe[0], &ms);//si pb cote ou pb dans la commande le double tab dans la liste = NULL
 	cmd_lst = lstnew(double_tab, ms);// open("chaine que renvoie parsing en fonction des chevron", Ouverture selon les chevron));//fd de -1 si rien a ouvris donc dans la liste on aura -1
@@ -47,6 +85,7 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	free(ms->split_pipe);
 	return (cmd_lst);
 }
+
 
 int	exist_chevron(char *str)
 {
@@ -200,6 +239,8 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 	{
 		write(2, "Probleme cote\n", 15);
 	}
+	// if (double_tab[0] == NULL)
+	// 	return (NULL);
 	free(one_cmd);//Free de tout le ms.split_pipe
 	return (double_tab);
 }

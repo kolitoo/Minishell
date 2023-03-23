@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/22 14:31:44 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:30:24 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	close_all(t_cmd *cmd);
 int		ft_strcmp_n(char *str1, char *str2);
 void	redir(int start, int end, t_cmd *cmd);
 void	free_cmd1(t_cmd *cmd);
-void	file_error(t_cmd *cmd, int code_error);
+void	file_error(int code_error, t_cmd_lst *cmd_lst, int i);
 void	close_fd(t_cmd *cmd);
 void	init_tab(t_cmd *cmd);
 int		first_space(char *cmd);

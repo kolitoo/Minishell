@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/22 14:39:31 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:34:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 				cmd->fd_infile = open(cmd_lst->infile_name[i], O_RDONLY);
 			if (cmd->fd_infile == -1)
 			{
-				file_error(cmd, 1);
+				file_error(1, cmd_lst, i);
 				return (ERR);
 			}
 			i++;
@@ -48,7 +48,7 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			if (cmd->fd_outfile == -1)
 			{
-				file_error(cmd, 9);
+				file_error(9, cmd_lst, i);
 				return(ERR);
 			}
 			if (cmd_lst->outfile_mode == 2)
@@ -59,9 +59,12 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			if (cmd->fd_outfile == -1)
 			{
-				file_error(cmd, 9);
+				file_error(9, cmd_lst, i);
 				return (ERR);
 			}
+			if (cmd_lst->outfile_mode == 3)
+				open(cmd_lst->outfile_name[i], O_WRONLY | O_CREAT,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			i++;
 		}
 	}

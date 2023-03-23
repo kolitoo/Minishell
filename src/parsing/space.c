@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 13:49:36 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/16 17:25:33 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:34:08 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ char	*strspace_cpy(char *str, int i)
 	result = malloc(sizeof(char *) * (countlen(str, 0, 0, 0) + 1));
 	while (str[i] == ' ' && str[i] != '\0')
 		i++;
+	if (str[i] == '\0')
+	{
+		free(result);
+		return (str);
+	}
 	while (str[i] != '\0')
 	{
 		if (str[i] == ' ' && bool_cote(str, i) == ERR)

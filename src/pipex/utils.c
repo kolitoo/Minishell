@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/21 12:44:03 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:15:59 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*low(char *str)
 	return (s);
 }
 
-void	file_error(t_cmd *cmd, int code_error)
+void	file_error(int code_error, t_cmd_lst *cmd_lst, int i)
 {
 	char	*test;
 
@@ -43,7 +43,7 @@ void	file_error(t_cmd *cmd, int code_error)
 		test = low(strerror(errno));
 		write(2, test, ft_strlen(test));
 		write(2, ": ", 2);
-		write(2, cmd->argv[1], ft_strlen(cmd->argv[1]));
+		write(2, cmd_lst->infile_name[i], ft_strlen(cmd_lst->infile_name[i]));
 		write(2, "\n", 1);
 	}
 	if (code_error == 9)
@@ -52,8 +52,8 @@ void	file_error(t_cmd *cmd, int code_error)
 		test = low(strerror(errno));
 		write(2, test, ft_strlen(test));
 		write(2, ": ", 2);
-		write(2, cmd->argv[cmd->nbr_cmd + cmd->off],
-			ft_strlen(cmd->argv[cmd->nbr_cmd + cmd->off]));
+		write(2, cmd_lst->outfile_name[i],
+			ft_strlen(cmd_lst->outfile_name[i]));
 		write(2, "\n", 1);
 	}
 	free(test);

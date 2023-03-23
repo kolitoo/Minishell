@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/22 15:53:48 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 12:54:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ char    *find_variable(char *str, int i)
     k = 0;
     i++;
     j = i;
-    while (str[j] != ' ' && str[j] != '\0' && str[j] != '\"' && str[j] != '\'' && str[i] != '$')
+    // printf("str[%d] = %c\n", i, str[i]);
+    while (str[j] != ' ' && str[j] != '\0' && str[j] != '\"' && str[j] != '\'' && str[j] != '|' && str[j] != '<' && str[j] != '>' && str[j] != '$' && str[j] != '-' && str[j] != '+')
     {
         len++;
         j++;
     }
     variable = malloc(sizeof(char) * (len + 2));
-    while (str[i] != ' ' && str[i] != '\0' && str[i] != '\"' && str[i] != '\'' && str[i] != '$')
+    while ((str[i] != ' ' && str[i] != '\0' && str[i] != '\"' && str[i] != '\'' && str[i] != '|' && str[i] != '<' && str[i] != '>' && str[i] != '$' && str[i] != '-' && str[i] != '+'))
     {
         variable[k] = str[i];
         k++;
@@ -78,76 +79,76 @@ char *neww_variable(char *new_variable, char *variable, char *envstring)
     return (new_variable);
 }
 
-char    *replace_variable(char *str, char *envstring, char *variable)
+char    *replace_variable(char *str, char *envstring, char *variable, int i)
 {
-    int    i;
     int    j;
     int    k;
+    int     l;
     char    *newstr;
     char    *new_variable;
     
-    i = 0;
     j = 0;
+    l = 0;
     new_variable = NULL;
     new_variable = neww_variable(new_variable, variable, envstring);
     newstr = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(variable) + ft_strlen(new_variable)) + 1);
-    while (str[i] != '$')
+    while (l != i)
     {
-        newstr[i] = str[i];
-        i++;
+        newstr[l] = str[l];
+        l++;
     }
-    k = i;
+    k = l;
     while (new_variable[j] != '\0')
     {
-        newstr[i] = new_variable[j];
-        i++;
+        newstr[l] = new_variable[j];
+        l++;
         j++;
     }
-    while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"')
+    while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"' && str[k] != '|' && str[k] != '>' && str[k] != '<' && str[k] != '+' && str[k] != '-')
         k++;
     while (str[k] != '\0')
     {
-        newstr[i] = str[k];
+        newstr[l] = str[k];
         k++;
-        i++;
+        l++;
     }
-    newstr[i] = '\0';
+    newstr[l] = '\0';
     free(new_variable);
     free(variable);
     free(str);
     return (newstr);
 }
 
-char    *replace_variable2(char *str, char *variable)
+char    *replace_variable2(char *str, char *variable, int i)
 {
-    int    i;
     int    j;
     int    k;
+    int     l;
     char    *newstr;
-    
-    i = 0;
+
     j = 0;
+    l = 0;
     newstr = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(variable) + 1));
-    while (str[i] != '$')
+    while (l != i)
     {
-        newstr[i] = str[i];
-        i++;
+        newstr[l] = str[l];
+        l++;
     }
-    k = i;
+    k = l;
     while (variable[j] != '\0')
     {
         k++;
         j++;
     }
-    while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"')
+    while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"' && str[k] != '|' && str[k] != '>' && str[k] != '<' && str[k] != '+' && str[k] != '-')
         k++;
     while (str[k] != '\0')
     {
-        newstr[i] = str[k];
+        newstr[l] = str[k];
         k++;
-        i++;
+        l++;
     }
-    newstr[i] = '\0';
+    newstr[l] = '\0';
     free(variable);
     free(str);
     return (newstr);
@@ -158,20 +159,20 @@ char    *comp_env(char *str, t_ms **ms, int i)
     int    j;
     char    *variable;
 
-    variable = find_variable(str, i);//substr
+    variable = find_variable(str, i);
     j = 0;
     while ((*ms)->env[j] != NULL)
     {
         if (strncmp((*ms)->env[j], variable, ft_strlen(variable)) == 0)
         {
-            str = replace_variable(str, (*ms)->env[j], variable);
+            str = replace_variable(str, (*ms)->env[j], variable, i);
             break ;
         }
         j++;
     }
     if ((*ms)->env[j] == NULL)
     {
-        str = replace_variable2(str, variable);
+        str = replace_variable2(str, variable, i);
     }
     return (str);
 }
@@ -234,6 +235,7 @@ char    *set_dollar(char *str, t_ms **ms)
     i = 0;
     while (str[i] != '\0')
     {
+                    // printf("coucou");
         if (str[i] == '$' && str[i + 1] == '?')
         {
             str = warning_error(str, i, ms);
@@ -242,31 +244,35 @@ char    *set_dollar(char *str, t_ms **ms)
         if (str[i] == '\"')
         {
             i++;
-            while (str[i] != '\"')
+            while (str[i] != '\"' && str[i] != '\0')
             {
-                if (str[i] == '$')
+                if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1] != '|' && str[i + 1] != '<' && str[i + 1] != '>' && str[i + 1] != '\'' && str[i + 1] != '\"' && str[i + 1] != '$' && str[i + 1] != '-' && str[i + 1] != '+')
                 {
+                    // printf("str[%d] = %c\n", i, str[i]);
+                    // printf("str[%d] = %c\n", i + 1, str[i + 1]);
                     str = comp_env(str, ms, i);
-                    i = 0;
+                    // i = 0;
                     break ;
                 }
                 i++;
             }
-            if (str[i] == '\"')
+            if (str[i] == '\"' && str[i] != '\0')
                 i++;
         }
         if (str[i] == '\'')
         {
             i++;
             while (str[i] != '\'')
+            {
                 i++;
+            }
             if (str[i] == '\'')
                 i++;
         }
-        if (str[i] == '$' && str[i + 1] != '\0' && str[i + 1] != ' ' && str[i + 1] != '\'' && str[i + 1] != '\"' )
+        if (str[i] == '$' && str[i + 1] != '\0' && str[i + 1] != ' ' && str[i + 1] != '\'' && str[i + 1] != '\"' && str[i + 1] != '|' && str[i + 1] != '<' && str[i + 1] != '>' && str[i + 1] != '$')
         {
             str = comp_env(str, ms, i);
-            i = 0;
+            // i = 0;
         }
         if (str[i] != '\0' && str[i] != '\'' && str[i] != '\"')
             i++;   

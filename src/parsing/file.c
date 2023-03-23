@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:04:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/16 17:53:54 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:31:27 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ char	**find_file(char *str, char c)
 				j++;
 			}
 			split_chevron[k][j] = '\0';
+			if (j == 0)
+				split_chevron[k] = NULL;
 			k++;
 		}
 		if ((str[i] != '\0' && str[i] != c) || (str[i] == c && bool_cote(str, i) == SUC))
@@ -106,7 +108,12 @@ void	rights_check(char *str, t_ms **ms, char c)
 	{
 		if (i != 0)
 		{
-			if ((str[i] == c && bool_cote(str, i) == ERR) && (str[i - 1] == c && bool_cote(str, i - 1) == ERR))
+			if ((str[i] == '>' && bool_cote(str, i) == ERR) && (str[i - 1] == '<' && bool_cote(str, i - 1) == ERR))
+			{
+					(*ms)->boolean_outfile = 3;
+					break ;
+			}
+			else if ((str[i] == c && bool_cote(str, i) == ERR) && (str[i - 1] == c && bool_cote(str, i - 1) == ERR))
 			{
 				if (c == '>')
 					(*ms)->boolean_outfile = 2;

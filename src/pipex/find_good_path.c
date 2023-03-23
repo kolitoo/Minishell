@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:07:24 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/21 16:40:25 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:06:31 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ char	*find_good_path(char **envp, char *cmd, t_cmd *cmd1)
 	while (tab_path[i] != NULL)
 	{
 		str_cmd = ft_substr(cmd, first_space(cmd), last_letter(cmd));
+		if (str_cmd[0] == '\0')
+		{
+			exit_free(tab_path, cmd);
+			free(str_cmd);
+			return (NULL);
+		}
 		path_cmd = ft_strjoin(tab_path[i], str_cmd);
 		if (access(path_cmd, F_OK | X_OK) == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:22:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/21 16:31:27 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:07:46 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 	char	*cmd_without_opti;
 
 	cmd->options = cmd_lst->cmd_option;//cmd->options = tab_option(argv[cmd->i + cmd->off]);//fichier make_tab_path peut etre inutile du coup
+	if (cmd->options[0] == NULL)
+		return ;
 	if (where(cmd->options[0]) == 1)
 	{
 		if (access(cmd_lst->cmd_option[0], F_OK | X_OK) == 0)
