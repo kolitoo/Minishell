@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/23 12:54:15 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:27:50 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ char    *find_variable(char *str, int i)
     k = 0;
     i++;
     j = i;
-    // printf("str[%d] = %c\n", i, str[i]);
-    while (str[j] != ' ' && str[j] != '\0' && str[j] != '\"' && str[j] != '\'' && str[j] != '|' && str[j] != '<' && str[j] != '>' && str[j] != '$' && str[j] != '-' && str[j] != '+')
+    while ((str[j] >= 'a' && str[j] <= 'z') || (str[j] >= 'A' && str[j] <= 'Z'))
     {
         len++;
         j++;
     }
     variable = malloc(sizeof(char) * (len + 2));
-    while ((str[i] != ' ' && str[i] != '\0' && str[i] != '\"' && str[i] != '\'' && str[i] != '|' && str[i] != '<' && str[i] != '>' && str[i] != '$' && str[i] != '-' && str[i] != '+'))
+    while ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))
     {
         variable[k] = str[i];
         k++;
@@ -104,7 +103,7 @@ char    *replace_variable(char *str, char *envstring, char *variable, int i)
         l++;
         j++;
     }
-    while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"' && str[k] != '|' && str[k] != '>' && str[k] != '<' && str[k] != '+' && str[k] != '-')
+    while ((str[k] >= 'a' && str[k] <= 'z') || (str[k] >= 'A' && str[k] <= 'Z') || str[k] == '$')
         k++;
     while (str[k] != '\0')
     {
@@ -140,7 +139,7 @@ char    *replace_variable2(char *str, char *variable, int i)
         k++;
         j++;
     }
-    while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"' && str[k] != '|' && str[k] != '>' && str[k] != '<' && str[k] != '+' && str[k] != '-')
+    while ((str[k] >= 'a' && str[k] <= 'z') || (str[k] >= 'A' && str[k] <= 'Z') || str[k] == '$')
         k++;
     while (str[k] != '\0')
     {
@@ -235,23 +234,19 @@ char    *set_dollar(char *str, t_ms **ms)
     i = 0;
     while (str[i] != '\0')
     {
-                    // printf("coucou");
         if (str[i] == '$' && str[i + 1] == '?')
         {
             str = warning_error(str, i, ms);
-            i = 0;
+            // i = 0;
         }
         if (str[i] == '\"')
         {
             i++;
             while (str[i] != '\"' && str[i] != '\0')
             {
-                if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1] != '|' && str[i + 1] != '<' && str[i + 1] != '>' && str[i + 1] != '\'' && str[i + 1] != '\"' && str[i + 1] != '$' && str[i + 1] != '-' && str[i + 1] != '+')
+                if (str[i] == '$' && ((str[i + 1] >= 'a' && str[i + 1] <= 'z') || (str[i + 1] >= 'A' && str[i + 1] <= 'Z')))
                 {
-                    // printf("str[%d] = %c\n", i, str[i]);
-                    // printf("str[%d] = %c\n", i + 1, str[i + 1]);
                     str = comp_env(str, ms, i);
-                    // i = 0;
                     break ;
                 }
                 i++;
@@ -263,17 +258,12 @@ char    *set_dollar(char *str, t_ms **ms)
         {
             i++;
             while (str[i] != '\'')
-            {
                 i++;
-            }
             if (str[i] == '\'')
                 i++;
         }
-        if (str[i] == '$' && str[i + 1] != '\0' && str[i + 1] != ' ' && str[i + 1] != '\'' && str[i + 1] != '\"' && str[i + 1] != '|' && str[i + 1] != '<' && str[i + 1] != '>' && str[i + 1] != '$')
-        {
+        if (str[i] == '$' && ((str[i + 1] >= 'a' && str[i + 1] <= 'z') || (str[i + 1] >= 'A' && str[i + 1] <= 'Z')))
             str = comp_env(str, ms, i);
-            // i = 0;
-        }
         if (str[i] != '\0' && str[i] != '\'' && str[i] != '\"')
             i++;   
     }
