@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/23 14:34:15 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:19:54 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 			if (cmd_lst->infile_mode == 1)
 				cmd->fd_infile = open(cmd_lst->infile_name[i], O_RDONLY);
 			if (cmd_lst->infile_mode == 2)//here_doc
-				cmd->fd_infile = open(cmd_lst->infile_name[i], O_RDONLY);
+				cmd->fd_infile = open(".temp.txt", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			if (cmd->fd_infile == -1)
 			{
 				file_error(1, cmd_lst, i);
