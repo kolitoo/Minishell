@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/23 14:30:24 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:04:21 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_ms
 	char	**split_pipe;
 	char	**split_chevron_in;
 	char	**split_chevron_out;
+	int	*limit_mode;
 	int	boolean_outfile;
 	int	boolean_infile;
 	int	code_erreur1;
@@ -74,6 +75,7 @@ typedef struct s_cmd_lst
 	char				**infile_name;
 	char				**outfile_name;
 	char				**cmd_option;
+	int				*limit_mode;
 	struct s_cmd_lst	*next;
 }t_cmd_lst;
 
@@ -96,6 +98,9 @@ int	check_cote(char *line, char c);
 t_cmd_lst	*lstnew(char **double_tab, t_ms *ms);
 void    print_map(char **map);
 char	**find_file(char *str, char c);
+void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, int i);
+void    right_check_heredoc(char *str, t_ms **ms);
+int    her_doc_check(char *str);
 
 //Pipex
 char	*find_good_path(char **envp, char *cmd, t_cmd *cmd1);
@@ -124,6 +129,6 @@ int	bool_cotev2(char *str, int i);
 int	no_pipe(t_cmd_lst *cmd_lst, char **envp);
 int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd);
 void	clear_lst(t_cmd_lst **cmd_lst);
-
+int	tab_len(t_cmd_lst *cmd_lst);
 
 #endif

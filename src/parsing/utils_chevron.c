@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 12:40:25 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/16 17:25:58 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:58:28 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,29 @@ int	nb_chevron(char *str, char c)
 	return (count);
 }
 
-int	check_after_chevron(char *str)
+int    check_after_chevron(char *str)
 {
-	int	i;
+    int    i;
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '>' && bool_cote(str, i) == ERR)
-			break ;
-		i++;
-	}
-	if (str[i] == '\0')
-		return (SUC);
-	i++;
-	while (str[i] != '\0' && str[i] < 32)
-	{
-		i++;
-	}
-	i++;
-	if (str[i] == '\0' || str[i] == '|' || str[i] == '\n')
-		return (ERR);
-	return (SUC);
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '>' && bool_cote(str, i) == ERR)
+            break ;
+        i++;
+    }
+    if (str[i] == '\0')
+        return (SUC);
+    i++;
+    while (str[i] != '\0' && str[i] < 32)
+    {
+        i++;
+    }
+    if (str[i] != '\0')
+        i++;
+    if (str[i] == '\0' || str[i] == '|' || str[i] == '\n')
+        return (ERR);
+    return (SUC);
 }
 
 int	check_more_2_chevron(char *str)
@@ -125,4 +126,18 @@ int	check_space_chevron(char *str)
 	}
 	free(s);
 	return (SUC);
+}
+
+int    her_doc_check(char *str)
+{
+    int    i;
+
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '<' && str[i + 1] == '<')
+            return (SUC);
+        i++;
+    }
+    return (ERR);
 }

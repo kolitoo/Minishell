@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:04:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/23 14:31:27 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:31:40 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,40 +97,86 @@ char	**find_file(char *str, char c)
 	return (split_chevron);
 }
 
-void	rights_check(char *str, t_ms **ms, char c)
+void    rights_check(char *str, t_ms **ms, char c)
 {
-	int	i;
+    int    i;
 
-	i = 0;
-	while (str[i])
-		i++;
-	while (i >= 0)
-	{
-		if (i != 0)
-		{
-			if ((str[i] == '>' && bool_cote(str, i) == ERR) && (str[i - 1] == '<' && bool_cote(str, i - 1) == ERR))
-			{
-					(*ms)->boolean_outfile = 3;
-					break ;
-			}
-			else if ((str[i] == c && bool_cote(str, i) == ERR) && (str[i - 1] == c && bool_cote(str, i - 1) == ERR))
-			{
-				if (c == '>')
-					(*ms)->boolean_outfile = 2;
-				else if (c == '<')
-					(*ms)->boolean_infile = 2;
-				break ;
-			}
-		}
-		if (str[i] == c && bool_cote(str, i) == ERR)
-		{
-			if (c == '>')
-				(*ms)->boolean_outfile = 1;
-			else if (c == '<')
-				(*ms)->boolean_infile = 1;
-			break ;
-		}
-		i--;
-	}
-	//printf("%d\n", (*ms)->boolean_infile);
+    i = 0;
+    if (c == '<')
+   	(*ms)->limit_mode = NULL;
+    while (str[i])
+        i++;
+    while (i >= 0)
+    {
+        if (i != 0)
+        {
+            if ((str[i] == '>' && bool_cote(str, i) == ERR) && (str[i - 1] == '<' && bool_cote(str, i - 1) == ERR))
+            {
+                    (*ms)->boolean_outfile = 3;
+                    break ;
+            }
+            else if ((str[i] == c && bool_cote(str, i) == ERR) && (str[i - 1] == c && bool_cote(str, i - 1) == ERR))
+            {
+                if (c == '>')
+                    (*ms)->boolean_outfile = 2;
+                else if (c == '<')
+                    (*ms)->boolean_infile = 2;
+                break ;
+            }
+        }
+        if (str[i] == c && bool_cote(str, i) == ERR)
+        {
+            if (c == '>')
+                (*ms)->boolean_outfile = 1;
+            else if (c == '<')
+                (*ms)->boolean_infile = 1;
+            break ;
+        }
+        i--;
+    }
+}
+
+void    right_check_heredoc(char *str, t_ms **ms)
+{
+    int    i;
+    int    j;
+    int    len;
+    
+    i = 0;
+    j = 0;
+    len = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '<' && str[i + 1] == '<')
+        {
+            len++;
+            i = i + 2;
+        }
+        if (str[i] == '<' && str[i + 1] != '<')
+        {
+            len++;
+            i++;
+        }
+        if (str[i] != '\0')
+            i++;
+    }
+    i = 0;
+    (*ms)->limit_mode = malloc(sizeof(int) * len);
+    while (str[i] != '\0')
+    {
+        if (str[i] == '<' && str[i + 1] == '<')
+        {
+            (*ms)->limit_mode[j] = 2;
+            j++;
+            i = i + 2;
+        }
+        if (str[i] == '<' && str[i + 1] != '<')
+        {
+            (*ms)->limit_mode[j] = 1;
+            j++;
+            i++;
+        }
+        if (str[i] != '\0')
+            i++;
+    }
 }

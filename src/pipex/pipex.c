@@ -6,17 +6,31 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/24 11:19:54 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:43:30 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
+int	tab_len(t_cmd_lst *cmd_lst)
 {
 	int	i;
 
 	i = 0;
+	while (cmd_lst->infile_name[i] != NULL)
+	{
+		i++;
+	}
+	return (i - 1);
+}
+
+int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
 	cmd->fd_infile = 0;
 	cmd->fd_outfile = 0;
 	if (cmd_lst->infile_name != NULL)
@@ -25,8 +39,25 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 		{
 			if (cmd_lst->infile_mode == 1)
 				cmd->fd_infile = open(cmd_lst->infile_name[i], O_RDONLY);
-			if (cmd_lst->infile_mode == 2)//here_doc
-				cmd->fd_infile = open(".temp.txt", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			if (cmd_lst->limit_mode != NULL/* && j <= tab_len(cmd_lst->infile_name)*/)//here_doc
+			{
+				if (cmd_lst->limit_mode[j] == 2)
+				{
+					cmd->fd_infile = open("/tmp/.file_temp.txt", O_RDWR | O_CREAT,
+						S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+					read_prompt(cmd, cmd_lst, i);
+					close(cmd->fd_infile);
+					cmd->fd_infile = open("/tmp/.file_temp.txt", O_RDONLY);
+					if (j + 1 < tab_len(cmd_lst))
+						unlink("/tmp/.file_temp.txt");
+					j++;
+				}
+				else
+				{
+					cmd->fd_infile = open(cmd_lst->infile_name[i], O_RDONLY);
+					j++;
+				}
+			}
 			if (cmd->fd_infile == -1)
 			{
 				file_error(1, cmd_lst, i);
@@ -176,9 +207,6 @@ int	parent(t_cmd *cmd)
 			cmd->exit_status = WEXITSTATUS(status);
 		cmd->i--;
 	}
-	// if (ft_strcmp(argv[1], "here_doc") == 0)
-	// 	if (unlink(".file_temp.txt") == -1)
-	// 		error_management(7, cmd);
 	free(cmd->pipefd);
 	free(cmd->pid);
 	close_fd(cmd);
@@ -221,6 +249,10 @@ int	pipex(t_cmd_lst *cmd_lst, char **envp)
 				if (cmd.pid[cmd.i] == 0)
 					child(&cmd, envp, cmd_lst);
 			}
+			if (cmd_lst->limit_mode != NULL)
+				if (cmd_lst->limit_mode[tab_len(cmd_lst)] == 2)
+					if (unlink("/tmp/.file_temp.txt") == -1)
+						error_management(7, &cmd);
 			clear_lst(&cmd_lst);
 			cmd.i++;
 		}

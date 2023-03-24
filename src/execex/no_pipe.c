@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/23 14:18:39 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:43:14 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ int	no_pipe(t_cmd_lst *cmd_lst, char **envp)
 		if (WIFEXITED(status) != 0)
 			cmd.exit_status = WEXITSTATUS(status);
 	}
+	if (cmd_lst->limit_mode != NULL)
+		if (cmd_lst->limit_mode[tab_len(cmd_lst)] == 2)
+			if (unlink("/tmp/.file_temp.txt") == -1)
+				error_management(7, &cmd);
 	clear_lst(&cmd_lst);
 	return (cmd.exit_status);
 }

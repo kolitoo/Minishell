@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/23 14:30:17 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:33:55 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int check_pipe(char *str)
         if (str[i] == '|' && bool_cote(str, i) == ERR)
         {
             if ((str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '|') || (str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '\0'))
-                return (ERR);
+                    return (ERR);
             i++;
             while (str[i] != '|' && bool_cote(str, i) == ERR && str[i] != '\0')
             {
@@ -37,6 +37,8 @@ int check_pipe(char *str)
                 if (str[i] == '\0' || (str[i] == '|' && bool_cote(str, i) == ERR))
                     return (ERR);
                 i++;
+                if ((str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '|') || (str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '\0'))
+                    return (ERR);
             }
         }
         if (str[i] != '\0')
@@ -101,24 +103,27 @@ int	exist_chevron(char *str)
 	return (1);
 }
 
-char	*parsing_chevron(char *one_cmd, t_ms **ms)
+char    *parsing_chevron(char *one_cmd, t_ms **ms)
 {
-	if (exist_chevron(one_cmd) == SUC)
-	{
-		rights_check(one_cmd, ms, '<');
-		rights_check(one_cmd, ms, '>');
-		(*ms)->split_chevron_out = find_file(one_cmd, '>');
-		(*ms)->split_chevron_in = find_file(one_cmd, '<');
-		one_cmd = strspace_cpy(one_cmd, 0);
-		if (one_cmd == NULL)
-			return (NULL);
-	}
-	else
-	{
-		(*ms)->split_chevron_in = NULL;
-		(*ms)->split_chevron_out = NULL;
-	}
-	return (one_cmd);
+    if (exist_chevron(one_cmd) == SUC)
+    {
+        if (her_doc_check(one_cmd) == SUC)
+        	right_check_heredoc(one_cmd, ms);
+        else
+            rights_check(one_cmd, ms, '<');
+        rights_check(one_cmd, ms, '>');
+        (*ms)->split_chevron_out = find_file(one_cmd, '>');
+        (*ms)->split_chevron_in = find_file(one_cmd, '<');
+        one_cmd = strspace_cpy(one_cmd, 0);
+        if (one_cmd == NULL)
+            return (NULL);
+    }
+    else
+    {
+        (*ms)->split_chevron_in = NULL;
+        (*ms)->split_chevron_out = NULL;
+    }
+    return (one_cmd);
 }
 
 char    *clear_quote(char    *str)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/24 11:27:50 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:34:01 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,9 @@ char    *replace_variable(char *str, char *envstring, char *variable, int i)
         l++;
         j++;
     }
-    while ((str[k] >= 'a' && str[k] <= 'z') || (str[k] >= 'A' && str[k] <= 'Z') || str[k] == '$')
+    if (str[k] == '$')
+        k++;
+    while ((str[k] >= 'a' && str[k] <= 'z') || (str[k] >= 'A' && str[k] <= 'Z'))
         k++;
     while (str[k] != '\0')
     {
@@ -139,7 +141,9 @@ char    *replace_variable2(char *str, char *variable, int i)
         k++;
         j++;
     }
-    while ((str[k] >= 'a' && str[k] <= 'z') || (str[k] >= 'A' && str[k] <= 'Z') || str[k] == '$')
+    if (str[k] == '$')
+        k++;
+    while ((str[k] >= 'a' && str[k] <= 'z') || (str[k] >= 'A' && str[k] <= 'Z'))
         k++;
     while (str[k] != '\0')
     {
