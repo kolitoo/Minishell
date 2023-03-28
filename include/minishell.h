@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/28 13:37:56 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:50:10 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,6 @@ void	clear_lst(t_cmd_lst **cmd_lst);
 int	tab_len(t_cmd_lst *cmd_lst);
 int	check_builtin(t_cmd_lst *cmd_lst);
 void    echo_builtin(char **tab, int bool);
+void	cd_builtin(char **tab, char **envp);
 
 #endif

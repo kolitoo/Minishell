@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/28 13:55:56 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:51:49 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,6 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 	close_all(cmd);
 	if (check_builtin(cmd_lst) != 0)
 	{
-		printf("EXEC\n");
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->i != 0 && cmd->cmd == NULL)
 			free_cmd(cmd, envp, cmd_lst);
@@ -169,10 +168,7 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 			free_cmd2(cmd, envp, cmd_lst);
 	}
 	else
-	{
-		printf("BUILTIN\n");
 		free_cmd2(cmd, envp, cmd_lst);
-	}
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");
@@ -228,8 +224,6 @@ int	pipex(t_cmd_lst *cmd_lst, char **envp)
 	if (cmd.argc > 1)
 	{
 		init(&cmd, cmd_lst, envp);
-		//here_doc(argc, argv, &cmd);
-		//check_fd(argv, argc, &cmd);
 		while (cmd_lst != NULL)//cmd.i < cmd.nbr_cmd
 		{
 			if (for_open(cmd_lst, &cmd) != 1)//envoie d'un seul element de la liste
@@ -240,6 +234,8 @@ int	pipex(t_cmd_lst *cmd_lst, char **envp)
 				if (cmd.pid[cmd.i] == 0)
 					child(&cmd, envp, cmd_lst);
 			}
+			if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)
+				cd_builtin(cmd_lst->cmd_option, envp);
 			if (cmd_lst->limit_mode != NULL)
 				if (cmd_lst->limit_mode[tab_len(cmd_lst)] == 2)
 					if (unlink("/tmp/.file_temp.txt") == -1)

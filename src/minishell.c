@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/28 13:49:35 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:41:33 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int	main(int argc, char **argv, char **envp)
 					free(cmd_lst);
 					lstclear(&cmd_lst);
 				}
+				//si cd dernier commande change de repertoire apres le pipex
 			}
 		}
 		i = 0;

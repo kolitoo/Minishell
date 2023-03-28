@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:55 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/28 13:36:20 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:37:57 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ int	check_builtin(t_cmd_lst *cmd_lst)
 			return (0);
 		}
 	}
+	if (ft_strcmp(cmd_lst->cmd_option[0], "cd") == SUC)
+		return (0);
 	return (1);
 }

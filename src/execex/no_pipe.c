@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/28 13:56:18 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:50:45 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,12 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 		redir(cmd->fd_infile, cmd->fd_outfile, cmd);
 	if (check_builtin(cmd_lst) != 0)
 	{
-		printf("EXEC\n");
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->cmd == NULL)
 			free_cmd(cmd, envp, cmd_lst);
 	}
 	else
-	{
-		printf("BUILTIN\n");
 		free_cmd(cmd, envp, cmd_lst);
-	}
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");
@@ -56,6 +52,8 @@ int	no_pipe(t_cmd_lst *cmd_lst, char **envp)
 		{
 			child_no_pipe(&cmd, cmd_lst, envp);
 		}
+		if (ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)
+			cd_builtin(cmd_lst->cmd_option, envp);
 		cmd.wpid = waitpid(cmd.off, &status, 0);
 		if (cmd.wpid == -1)
 			error_management(8, &cmd);
