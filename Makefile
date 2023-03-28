@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/22 12:58:58 by lgirault         ###   ########.fr        #
+#    Updated: 2023/03/28 13:41:05 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,14 @@ SRC = src/minishell.c \
 	src/utils/free.c \
 	src/utils/lst_fonction.c \
 	src/execex/no_pipe.c \
+	src/builtin/check_builtin.c \
+	src/builtin/echo_builtin.c \
+	src/builtin/cd_builtin.c \
+	src/builtin/pwd_builtin.c \
+	src/builtin/export_builtin.c \
+	src/builtin/unset_builtin.c \
+	src/builtin/env_builtin.c \
+	src/builtin/exit_builtin.c \
 	src/pipex/pipex.c \
 	src/pipex/find_good_path.c \
 	src/pipex/free_pipex.c \

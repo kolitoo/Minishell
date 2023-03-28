@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/24 16:43:14 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:56:18 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 {
-	find_path(cmd, envp, cmd_lst);
-	if (cmd->cmd == NULL)
-		free_cmd(cmd, envp, cmd_lst);
 	redir(0, 1, cmd);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile == 0)
 		redir(cmd->fd_infile, 1, cmd);
@@ -24,6 +21,18 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 		redir(0, cmd->fd_outfile, cmd);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile != 0)
 		redir(cmd->fd_infile, cmd->fd_outfile, cmd);
+	if (check_builtin(cmd_lst) != 0)
+	{
+		printf("EXEC\n");
+		find_path(cmd, envp, cmd_lst);
+		if (cmd->cmd == NULL)
+			free_cmd(cmd, envp, cmd_lst);
+	}
+	else
+	{
+		printf("BUILTIN\n");
+		free_cmd(cmd, envp, cmd_lst);
+	}
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");

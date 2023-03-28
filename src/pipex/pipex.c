@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/24 16:43:30 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:55:56 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,26 +102,6 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 	return (SUC);
 }
 
-// void	check_fd(char **argv, int argc, t_cmd *cmd)
-// {
-// 	// if (ft_strcmp(argv[1], "here_doc") == 0)
-// 	// {
-// 	// 	if (close(cmd->fd_infile) == -1)
-// 	// 		error_management(6, cmd);
-// 	// 	cmd->fd_infile = open(".file_temp.txt", O_RDONLY);
-// 	// }
-// 	cmd->fd_outfile = open(argv[argc - 1], O_WRONLY | O_TRUNC,
-// 		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-// 	cmd->fd_infile = open(argv[1], O_RDONLY);
-// 	if (cmd->fd_outfile == -1)
-// 		cmd->fd_outfile = open(argv[argc - 1], O_WRONLY | O_CREAT,
-// 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-// 	if (cmd->fd_infile == -1)
-// 		file_error(cmd, 1);
-// 	if (cmd->fd_outfile == -1)
-// 		file_error(cmd, 9);
-// }
-
 void	init(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 {
 	int	i;
@@ -148,11 +128,6 @@ premiere fois on fait un pipe de 2 * 0*/
 
 void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
-	find_path(cmd, envp, cmd_lst);
-	if (cmd->i != 0 && cmd->cmd == NULL)
-		free_cmd(cmd, envp, cmd_lst);
-	if (cmd->i == 0 && cmd->cmd == NULL)
-		free_cmd2(cmd, envp, cmd_lst);
 	if (cmd->i == 0)
 	{
 		redir(0, cmd->pipefd[1], cmd);
@@ -184,6 +159,20 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 			redir(cmd->fd_infile, cmd->fd_outfile, cmd);
 	}
 	close_all(cmd);
+	if (check_builtin(cmd_lst) != 0)
+	{
+		printf("EXEC\n");
+		find_path(cmd, envp, cmd_lst);
+		if (cmd->i != 0 && cmd->cmd == NULL)
+			free_cmd(cmd, envp, cmd_lst);
+		if (cmd->i == 0 && cmd->cmd == NULL)
+			free_cmd2(cmd, envp, cmd_lst);
+	}
+	else
+	{
+		printf("BUILTIN\n");
+		free_cmd2(cmd, envp, cmd_lst);
+	}
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");
@@ -224,6 +213,8 @@ void	clear_lst(t_cmd_lst **cmd_lst)
 		free_tab((*cmd_lst)->outfile_name, 0);
 	if ((*cmd_lst)->cmd_option != NULL)
 		free_tab((*cmd_lst)->cmd_option, 0);
+	if ((*cmd_lst)->limit_mode != NULL)
+		free((*cmd_lst)->limit_mode);
 	free(*cmd_lst);
 	(*cmd_lst) = temp;
 }

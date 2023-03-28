@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/24 15:33:15 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:49:35 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 	int	i;
 	(void)argc;
 	(void)argv;
+	ms.limit_mode = NULL;
 	ms.env = set_env(envp);
 	i = 1;
 	print_minishell();
@@ -110,8 +111,6 @@ int	main(int argc, char **argv, char **envp)
 				// 	print_map(cmd_lst->infile_name);
 				// 	printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
 				// 	printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
-				// 	printf("TAB INFILE %d :\n", i);
-				// 	printf("%d\n", cmd_lst->limit_mode[0]);
 				// 	cmd_lst = cmd_lst->next;
 				// 	i++;
 				// }

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/24 16:33:55 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:54:26 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,31 @@ int check_pipe(char *str)
     i = 0;
     while (str[i] != '\0')
     {
-        if (str[i] == '|' && bool_cote(str, i) == ERR)
+        if (str[i] == '\"')
         {
-            if ((str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '|') || (str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '\0'))
-                    return (ERR);
             i++;
-            while (str[i] != '|' && bool_cote(str, i) == ERR && str[i] != '\0')
-            {
-                while ((str[i] == ' ' || str[i] == '\'' || str[i] == '\"') && str[i] != '\0')
-                {
-                    if (str[i] == '\'' && str[i + 1] != '\'')
-                        return (SUC);
-                    if ((str[i] == '\"' && str[i + 1] != '\"'))
-                        return (SUC);
-                    i++;
-                }
-                if (str[i] == '\0' || (str[i] == '|' && bool_cote(str, i) == ERR))
-                    return (ERR);
+            while (str[i] != '\"')
                 i++;
-                if ((str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '|') || (str[i] == '|' && bool_cote(str, i) == ERR && str[i + 1] == '\0'))
-                    return (ERR);
-            }
+            if (str[i] == '\"')
+                i++;
+        }
+        if (str[i] == '\'')
+        {
+            i++;
+            while (str[i] != '\'')
+                i++;
+            if (str[i] == '\'')
+                i++;
+        }
+        if ((str[i] == '|' && bool_cote(str, i) == ERR) && str[i + 1] == '\0')
+            return (ERR);
+        if ((str[i] == '|' && bool_cote(str, i) == ERR) && str[i + 1] == ' ')
+        {
+            i++;
+            while (str[i] == ' ')
+                i++;
+            if ((str[i] == '|' && bool_cote(str, i) == ERR )|| str[i] == '\0')
+                return (ERR);
         }
         if (str[i] != '\0')
             i++;

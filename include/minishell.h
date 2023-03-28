@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/24 16:04:21 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:37:56 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, char **envp);
 int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd);
 void	clear_lst(t_cmd_lst **cmd_lst);
 int	tab_len(t_cmd_lst *cmd_lst);
+int	check_builtin(t_cmd_lst *cmd_lst);
+void    echo_builtin(char **tab, int bool);
 
 #endif
