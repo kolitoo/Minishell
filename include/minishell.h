@@ -6,12 +6,14 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/28 16:50:10 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:54:22 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define PATH_MAX
 
 # define ERR 1
 # define SUC 0
@@ -29,6 +31,7 @@
 # include <sys/stat.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <limits.h>
 
 typedef struct s_tab
 {
@@ -123,15 +126,19 @@ int		last_letter(char *cmd);
 int		where(char *cmd);
 void	find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 int	lstsize(t_cmd_lst *cmd_lst);
-int	pipex(t_cmd_lst *cmd_lst, char **envp);
+int	pipex(t_cmd_lst *cmd_lst, t_ms *ms);
 int	valid_cotev2(char *str, int i, char c);
 int	bool_cotev2(char *str, int i);
-int	no_pipe(t_cmd_lst *cmd_lst, char **envp);
+int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms);
 int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd);
 void	clear_lst(t_cmd_lst **cmd_lst);
-int	tab_len(t_cmd_lst *cmd_lst);
-int	check_builtin(t_cmd_lst *cmd_lst);
+int	tab_len(char **tab);
+int	check_builtin(t_cmd_lst *cmd_lst, char **envp);
 void    echo_builtin(char **tab, int bool);
 void	cd_builtin(char **tab, char **envp);
+void	pwd_builtin(void);
+void	only_last(t_cmd_lst *cmd_lst, t_ms *ms);
+char	**export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
+void	env_builtin(t_ms *ms);
 
 #endif

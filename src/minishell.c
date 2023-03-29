@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/28 15:41:33 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:50:57 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void    print_map(char **map)
 	{
 		if (map[j] == NULL)
 			printf("NULL\n");
-       		printf("%s$\n", map[j]);
+       		printf("%s\n", map[j]);
 		j++;
 	}
 }
@@ -115,9 +115,9 @@ int	main(int argc, char **argv, char **envp)
 				// 	i++;
 				// }
 				if (lstsize(cmd_lst) > 1)
-					ms.code_erreur = pipex(cmd_lst, ms.env);
+					ms.code_erreur = pipex(cmd_lst, &ms);
 				else if (lstsize(cmd_lst) == 1)
-					ms.code_erreur = no_pipe(cmd_lst, ms.env);
+					ms.code_erreur = no_pipe(cmd_lst, &ms);
 				else
 				{
 					free(cmd_lst);

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/28 16:50:45 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:41:33 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 		redir(0, cmd->fd_outfile, cmd);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile != 0)
 		redir(cmd->fd_infile, cmd->fd_outfile, cmd);
-	if (check_builtin(cmd_lst) != 0)
+	if (check_builtin(cmd_lst, envp) != 0)
 	{
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->cmd == NULL)
@@ -37,7 +37,7 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 	}
 }
 
-int	no_pipe(t_cmd_lst *cmd_lst, char **envp)
+int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	t_cmd cmd;
 	int	status;
@@ -50,10 +50,11 @@ int	no_pipe(t_cmd_lst *cmd_lst, char **envp)
 			error_management(2, &cmd);
 		if (cmd.off == 0)
 		{
-			child_no_pipe(&cmd, cmd_lst, envp);
+			child_no_pipe(&cmd, cmd_lst, (*ms).env);
 		}
-		if (ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)
-			cd_builtin(cmd_lst->cmd_option, envp);
+		only_last(cmd_lst, ms);
+		// if (ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)
+		// 	cd_builtin(cmd_lst->cmd_option, envp);
 		cmd.wpid = waitpid(cmd.off, &status, 0);
 		if (cmd.wpid == -1)
 			error_management(8, &cmd);
@@ -61,7 +62,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, char **envp)
 			cmd.exit_status = WEXITSTATUS(status);
 	}
 	if (cmd_lst->limit_mode != NULL)
-		if (cmd_lst->limit_mode[tab_len(cmd_lst)] == 2)
+		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 			if (unlink("/tmp/.file_temp.txt") == -1)
 				error_management(7, &cmd);
 	clear_lst(&cmd_lst);

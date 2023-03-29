@@ -6,8 +6,20 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/28 13:39:53 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:29:58 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	env_builtin(t_ms *ms)
+{
+	int	j;
+
+	j = 0;
+	while (ms->env[j] != NULL)
+	{
+       		ft_printf("%s", ms->env[j]);
+		j++;
+	}
+}

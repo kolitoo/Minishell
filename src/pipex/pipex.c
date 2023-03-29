@@ -6,18 +6,18 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/28 16:51:49 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:44:13 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	tab_len(t_cmd_lst *cmd_lst)
+int	tab_len(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (cmd_lst->infile_name[i] != NULL)
+	while (tab[i] != NULL)
 	{
 		i++;
 	}
@@ -48,7 +48,7 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 					read_prompt(cmd, cmd_lst, i);
 					close(cmd->fd_infile);
 					cmd->fd_infile = open("/tmp/.file_temp.txt", O_RDONLY);
-					if (j + 1 < tab_len(cmd_lst))
+					if (j + 1 < tab_len(cmd_lst->infile_name))
 						unlink("/tmp/.file_temp.txt");
 					j++;
 				}
@@ -159,7 +159,7 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 			redir(cmd->fd_infile, cmd->fd_outfile, cmd);
 	}
 	close_all(cmd);
-	if (check_builtin(cmd_lst) != 0)
+	if (check_builtin(cmd_lst, envp) != 0)
 	{
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->i != 0 && cmd->cmd == NULL)
@@ -215,7 +215,7 @@ void	clear_lst(t_cmd_lst **cmd_lst)
 	(*cmd_lst) = temp;
 }
 
-int	pipex(t_cmd_lst *cmd_lst, char **envp)
+int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	t_cmd	cmd;
 
@@ -223,7 +223,7 @@ int	pipex(t_cmd_lst *cmd_lst, char **envp)
 	cmd.argc = lstsize(cmd_lst);
 	if (cmd.argc > 1)
 	{
-		init(&cmd, cmd_lst, envp);
+		init(&cmd, cmd_lst, (*ms).env);
 		while (cmd_lst != NULL)//cmd.i < cmd.nbr_cmd
 		{
 			if (for_open(cmd_lst, &cmd) != 1)//envoie d'un seul element de la liste
@@ -232,12 +232,13 @@ int	pipex(t_cmd_lst *cmd_lst, char **envp)
 				if (cmd.pid[cmd.i] == -1)
 					error_management(2, &cmd);
 				if (cmd.pid[cmd.i] == 0)
-					child(&cmd, envp, cmd_lst);
+					child(&cmd, (*ms).env, cmd_lst);
 			}
-			if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)
-				cd_builtin(cmd_lst->cmd_option, envp);
+			only_last(cmd_lst, ms);
+			// if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)
+			// 	cd_builtin(cmd_lst->cmd_option, envp);
 			if (cmd_lst->limit_mode != NULL)
-				if (cmd_lst->limit_mode[tab_len(cmd_lst)] == 2)
+				if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 					if (unlink("/tmp/.file_temp.txt") == -1)
 						error_management(7, &cmd);
 			clear_lst(&cmd_lst);
