@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 17:27:44 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:53:49 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**set_env(char	**envp)
 	return (env);
 }
 
-void    print_map(char **map)
+void	print_map(char **map)
 {
 	int	j;
 
@@ -59,7 +59,7 @@ void    print_map(char **map)
 	{
 		if (map[j] == NULL)
 			printf("NULL\n");
-       		printf("%s\n", map[j]);
+			printf("%s\n", map[j]);
 		j++;
 	}
 }
