@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 16:09:09 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:27:44 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_printf("\033[36m \033[1m");
 		ms.line = readline("minishell → \033[0m");
-		if (strcmp(ms.line, "exit") == 0)//COMMENTER CAR BUG SUR MAC??//A recoder
-			break ;
 		if (ms.line[0] != '\0')
 		{
 			cmd_lst = make_cmd_lst(&ms);
@@ -123,8 +121,9 @@ int	main(int argc, char **argv, char **envp)
 					free(cmd_lst);
 					lstclear(&cmd_lst);
 				}
-				//si cd dernier commande change de repertoire apres le pipex
 			}
+			if (exit_builtin(cmd_lst) == SUC)
+				break;
 		}
 		// i = 0;
 		free(ms.line);

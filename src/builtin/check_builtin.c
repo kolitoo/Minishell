@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:55 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 12:56:04 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:02:18 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	check_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 	if (check_env(cmd_lst, ms) == SUC)
 		return (0);
 	if (check_unset(cmd_lst) == SUC)
+		return (0);
+	if (check_exit(cmd_lst) == SUC)
 		return (0);
 	return (1);
 }

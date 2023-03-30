@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 16:16:21 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:26:41 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ int			check_pwd(t_cmd_lst *cmd_lst);
 int			check_env(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_unset(t_cmd_lst *cmd_lst);
 int			check_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
+int			check_exit(t_cmd_lst *cmd_lst);
+int			exit_builtin(t_cmd_lst *cmd_lst);
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 void		echo_builtin(char **tab, int bool);
 void		cd_builtin(char **tab, char **envp);
