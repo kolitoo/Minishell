@@ -6,7 +6,7 @@
 #    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/30 13:49:45 by abourdon         ###   ########.fr        #
+#    Updated: 2023/03/30 15:51:54 by abourdon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC = src/minishell.c \
 	src/parsing/split_incurve.c \
 	src/parsing/utils_chevron.c \
 	src/parsing/utils_cote.c \
+	src/parsing/utils_cote2.c \
 	src/parsing/file.c \
 	src/parsing/env_utils.c \
 	src/parsing/env_utils2.c \

@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 13:49:36 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 14:22:38 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:08:45 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,48 @@ char	*strspace_cpy(char *str, int i)
 	result = strspace_cpy2(str, i, j, result);
 	free(str);
 	return (result);
+}
+
+static void	check_pipe2(char *str, int *i)
+{
+	if (str[*i] == '\"')
+	{
+		*i = *i + 1;
+		while (str[*i] != '\"')
+			*i = *i + 1;
+		if (str[*i] == '\"')
+		*i = *i + 1;
+	}
+	if (str[*i] == '\'')
+	{
+		*i = *i + 1;
+		while (str[*i] != '\'')
+			i++;
+		if (str[*i] == '\'')
+		*i = *i + 1;
+	}
+}
+
+int	check_pipe(char *str)
+{
+	int	i;
+
+	i = 0;
+	check_pipe2(str, &i);
+	while (str[i] != '\0')
+	{
+		if ((str[i] == '|' && bool_cote(str, i) == ERR) && str[i + 1] == '\0')
+			return (ERR);
+		if ((str[i] == '|' && bool_cote(str, i) == ERR) && str[i + 1] == ' ')
+		{
+			i++;
+			while (str[i] == ' ')
+				i++;
+			if ((str[i] == '|' && bool_cote(str, i) == ERR) || str[i] == '\0')
+				return (ERR);
+		}
+		if (str[i] != '\0')
+		i++;
+	}
+	return (SUC);
 }

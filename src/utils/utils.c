@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:49:14 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 14:38:12 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:50:34 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,38 +57,30 @@ int	her_doc_check(char *str)
 	return (ERR);
 }
 
-int	valid_cotev2(char *str, int i, char c)
+char    **clean_str(char **double_tab)
 {
-	int	j;
-	int	k;
+    int    j;
 
-	j = 0;
-	k = 0;
-	while (j <= i)
-	{
-		if (str[j] == c)
-			k++;
-		j++;
-	}
-	if ((k % 2) == 0) //pas entre cote
-		return (ERR);
-	return (SUC);
+    j = 0;
+    while (double_tab[j] != NULL)
+    {
+        if (check_cote(double_tab[j], '\'') == ERR || check_cote(double_tab[j], '\"') == ERR)
+            double_tab[j] = clear_quote(double_tab[j]);
+        j++;
+    }
+    return (double_tab);
 }
 
-int	bool_cotev2(char *str, int i)
+int	exist_chevron(char *str)
 {
-	int	one;
-	int	two;
+	int	i;
 
-	one = valid_cotev2(str, i, '\'');
-	two = valid_cotev2(str, i, '\"');
-	if (one == ERR && two == SUC) //entre cote
-		return (SUC);
-	if (one == SUC && two == ERR) //entre cote
-		return (SUC);
-	if (one == SUC && two == SUC) //entre cote
-		return (SUC);
-	if (one == ERR && two == ERR) //pas entre cote
-		return (ERR);
-	return (ERR);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if ((str[i] == '<' || str[i] == '>') && bool_cote(str, i) == 1)
+			return (0);
+		i++;
+	}
+	return (1);
 }

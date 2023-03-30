@@ -3,53 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/28 13:54:26 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:50:30 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int check_pipe(char *str)
-{
-    int i;
-    
-    i = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] == '\"')
-        {
-            i++;
-            while (str[i] != '\"')
-                i++;
-            if (str[i] == '\"')
-                i++;
-        }
-        if (str[i] == '\'')
-        {
-            i++;
-            while (str[i] != '\'')
-                i++;
-            if (str[i] == '\'')
-                i++;
-        }
-        if ((str[i] == '|' && bool_cote(str, i) == ERR) && str[i + 1] == '\0')
-            return (ERR);
-        if ((str[i] == '|' && bool_cote(str, i) == ERR) && str[i + 1] == ' ')
-        {
-            i++;
-            while (str[i] == ' ')
-                i++;
-            if ((str[i] == '|' && bool_cote(str, i) == ERR )|| str[i] == '\0')
-                return (ERR);
-        }
-        if (str[i] != '\0')
-            i++;
-    }
-    return (SUC);
-}
 
 t_cmd_lst	*make_cmd_lst(t_ms *ms)
 {
@@ -92,21 +53,6 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	return (cmd_lst);
 }
 
-
-int	exist_chevron(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if ((str[i] == '<' || str[i] == '>') && bool_cote(str, i) == 1)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 char    *parsing_chevron(char *one_cmd, t_ms **ms)
 {
     if (exist_chevron(one_cmd) == SUC)
@@ -128,100 +74,6 @@ char    *parsing_chevron(char *one_cmd, t_ms **ms)
         (*ms)->split_chevron_out = NULL;
     }
     return (one_cmd);
-}
-
-char    *clear_quote(char    *str)
-{
-    int    i;
-    int    j;
-    int    len;
-    char    *newstr;
-
-    i = 0;
-    j = 0;
-    len = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] == '\"')
-        {
-            i++;
-            while (str[i] != '\"')
-            {
-                len++;
-                i++;
-            }
-            if (str[i] == '\"')
-                i++;
-        }
-        if (str[i] == '\'')
-        {
-            i++;
-            while (str[i] != '\'')
-            {
-                len++;
-                i++;
-            }
-            if (str[i] == '\'')
-                i++;
-        }
-        if (str[i] != '\0' && str[i] != '\"' && str[i] != '\'')
-        {
-            len++;
-            i++;
-        }
-    }
-    i = 0;
-    newstr = malloc(sizeof(char) * (len + 1));
-    while (str[i] != '\0')
-    {
-        if (str[i] == '\"')
-        {
-            i++;
-            while (str[i] != '\"')
-            {
-                newstr[j] = str[i];
-                i++;
-                j++;
-            }
-            if (str[i] == '\"')
-                i++;
-        }
-        if (str[i] == '\'')
-        {
-            i++;
-            while (str[i] != '\'')
-            {
-                newstr[j] = str[i];
-                i++;
-                j++;
-            }
-            if (str[i] == '\'')
-                i++;
-        }
-        if (str[i] != '\0' && str[i] != '\"' && str[i] != '\'')
-        {
-            newstr[j] = str[i];
-            i++;
-            j++;
-        }
-    }
-    newstr[j] = '\0';
-    free(str);
-    return (newstr);
-}
-
-char    **clean_str(char **double_tab)
-{
-    int    j;
-
-    j = 0;
-    while (double_tab[j] != NULL)
-    {
-        if (check_cote(double_tab[j], '\'') == ERR || check_cote(double_tab[j], '\"') == ERR)
-            double_tab[j] = clear_quote(double_tab[j]);
-        j++;
-    }
-    return (double_tab);
 }
 
 char	**parsing(char	*one_cmd, t_ms **ms)
