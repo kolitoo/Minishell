@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/29 16:44:13 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 12:54:43 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	init(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 /*ON fait un pipe pour chaque paire de commande la
 premiere fois on fait un pipe de 2 * 0*/
 
-void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
+void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	if (cmd->i == 0)
 	{
@@ -159,7 +159,7 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 			redir(cmd->fd_infile, cmd->fd_outfile, cmd);
 	}
 	close_all(cmd);
-	if (check_builtin(cmd_lst, envp) != 0)
+	if (check_builtin(cmd_lst, ms) != 0)
 	{
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->i != 0 && cmd->cmd == NULL)
@@ -232,7 +232,7 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 				if (cmd.pid[cmd.i] == -1)
 					error_management(2, &cmd);
 				if (cmd.pid[cmd.i] == 0)
-					child(&cmd, (*ms).env, cmd_lst);
+					child(&cmd, (*ms).env, cmd_lst, ms);
 			}
 			only_last(cmd_lst, ms);
 			// if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)

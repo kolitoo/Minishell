@@ -6,13 +6,13 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/29 16:41:33 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 12:54:09 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
+void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 {
 	redir(0, 1, cmd);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile == 0)
@@ -21,7 +21,7 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 		redir(0, cmd->fd_outfile, cmd);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile != 0)
 		redir(cmd->fd_infile, cmd->fd_outfile, cmd);
-	if (check_builtin(cmd_lst, envp) != 0)
+	if (check_builtin(cmd_lst, ms) != 0)
 	{
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->cmd == NULL)
@@ -50,7 +50,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 			error_management(2, &cmd);
 		if (cmd.off == 0)
 		{
-			child_no_pipe(&cmd, cmd_lst, (*ms).env);
+			child_no_pipe(&cmd, cmd_lst, (*ms).env, ms);
 		}
 		only_last(cmd_lst, ms);
 		// if (ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)

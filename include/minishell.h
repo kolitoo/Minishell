@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/29 16:54:22 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 12:53:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,20 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms);
 int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd);
 void	clear_lst(t_cmd_lst **cmd_lst);
 int	tab_len(char **tab);
-int	check_builtin(t_cmd_lst *cmd_lst, char **envp);
+
+//Builtin
+int	check_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 void    echo_builtin(char **tab, int bool);
 void	cd_builtin(char **tab, char **envp);
 void	pwd_builtin(void);
 void	only_last(t_cmd_lst *cmd_lst, t_ms *ms);
-char	**export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
+void	export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
+char    **unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 void	env_builtin(t_ms *ms);
+int	check_cd(t_cmd_lst *cmd_lst);
+int	check_echo(t_cmd_lst *cmd_lst);
+int	check_pwd(t_cmd_lst *cmd_lst);
+int	check_env(t_cmd_lst *cmd_lst, t_ms *ms);
+int	check_unset(t_cmd_lst *cmd_lst);
 
 #endif
