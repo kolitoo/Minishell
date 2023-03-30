@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 13:49:36 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/23 11:34:08 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:22:38 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,8 @@ int	countlen(char *str, int i, int k, int count)
 	return (count);
 }
 
-char	*strspace_cpy(char *str, int i)
+static char	*strspace_cpy2(char *str, int i, int j, char *result)
 {
-	int		j;
-	char	*result;
-
-	j = 0;
-	result = malloc(sizeof(char *) * (countlen(str, 0, 0, 0) + 1));
-	while (str[i] == ' ' && str[i] != '\0')
-		i++;
-	if (str[i] == '\0')
-	{
-		free(result);
-		return (str);
-	}
 	while (str[i] != '\0')
 	{
 		if (str[i] == ' ' && bool_cote(str, i) == ERR)
@@ -67,7 +55,26 @@ char	*strspace_cpy(char *str, int i)
 			result[j++] = str[i];
 		i++;
 	}
-	free(str);
 	result[j] = '\0';
+	return (result);
+}
+
+char	*strspace_cpy(char *str, int i)
+{
+	int		j;
+	char	*result;
+
+	j = 0;
+	result = malloc(sizeof(char *)
+			* (countlen(str, 0, 0, 0) + 1));//protect maloc
+	while (str[i] == ' ' && str[i] != '\0')
+		i++;
+	if (str[i] == '\0')
+	{
+		free(result);
+		return (str);
+	}
+	result = strspace_cpy2(str, i, j, result);
+	free(str);
 	return (result);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
+#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/28 13:41:05 by lgirault         ###   ########.fr        #
+#    Updated: 2023/03/30 13:49:45 by abourdon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,11 @@ SRC = src/minishell.c \
 	src/parsing/utils_cote.c \
 	src/parsing/file.c \
 	src/parsing/env_utils.c \
+	src/parsing/env_utils2.c \
 	src/utils/free.c \
 	src/utils/lst_fonction.c \
+	src/utils/malloc.c \
+	src/utils/utils.c \
 	src/execex/no_pipe.c \
 	src/builtin/check_builtin.c \
 	src/builtin/echo_builtin.c \

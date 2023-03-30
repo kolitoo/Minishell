@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_incurve.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:56:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/16 13:00:55 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:54:29 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	count_line(char *str, char c, int i)
 	int	count;
 
 	count = 0;
-	while ((str[i] != c || (str[i] == c && bool_cote(str, i) == SUC)) && str[i] != '\0')
+	while ((str[i] != c || (str[i] == c && bool_cote(str, i) == SUC))
+		&& str[i] != '\0')
 	{
 		i++;
 		count++;
@@ -62,38 +63,44 @@ int	count_line(char *str, char c, int i)
 	return (count);
 }
 
+static char	**split_incurve2(char *str, char **res, t_var var, char c)
+{
+	while (str[var.i] != '\0')
+	{
+		var.k = 0;
+		while (str[var.i] == c && bool_cote(str, var.i) == ERR)
+			var.i++;
+		res[var.j] = malloc(sizeof(char) * (count_line(str, c, var.i) + 1));
+		if (!res[var.j])
+		{
+			free_all(res, var.j);
+			return (NULL);
+		}
+		while ((str[var.i] != c || (str[var.i] == c
+					&& bool_cote(str, var.i) == SUC))
+			&& str[var.i] != '\0')
+		{
+			res[var.j][var.k] = str[var.i];
+			var.i++;
+			var.k++;
+		}
+		res[var.j][var.k] = '\0';
+		var.j++;
+	}
+	res[var.j] = NULL;
+	return (res);
+}
+
 char	**split_incurve(char *str, char c)
 {
-	int		i;
-	int		j;
-	int		k;
+	t_var	var;
 	char	**res;
 
-	i = 0;
-	j = 0;
+	var.i = 0;
+	var.j = 0;
 	res = malloc(sizeof(char *) * (count_words(str, c) + 1));
 	if (!res)
 		return (NULL);
-	while (str[i] != '\0')
-	{
-		k = 0;
-		while (str[i] == c && bool_cote(str, i) == ERR)
-			i++;
-		res[j] = malloc(sizeof(char) * (count_line(str, c, i) + 1));
-		if (!res[j])
-		{
-			free_all(res, j);
-			return (NULL);
-		}
-		while ((str[i] != c || (str[i] == c && bool_cote(str, i) == SUC)) && str[i] != '\0')
-		{
-			res[j][k] = str[i];
-			i++;
-			k++;
-		}
-		res[j][k] = '\0';
-		j++;
-	}
-	res[j] = NULL;
+	res = split_incurve2(str, res, var, c);
 	return (res);
 }
