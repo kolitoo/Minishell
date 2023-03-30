@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/29 16:54:22 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:06:42 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ typedef struct s_tab
 	int	j;
 	int	k;
 }	t_tab;
+
+typedef struct s_var
+{
+	int	i;
+	int	j;
+	int	k;
+	int	bool;
+}	t_var;
 
 typedef struct s_cmd
 {
@@ -87,6 +95,7 @@ int			check_space_chevron(char *str);
 int			bool_cote(char *str, int i);
 int			nb_chevron(char *str, char c);
 int		valid_cote(char *str, int i, char c);
+int 	malloc_new_variable(char *variable, char *envstring, int *j);
 char		*strspace_cpy(char *str, int i);
 char		**parsing(char *one_cmd, t_ms **ms);
 char		**split_incurve(char *str, char c);
@@ -104,6 +113,17 @@ char	**find_file(char *str, char c);
 void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, int i);
 void    right_check_heredoc(char *str, t_ms **ms);
 int    her_doc_check(char *str);
+char    *warning_error(char *str, int i, t_ms **ms);
+char *neww_variable(char *new_variable, char *variable, char *envstring);
+char    *find_variable(char *str, int i);
+char    *comp_env(char *str, t_ms **ms, int i);
+char    *replace_variable(char *str, char *envstring, char *variable, int i);
+char    *replace_variable2(char *str, char *variable, int i);
+int	limit_mode_malloc(char *str);
+int	len_dbl_tab(char *str, char c);
+int	len_file(char *str, int i, char c);
+int	rights_check_util(char *str, int *i, t_ms **ms, char c);
+char	*put_space(char *str, char c, int *i, char *str2);
 
 //Pipex
 char	*find_good_path(char **envp, char *cmd, t_cmd *cmd1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_chevron.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 12:40:25 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/24 14:58:28 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:37:01 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,27 @@ int	nb_chevron(char *str, char c)
 	return (count);
 }
 
-int    check_after_chevron(char *str)
+int	check_after_chevron(char *str)
 {
-    int    i;
+	int	i;
 
-    i = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] == '>' && bool_cote(str, i) == ERR)
-            break ;
-        i++;
-    }
-    if (str[i] == '\0')
-        return (SUC);
-    i++;
-    while (str[i] != '\0' && str[i] < 32)
-    {
-        i++;
-    }
-    if (str[i] != '\0')
-        i++;
-    if (str[i] == '\0' || str[i] == '|' || str[i] == '\n')
-        return (ERR);
-    return (SUC);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '>' && bool_cote(str, i) == ERR)
+			break ;
+		i++;
+	}
+	if (str[i] == '\0')
+		return (SUC);
+	i++;
+	while (str[i] != '\0' && str[i] < 32)
+		i++;
+	if (str[i] != '\0')
+		i++;
+	if (str[i] == '\0' || str[i] == '|' || str[i] == '\n')
+		return (ERR);
+	return (SUC);
 }
 
 int	check_more_2_chevron(char *str)
@@ -82,9 +80,28 @@ int	check_more_2_chevron(char *str)
 	return (SUC);
 }
 
+static int	space_chevron_utils(int *i, char *s, char c)
+{
+	while (s[*i] != '\0')
+	{
+		if (s[*i] == c && bool_cote(s, *i) == ERR)
+		{
+			if ((s[*i + 1] == '\0') || (s[*i + 2] == '\0')
+				|| (s[*i + 2] == c && s[*i + 1] <= 32)
+				|| ((s[*i + 1] == '<' || s[*i + 1] == '>') && s[*i + 2] == c))
+				return (ERR);
+			*i = *i + 1;
+		}
+		if (s[*i] != '\0')
+			*i = *i + 1;
+	}
+	*i = 0;
+	return (SUC);
+}
+
 int	check_space_chevron(char *str)
 {
-	int	i;
+	int		i;
 	char	*s;
 
 	i = 0;
@@ -95,49 +112,16 @@ int	check_space_chevron(char *str)
 		free(s);
 		return (ERR);
 	}
-	while (s[i] != '\0')
+	if (space_chevron_utils(&i, s, '>') == ERR)
 	{
-		if (s[i] == '>' && bool_cote(s, i) == ERR)
-		{
-			if ((s[i + 1] == '\0') || (s[i + 2] == '\0') || (s[i + 2] == '>' && s[i + 1] <= 32) || (s[i + 1] == '<') || ((s[i + 1] == '<' || s[i + 1] == '>') && s[i + 2] == '<'))
-			{
-				free(s);
-				return (ERR);
-			}
-			i++;
-		}
-		if (s[i] != '\0')
-			i++;
+		free(s);
+		return (ERR);
 	}
-	i = 0;
-	while (s[i] != '\0')
+	if (space_chevron_utils(&i, s, '<') == ERR)
 	{
-		if (s[i] == '<' && bool_cote(s, i) == ERR)
-		{
-			if ((s[i + 1] == '\0') || (s[i + 2] == '\0') || (s[i + 2] == '<' && s[i + 1] <= 32) || ((s[i + 1] == '<' || s[i + 1] == '>') && s[i + 2] == '>'))
-			{
-				free(s);
-				return (ERR);
-			}
-			i++;
-		}
-		if (s[i] != '\0')
-			i++;
+		free(s);
+		return (ERR);
 	}
 	free(s);
 	return (SUC);
-}
-
-int    her_doc_check(char *str)
-{
-    int    i;
-
-    i = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] == '<' && str[i + 1] == '<')
-            return (SUC);
-        i++;
-    }
-    return (ERR);
 }

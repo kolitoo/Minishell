@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/29 15:50:57 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:20:15 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_ms	ms;
 	t_cmd_lst *cmd_lst;
-	int	i;
+	// int	i;
 	(void)argc;
 	(void)argv;
 	ms.limit_mode = NULL;
 	ms.env = set_env(envp);
-	i = 1;
+	// i = 1;
 	print_minishell();
 	while (1)
 	{
@@ -101,19 +101,19 @@ int	main(int argc, char **argv, char **envp)
 			add_history(ms.line);
 			if (cmd_lst != NULL)
 			{
-				// while (cmd_lst != NULL)
-				// {
-				// 	printf("CMD %d :\n", i);
-				// 	print_map(cmd_lst->cmd_option);
-				// 	printf("TAB OUTFILE %d :\n", i);
-				// 	print_map(cmd_lst->outfile_name);
-				// 	printf("TAB INFILE %d :\n", i);
-				// 	print_map(cmd_lst->infile_name);
-				// 	printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
-				// 	printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
-				// 	cmd_lst = cmd_lst->next;
-				// 	i++;
-				// }
+			// 	while (cmd_lst != NULL)
+			// 	{
+			// 		printf("CMD %d :\n", i);
+			// 		print_map(cmd_lst->cmd_option);
+			// 		printf("TAB OUTFILE %d :\n", i);
+			// 		print_map(cmd_lst->outfile_name);
+			// 		printf("TAB INFILE %d :\n", i);
+			// 		print_map(cmd_lst->infile_name);
+			// 		printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
+			// 		printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
+			// 		cmd_lst = cmd_lst->next;
+			// 		i++;
+			// 	}
 				if (lstsize(cmd_lst) > 1)
 					ms.code_erreur = pipex(cmd_lst, &ms);
 				else if (lstsize(cmd_lst) == 1)
@@ -126,7 +126,7 @@ int	main(int argc, char **argv, char **envp)
 				//si cd dernier commande change de repertoire apres le pipex
 			}
 		}
-		i = 0;
+		// i = 0;
 		free(ms.line);
 	}
 	rl_clear_history(); //COMMENTER CAR BUG SUR MAC??
