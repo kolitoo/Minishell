@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:59:41 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 11:40:03 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:09:17 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,12 @@ char	*comp_env(char *str, t_ms **ms, int i)
 	{
 		if (strncmp((*ms)->env[j], variable, ft_strlen(variable)) == 0)
 		{
-			str = replace_variable(str, (*ms)->env[j], variable, i);
+			str = replace_variable(str, (*ms)->env[j], variable);
 			break ;
 		}
 		j++;
 	}
 	if ((*ms)->env[j] == NULL)
-		str = replace_variable2(str, variable, i);
+		str = replace_variable2(str, variable);
 	return (str);
 }
