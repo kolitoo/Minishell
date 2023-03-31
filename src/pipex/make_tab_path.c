@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:22:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/23 13:07:46 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:18:07 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ char	*make_str_path(char **envp, char *cmd, t_cmd *cmd1)
 		ft_printf("zsh: command not found: %s\n", cmd_without_opti);
 		free(cmd_without_opti);
 		free_cmd1(cmd1);
+		exit(127);
 	}
 	return (make_str_path_2(envp, ijk));
 }

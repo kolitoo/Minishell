@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:48:12 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/31 15:49:47 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:26:35 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ char    *clear_quote(char *str)
     i = 0;
     j = 0;
     len = 0;
-    printf("%d\n", len);
-    printf("%s\n", str);
     clear_quote2(str, i, &len);
     newstr = malloc(sizeof(char) * (len + 1)); // protect malloc
     i = 0;

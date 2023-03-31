@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 14:04:33 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:57:21 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*create_newstr(char *str, char *newstr, int l, int k)
+char    *create_newstr(char *str, char *newstr, int l, int k)
 {
-	if (str[k] == '$')
-		k++;
-	while ((str[k] >= 'a' && str[k] <= 'z') || (str[k] >= 'A' && str[k] <= 'Z'))
-		k++;
-	while (str[k] != '\0')
-		newstr[l++] = str[k++];
-	newstr[l] = '\0';
-	free(str);
-	return (newstr);
+    if (str[k] == '$')
+        k++;
+    while ((str[k] >= 'a' && str[k] <= 'z') || (str[k] >= 'A' && str[k] <= 'Z'))
+        k++;
+    while (str[k] != '\0')
+        newstr[l++] = str[k++];
+    newstr[l] = '\0';
+    free(str);
+    return (newstr);
 }
 
 char    *replace_variable(char *str, char *envstring, char *variable)

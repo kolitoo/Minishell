@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:55 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 13:13:27 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:35:13 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 		return (0);
 	if (ft_strcmp(cmd_lst->cmd_option[0], "export") == SUC)
 	{
-		if (cmd_lst->cmd_option[1] == NULL) //Cas non definie discord
+		if (cmd_lst->cmd_option[1] == NULL)
 			ft_printf("export need argument\n");
 		if (cmd_lst->cmd_option[1][0] == '-')
 			return (1);
@@ -46,7 +46,7 @@ void	only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status)
 		&& cmd_lst->cmd_option[1][0] != '-')
 		export_builtin(cmd_lst, ms);
 	if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0],
-			"unset") == SUC && cmd_lst->cmd_option[1][0] != '-')
+			"unset") == SUC && cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[1][0] != '-')
 		unset_builtin(cmd_lst, ms);
 	if (status == 0 && cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC)
 		exit_builtin_execex(cmd_lst, cmd, ms, status);

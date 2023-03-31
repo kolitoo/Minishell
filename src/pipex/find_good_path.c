@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:07:24 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/23 13:06:31 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:33:23 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,19 @@ int	first_space(char *cmd)
 void	exit_free(char **tab_path, char *cmd)
 {
 	char	*cmd_without_opti;
+	int	i;
 
+	i = 0;
 	cmd_without_opti = ft_substr(cmd, first_space(cmd), last_letter(cmd));
 	free_tab(tab_path, 0);
-	ft_printf("zsh: command not found: %s\n", cmd_without_opti);
+	write(2, "zsh: command not found: ", 25);
+	while (cmd_without_opti[i] != '\0')
+	{
+		ft_putchar_fd(cmd_without_opti[i], 2);
+		i++;
+	}
+	ft_putchar_fd('\n', 2);
+	//ft_printf("zsh: command not found: %s\n", cmd_without_opti);//Faire un fd printf pour afficher sur la sortie 2
 	free(cmd_without_opti);
 }
 

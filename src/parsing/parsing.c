@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 15:18:31 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:38:30 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	i = 1;
 	ms->boolean_infile = 0;
 	ms->boolean_outfile = 0;
-	if (check_fine_cote(ms->line, '\'', '\"') == ERR)//check aussi si les chevrons sont valides
+	if (check_fine_cote(ms->line, '\'', '\"') == ERR)
 	{
 		write(2, "dquote\n", 7);
 		return (NULL);
@@ -37,9 +37,9 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 		write(2, "dpipe\n", 7);
 		return (NULL);
 	}
-	ms->split_pipe = split_incurve(ms->line, '|');//PB split sur pipe mais pas si pipe est entre des cotes (faire un split_pipe)
-	double_tab = parsing(ms->split_pipe[0], &ms);//si pb cote ou pb dans la commande le double tab dans la liste = NULL
-	cmd_lst = lstnew(double_tab, ms);// open("chaine que renvoie parsing en fonction des chevron", Ouverture selon les chevron));//fd de -1 si rien a ouvris donc dans la liste on aura -1
+	ms->split_pipe = split_incurve(ms->line, '|');
+	double_tab = parsing(ms->split_pipe[0], &ms);
+	cmd_lst = lstnew(double_tab, ms);
 	while (ms->split_pipe[i] != NULL)
 	{
 		ms->boolean_infile = 0;
@@ -87,11 +87,11 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 		one_cmd = strspace_cpy(one_cmd, 0);
 		one_cmd = parsing_chevron(one_cmd, ms);
 		one_cmd = set_dollar(one_cmd, ms);
-		if (nb_cote(one_cmd) == 0)//Pas de cote//faire une fonction pour split_espace
+		if (nb_cote(one_cmd) == 0)
 		{
 			double_tab = ft_split(one_cmd, ' ');
 		}
-		else//Cote
+		else
 		{
 			double_tab = split_incurve(one_cmd, ' ');
 		}
@@ -101,8 +101,6 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 	{
 		write(2, "Probleme cote\n", 15);
 	}
-	// if (double_tab[0] == NULL)
-	// 	return (NULL);
 	free(one_cmd);//Free de tout le ms.split_pipe
 	return (double_tab);
 }

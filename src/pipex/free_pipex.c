@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:59:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 16:04:30 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:39:30 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,6 @@ void	error_management(int code_error, t_cmd *cmd)
 		free_cmd1(cmd);
 	exit(EXIT_FAILURE);
 }
-
-// void	free_tab(char **tab_path)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (tab_path[i] != NULL)
-// 	{
-// 		free(tab_path[i]);
-// 		i++;
-// 	}
-// 	free(tab_path);
-// }
 
 void	free_cmd(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {

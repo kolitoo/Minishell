@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:56:44 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/31 11:16:39 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:38:49 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-//on a checker la validite des cotes avants donc aue des cas possibles
 int	valid_cote(char *str, int i, char c)
 {
 	int	j;

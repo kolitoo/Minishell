@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:40 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 20:44:36 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:35:27 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	check_unset(t_cmd_lst *cmd_lst)
 {
 	if (ft_strcmp(cmd_lst->cmd_option[0], "unset") == SUC)
 	{
+		if (cmd_lst->cmd_option[1] == NULL)
+			ft_printf("unset need argument\n");
 		if (cmd_lst->cmd_option[1][0] == '-')
 			return (1);
 		return (0);

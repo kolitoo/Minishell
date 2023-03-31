@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 16:09:16 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:40:49 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 		{
 			if (cmd_lst->infile_mode == 1)
 				cmd->fd_infile = open(cmd_lst->infile_name[i], O_RDONLY);
-			if (cmd_lst->limit_mode != NULL/* && j <= tab_len(cmd_lst->infile_name)*/)//here_doc
+			if (cmd_lst->limit_mode != NULL)
 			{
 				if (cmd_lst->limit_mode[j] == 2)
 				{
@@ -226,7 +226,7 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 	if (cmd.argc > 1)
 	{
 		init(&cmd, cmd_lst, (*ms).env);
-		while (cmd_lst != NULL)//cmd.i < cmd.nbr_cmd
+		while (cmd_lst != NULL)
 		{
 			if (for_open(cmd_lst, &cmd) != 1)//envoie d'un seul element de la liste
 			{
