@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:14 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 10:53:08 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:51:12 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	pwd_builtin(void)
 {
 	char	*str;
 
-	str= malloc(sizeof(char) * PATH_MAX + 1);
+	str = malloc(sizeof(char) * PATH_MAX + 1);
 	getcwd(str, PATH_MAX);
 	ft_printf("%s\n", str);
 }

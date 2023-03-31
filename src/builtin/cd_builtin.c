@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:38:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 10:49:30 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:52:45 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	check_cd(t_cmd_lst *cmd_lst)
 void	cd_builtin(char **tab, char **envp)
 {
 	char	*home;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -32,7 +32,7 @@ void	cd_builtin(char **tab, char **envp)
 		while (envp[i] != NULL)
 		{
 			if (strncmp("HOME=", envp[i], 5) == 0)
-				break;
+				break ;
 			i++;
 		}
 		while (envp[i][j] != '\0')

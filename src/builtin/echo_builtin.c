@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:35:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 10:51:21 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:42:12 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,39 +30,39 @@ int	check_echo(t_cmd_lst *cmd_lst)
 	return (1);
 }
 
-void    printchar(char c)
+void	printchar(char c)
 {
-    write(1, &c, 1);
+	write(1, &c, 1);
 }
 
-void    printstr(char *str)
+void	printstr(char *str)
 {
-    int    i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        printchar(str[i]);
-        i++;
-    }
+	i = 0;
+	 while (str[i])
+	{
+		printchar(str[i]);
+		i++;
+	}
 }
 
-void    echo_builtin(char **tab, int bool)
+void	echo_builtin(char **tab, int bool)
 {
-    int    j;
+	int	j;
 
-    j = 0;
-    if (bool == 0)
-        j = 1;
-    else if (bool == 1)
-        j = 2;
-    while (tab[j] != NULL)
-    {
-        printstr(tab[j]);
+	j = 0;
+	if (bool == 0)
+		j = 1;
+	else if (bool == 1)
+		j = 2;
+	while (tab[j] != NULL)
+	{
+		printstr(tab[j]);
 	if (tab[j + 1] != NULL)
 		printchar(' ');
-        j++;
-    }
-    if (bool == 0)
-        printchar('\n');
+	j++;
+	}
+	if (bool == 0)
+		printchar('\n');
 }

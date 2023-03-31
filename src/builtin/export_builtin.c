@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:29 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 13:58:12 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:48:13 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 char	**create_env(char *str, t_ms *ms)
 {
 	char	**new_envp;
-	int	i;
-	int	j;
-	
+	int		i;
+	int		j;
+
 	i = 0;
 	j = 0;
 	new_envp = malloc(sizeof(char *) * (tab_len((*ms).env) + 3));
@@ -67,9 +67,9 @@ int	check_replace(char *str, t_ms *ms, int i)
 char	**replace_env(char *str, t_ms *ms)
 {
 	char	**new_envp;
-	int	i;
-	int	j;
-	
+	int		i;
+	int		j;
+
 	i = 0;
 	j = 0;
 	new_envp = malloc(sizeof(char *) * (tab_len((*ms).env) + 2));
