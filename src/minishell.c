@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 17:27:44 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:09:41 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,11 @@ int	main(int argc, char **argv, char **envp)
 					lstclear(&cmd_lst);
 				}
 			}
-			if (exit_builtin(cmd_lst) == SUC)
-				break;
+			// if (exit_builtin(cmd_lst) == SUC)
+			// {
+			// 	printf("TEST\n");
+			// 	break;
+			// }
 		}
 		// i = 0;
 		free(ms.line);
