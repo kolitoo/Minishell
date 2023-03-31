@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 11:33:28 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:04:33 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,99 +25,124 @@ char	*create_newstr(char *str, char *newstr, int l, int k)
 	return (newstr);
 }
 
-char	*replace_variable(char *str, char *envstring, char *variable, int i)
+char    *replace_variable(char *str, char *envstring, char *variable)
 {
-	int		j;
-	int		k;
-	int		l;
-	char	*newstr;
-	char	*new_variable;
-
-	j = -1;
-	l = -1;
-	new_variable = NULL;
-	new_variable = neww_variable(new_variable, variable, envstring);
-	newstr = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(variable)
-				+ ft_strlen(new_variable)) + 1);//proteger malloc
-	while (++l != i)
-		newstr[l] = str[l];
-	k = l;
-	while (new_variable[++j] != '\0')
-	{
-		newstr[l] = new_variable[j];
-		l++;
-	}
-	newstr = create_newstr(str, newstr, l, k);
-	free(variable);
-	free(new_variable);
-	return (newstr);
+    int    i;
+    int    j;
+    int    k;
+    char    *newstr;
+    char    *new_variable;
+    
+    i = 0;
+    j = 0;
+    new_variable = NULL;
+    new_variable = neww_variable(new_variable, variable, envstring);
+    newstr = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(variable) + ft_strlen(new_variable)) + 1);
+    while (str[i] != '$')
+    {
+        newstr[i] = str[i];
+        i++;
+    }
+    k = i;
+    while (new_variable[j] != '\0')
+    {
+        newstr[i] = new_variable[j];
+        i++;
+        j++;
+    }
+    while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"')
+        k++;
+    while (str[k] != '\0')
+    {
+        newstr[i] = str[k];
+        k++;
+        i++;
+    }
+    newstr[i] = '\0';
+    free(new_variable);
+    free(variable);
+    free(str);
+    return (newstr);
 }
 
-char	*replace_variable2(char *str, char *variable, int i)
+char    *replace_variable2(char *str, char *variable)
 {
-	int		j;
-	int		k;
-	int		l;
-	char	*newstr;
-
-	j = -1;
-	l = -1;
-	newstr = malloc(sizeof(char)
-			* (ft_strlen(str) - ft_strlen(variable) + 1));//proteger malloc
-	while (++l != i)
-		newstr[l] = str[l];
-	k = l;
-	while (variable[++j] != '\0')
-		k++;
-	newstr = create_newstr(str, newstr, l, k);
-	free(variable);
-	return (newstr);
+    int    i;
+    int    j;
+    int    k;
+    char    *newstr;
+    
+    i = 0;
+    j = 0;
+    newstr = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(variable) + 1));
+    while (str[i] != '$')
+    {
+        newstr[i] = str[i];
+        i++;
+    }
+    k = i;
+    while (variable[j] != '\0')
+    {
+        k++;
+        j++;
+    }
+    while (str[k] != ' ' && str[k] != '\0' && str[k] != '\'' && str[k] != '\"')
+        k++;
+    while (str[k] != '\0')
+    {
+        newstr[i] = str[k];
+        k++;
+        i++;
+    }
+    newstr[i] = '\0';
+    free(variable);
+    free(str);
+    return (newstr);
 }
 
-static char	*set_dollar2(char *str, int *i, t_ms **ms)
+char    *set_dollar(char *str, t_ms **ms)
 {
-	if (str[*i] == '$' && str[*i + 1] == '?')
-		str = warning_error(str, *i, ms);
-	if (str[*i] == '\"')
-	{
-		*i = *i + 1;
-		while (str[*i] != '\"' && str[*i] != '\0')
-		{
-			if (str[*i] == '$' && ((str[*i + 1] >= 'a' && str[*i + 1] <= 'z')
-					|| (str[*i + 1] >= 'A' && str[*i + 1] <= 'Z')))
-			{
-				str = comp_env(str, ms, *i);
-				break ;
-			}
-			*i = *i + 1;
-		}
-		if (str[*i] == '\"' && str[*i] != '\0')
-		*i = *i + 1;
-	}
-	return (str);
-}
+    int    i;
 
-char	*set_dollar(char *str, t_ms **ms)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		str = set_dollar2(str, &i, ms);
-		if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] != '\'')
-				i++;
-			if (str[i] == '\'')
-				i++;
-		}
-		if (str[i] == '$' && ((str[i + 1] >= 'a' && str[i + 1] <= 'z')
-				|| (str[i + 1] >= 'A' && str[i + 1] <= 'Z')))
-			str = comp_env(str, ms, i);
-		if (str[i] != '\0' && str[i] != '\'' && str[i] != '\"')
-			i++;
-	}
-	return (str);
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '$' && str[i + 1] == '?')
+        {
+            str = warning_error(str, i, ms);
+            i = 0;
+        }
+        if (str[i] == '\"')
+        {
+            i++;
+            while (str[i] != '\"')
+            {
+                if (str[i] == '$')
+                {
+                    str = comp_env(str, ms, i);
+                    i = 0;
+                    break ;
+                }
+                i++;
+            }
+            if (str[i] == '\"')
+                i++;
+        }
+        if (str[i] == '\'')
+        {
+            i++;
+            while (str[i] != '\'')
+                i++;
+            if (str[i] == '\'')
+                i++;
+        }
+        if (str[i] == '$' && str[i + 1] != '\0' && str[i + 1] != ' ' && str[i + 1] != '\'' && str[i + 1] != '\"' )
+        {
+            str = comp_env(str, ms, i);
+            i = 0;
+        }
+        if (str[i] != '\0' && str[i] != '\'' && str[i] != '\"')
+            i++;   
+    }
+    return (str);
 }

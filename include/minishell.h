@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/31 13:19:53 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:02:09 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,8 @@ char		*set_dollar(char *str, t_ms **ms);
 char		**find_file(char *str, char c);
 char		*find_variable(char *str, int i);
 char		*comp_env(char *str, t_ms **ms, int i);
-char		*replace_variable(char *str, char *envstring,
-				char *variable, int i);
-char		*replace_variable2(char *str, char *variable, int i);
+char    *replace_variable(char *str, char *envstring, char *variable);
+char    *replace_variable2(char *str, char *variable);
 char		*put_space(char *str, char c, int *i, char *str2);
 char		**clean_str(char **double_tab);
 char		*clear_quote(char *str);
