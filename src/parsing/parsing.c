@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 15:50:30 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:23:08 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 		return (NULL);
 	}
 	if (check_pipe(ms->line) == ERR)
-  	{
-        	write(2, "dpipe\n", 7);
-        	return (NULL);
-    	}
+	{
+		write(2, "dpipe\n", 7);
+		return (NULL);
+	}
 	ms->split_pipe = split_incurve(ms->line, '|');//PB split sur pipe mais pas si pipe est entre des cotes (faire un split_pipe)
 	double_tab = parsing(ms->split_pipe[0], &ms);//si pb cote ou pb dans la commande le double tab dans la liste = NULL
 	cmd_lst = lstnew(double_tab, ms);// open("chaine que renvoie parsing en fonction des chevron", Ouverture selon les chevron));//fd de -1 si rien a ouvris donc dans la liste on aura -1

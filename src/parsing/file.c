@@ -6,48 +6,53 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:04:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 15:19:41 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:40:00 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static char **find_file3(char *str, char **split_chevron, char *str2, t_var *var)
+{
+	if (str[var->i] == var->c && bool_cote(str2, var->i) == 1)
+		{
+			str = put_space(str, var->c, &var->i, str2);
+			split_chevron[var->k] = malloc(sizeof(char)
+					* (len_file(str, var->i, var->c) + 1));//protect malloc
+			while ((str[var->i] != ' ' && str[var->i] != var->c && str[var->i] != '\0')
+				|| bool_cote(str2, var->i) == 0)
+			{
+				split_chevron[var->k][var->j] = str[var->i];
+				str[var->i] = ' ';
+				var->i++;
+				var->j++;
+			}
+			split_chevron[var->k][var->j] = '\0';
+			if (var->j == 0)
+				split_chevron[var->k] = NULL;
+			var->k++;
+		}
+		return (split_chevron);
+}
+
 static char	**find_file2(char *str, char **split_chevron, char *str2, char c)
 {
-	int	j;
-	int	k;
-	int	i;
+	t_var	var;
 
-	j = 0;
-	k = 0;
-	i = 0;
-	while (str[i] != '\0')
+	var.j = 0;
+	var.k = 0;
+	var.i = 0;
+	var.c = c;
+	while (str[var.i] != '\0')
 	{
-		j = 0;
-		if (str[i] == c && bool_cote(str2, i) == 1)
-		{
-			str = put_space(str, c, &i, str2);
-			split_chevron[k] = malloc(sizeof(char)
-					* (len_file(str, i, c) + 1));//protect malloc
-			while ((str[i] != ' ' && str[i] != c && str[i] != '\0')
-				|| bool_cote(str2, i) == 0)
-			{
-				split_chevron[k][j] = str[i];
-				str[i] = ' ';
-				i++;
-				j++;
-			}
-			split_chevron[k][j] = '\0';
-			if (j == 0)
-				split_chevron[k] = NULL;
-			k++;
-		}
-		if ((str[i] != '\0' && str[i] != c)
-			|| (str[i] == c && bool_cote(str, i) == SUC))
-			i++;
+		var.j = 0;
+		split_chevron = find_file3(str, split_chevron, str2, &var);
+		if ((str[var.i] != '\0' && str[var.i] != var.c)
+			|| (str[var.i] == c && bool_cote(str, var.i) == SUC))
+			var.i++;
 	}
-	split_chevron[k] = NULL;
-	if (k == 0)
+	split_chevron[var.k] = NULL;
+	if (var.k == 0)
 		split_chevron = NULL;
 	return (split_chevron);
 }	
