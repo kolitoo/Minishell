@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/31 11:11:45 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:30:27 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ void	print_map(char **map)
 	while (map[j] != NULL)
 	{
 		if (map[j] == NULL)
+		{
 			printf("NULL\n");
 			printf("%s\n", map[j]);
+		}
 		j++;
 	}
 }
@@ -122,16 +124,11 @@ int	main(int argc, char **argv, char **envp)
 					lstclear(&cmd_lst);
 				}
 			}
-			// if (exit_builtin(cmd_lst) == SUC)
-			// {
-			// 	printf("TEST\n");
-			// 	break;
-			// }
 		}
 		// i = 0;
 		free(ms.line);
 	}
-	rl_clear_history(); //COMMENTER CAR BUG SUR MAC??
+	rl_clear_history();
 	free(ms.line);
 	free_tab(ms.env, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 17:26:00 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:47:01 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 	t_cmd cmd;
 	int	status;
 
+	status = 0;
 	init_tab(&cmd);
 	if (for_open(cmd_lst, &cmd) != 1)
 	{
@@ -52,7 +53,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 		{
 			child_no_pipe(&cmd, cmd_lst, (*ms).env, ms);
 		}
-		only_last(cmd_lst, ms);
+		only_last(cmd_lst, ms, &cmd, status);
 		cmd.wpid = waitpid(cmd.off, &status, 0);
 		if (cmd.wpid == -1)
 			error_management(8, &cmd);
