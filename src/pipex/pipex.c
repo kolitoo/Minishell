@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 13:12:37 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:09:16 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	tab_len(char **tab)
 	int	i;
 
 	i = 0;
+	if (tab == NULL)
+		return (0);
 	while (tab[i] != NULL)
 	{
 		i++;
@@ -33,6 +35,39 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 	j = 0;
 	cmd->fd_infile = 0;
 	cmd->fd_outfile = 0;
+	if (cmd_lst->outfile_name != NULL)
+	{
+		while (cmd_lst->outfile_name[i] != NULL)
+		{
+			if (cmd_lst->outfile_mode == 1)
+				cmd->fd_outfile = open(cmd_lst->outfile_name[i], O_WRONLY | O_TRUNC,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			if (cmd->fd_outfile == -1)
+				cmd->fd_outfile = open(cmd_lst->outfile_name[i], O_WRONLY | O_CREAT,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			if (cmd->fd_outfile == -1)
+			{
+				file_error(9, cmd_lst, i);
+				return(ERR);
+			}
+			if (cmd_lst->outfile_mode == 2)
+				cmd->fd_outfile = open(cmd_lst->outfile_name[i], O_WRONLY | O_APPEND,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			if (cmd->fd_outfile == -1)
+				cmd->fd_outfile = open(cmd_lst->outfile_name[i], O_WRONLY | O_CREAT,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			if (cmd->fd_outfile == -1)
+			{
+				file_error(9, cmd_lst, i);
+				return (ERR);
+			}
+			if (cmd_lst->outfile_mode == 3)
+				open(cmd_lst->outfile_name[i], O_WRONLY | O_CREAT,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			i++;
+		}
+	}
+	i = 0;
 	if (cmd_lst->infile_name != NULL)
 	{
 		while (cmd_lst->infile_name[i] != NULL)
@@ -63,39 +98,6 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
 				file_error(1, cmd_lst, i);
 				return (ERR);
 			}
-			i++;
-		}
-	}
-	i = 0;
-	if (cmd_lst->outfile_name != NULL)
-	{
-		while (cmd_lst->outfile_name[i] != NULL)
-		{
-			if (cmd_lst->outfile_mode == 1)
-				cmd->fd_outfile = open(cmd_lst->outfile_name[i], O_WRONLY | O_TRUNC,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			if (cmd->fd_outfile == -1)
-				cmd->fd_outfile = open(cmd_lst->outfile_name[i], O_WRONLY | O_CREAT,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			if (cmd->fd_outfile == -1)
-			{
-				file_error(9, cmd_lst, i);
-				return(ERR);
-			}
-			if (cmd_lst->outfile_mode == 2)
-				cmd->fd_outfile = open(cmd_lst->outfile_name[i], O_WRONLY | O_APPEND,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			if (cmd->fd_outfile == -1)
-				cmd->fd_outfile = open(cmd_lst->outfile_name[i], O_WRONLY | O_CREAT,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			if (cmd->fd_outfile == -1)
-			{
-				file_error(9, cmd_lst, i);
-				return (ERR);
-			}
-			if (cmd_lst->outfile_mode == 3)
-				open(cmd_lst->outfile_name[i], O_WRONLY | O_CREAT,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			i++;
 		}
 	}
@@ -235,7 +237,7 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 					child(&cmd, (*ms).env, cmd_lst, ms);
 			}
 			only_last(cmd_lst, ms, &cmd, 1);
-			if (cmd_lst->limit_mode != NULL)
+			if (cmd_lst->limit_mode != NULL && cmd_lst->cmd_option[0] != NULL)
 				if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 					if (unlink("/tmp/.file_temp.txt") == -1)
 						error_management(7, &cmd);

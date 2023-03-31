@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 11:47:01 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:11:48 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 		if (WIFEXITED(status) != 0)
 			cmd.exit_status = WEXITSTATUS(status);
 	}
-	if (cmd_lst->limit_mode != NULL)
+	if (cmd_lst->limit_mode != NULL && cmd_lst->cmd_option[0] != NULL)
 		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 			if (unlink("/tmp/.file_temp.txt") == -1)
 				error_management(7, &cmd);

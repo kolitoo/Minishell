@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 11:23:08 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 15:18:31 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char    *parsing_chevron(char *one_cmd, t_ms **ms)
     }
     else
     {
+	(*ms)->limit_mode = NULL;
         (*ms)->split_chevron_in = NULL;
         (*ms)->split_chevron_out = NULL;
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cote2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:48:12 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 16:07:31 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 15:49:47 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,43 +48,155 @@ int	bool_cotev2(char *str, int i)
 	return (ERR);
 }
 
-static char	*clear_quote2(char *str, char *newstr, t_var *var, char c)
+static    void    clear_quote2(char *str, int i, int *len)
 {
-	var->i = var->i + 1;
-	while (str[var->i] != c)
-	{
-		newstr[var->j] = str[var->i];
-		var->i = var->i + 1;
-		var->j = var->j + 1;
-	}
-	if (str[var->i] == c)
-		var->i = var->i + 1;
-	return (newstr);
+    while (str[i] != '\0')
+    {
+        if (str[i] == '\"')
+        {
+            while (str[++i] != '\"')
+                *len = *len + 1;
+            if (str[i] == '\"')
+                i++;
+        }
+        if (str[i] == '\'')
+        {
+            while (str[++i] != '\'')
+		*len = *len + 1;
+            if (str[i] == '\'')
+                i++;
+        }
+        if (str[i] != '\0' && str[i] != '\"' && str[i] != '\'')
+        {
+            *len = *len + 1;
+            i++;
+        }
+    }
 }
 
-char	*clear_quote(char *str)
+static char    *clear_quote3(char *str, char *newstr, int i, int j)
 {
-	t_var	var;
-	char	*newstr;
-
-	var.i = 0;
-	var.j = 0;
-	newstr = malloc(sizeof(char)
-			* (malloc_clear_quote(str, var.i) + 1));//proteger malloc
-	while (str[var.i] != '\0')
-	{
-		if (str[var.i] == '\"')
-			newstr = clear_quote2(str, newstr, &var, '\"');
-		if (str[var.i] == '\'')
-			newstr = clear_quote2(str, newstr, &var, '\'');
-		if (str[var.i] != '\0' && str[var.i] != '\"' && str[var.i] != '\'')
-		{
-			newstr[var.j] = str[var.i];
-			var.i++;
-			var.j++;
-		}
-	}
-	newstr[var.j] = '\0';
-	free(str);
-	return (newstr);
+    while (str[i] != '\0')
+    {
+        if (str[i] == '\"')
+        {
+            i++;
+            while (str[i] != '\"')
+                newstr[j++] = str[i++];
+            if (str[i] == '\"')
+                i++;
+        }
+        if (str[i] == '\'')
+        {
+            i++;
+            while (str[i] != '\'')
+                newstr[j++] = str[i++];
+            if (str[i] == '\'')
+                i++;
+        }
+        if (str[i] != '\0' && str[i] != '\"' && str[i] != '\'')
+            newstr[j++] = str[i++];
+    }
+    newstr[j] = '\0';
+    return (newstr);
 }
+
+char    *clear_quote(char *str)
+{
+    int        i;
+    int        j;
+    int        len;
+    char    *newstr;
+
+    i = 0;
+    j = 0;
+    len = 0;
+    printf("%d\n", len);
+    printf("%s\n", str);
+    clear_quote2(str, i, &len);
+    newstr = malloc(sizeof(char) * (len + 1)); // protect malloc
+    i = 0;
+    newstr = clear_quote3(str, newstr, i, j);
+    free(str);
+    return (newstr);
+}
+
+// char    *clear_quote(char    *str)
+// {
+//     int    i;
+//     int    j;
+//     int    len;
+//     char    *newstr;
+
+//     i = 0;
+//     j = 0;
+//     len = 0;
+//     while (str[i] != '\0')
+//     {
+//         if (str[i] == '\"')
+//         {
+//             i++;
+//             while (str[i] != '\"')
+//             {
+//                 len++;
+//                 i++;
+//             }
+//             if (str[i] == '\"')
+//                 i++;
+//         }
+//         if (str[i] == '\'')
+//         {
+//             i++;
+//             while (str[i] != '\'')
+//             {
+//                 len++;
+//                 i++;
+//             }
+//             if (str[i] == '\'')
+//                 i++;
+//         }
+//         if (str[i] != '\0' && str[i] != '\"' && str[i] != '\'')
+//         {
+//             len++;
+//             i++;
+//         }
+//     }
+//     i = 0;
+//     newstr = malloc(sizeof(char) * (len + 1));
+//     while (str[i] != '\0')
+//     {
+//         if (str[i] == '\"')
+//         {
+//             i++;
+//             while (str[i] != '\"')
+//             {
+//                 newstr[j] = str[i];
+//                 i++;
+//                 j++;
+//             }
+//             if (str[i] == '\"')
+//                 i++;
+//         }
+//         if (str[i] == '\'')
+//         {
+//             i++;
+//             while (str[i] != '\'')
+//             {
+//                 newstr[j] = str[i];
+//                 i++;
+//                 j++;
+//             }
+//             if (str[i] == '\'')
+//                 i++;
+//         }
+//         if (str[i] != '\0' && str[i] != '\"' && str[i] != '\'')
+//         {
+//             newstr[j] = str[i];
+//             i++;
+//             j++;
+//         }
+//     }
+//     newstr[j] = '\0';
+//     free(str);
+//     return (newstr);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/31 13:52:24 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 15:19:20 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	main(int argc, char **argv, char **envp)
 	// int	i;
 	(void)argc;
 	(void)argv;
-	ms.limit_mode = NULL;
 	ms.env = set_env(envp);
 	// i = 1;
 	print_minishell();
@@ -128,7 +127,7 @@ int	main(int argc, char **argv, char **envp)
 		// i = 0;
 		free(ms.line);
 	}
-	// clear_history();
+	rl_clear_history();
 	free(ms.line);
 	free_tab(ms.env, 0);
 }

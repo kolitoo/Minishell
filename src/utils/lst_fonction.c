@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:45:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/24 15:01:41 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:08:36 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	lstclear(t_cmd_lst **cmd_lst)
 			// if ((*cmd_lst)->outfile_name != NULL)
 			// free((*cmd_lst)->outfile_name);
 			free_tab((*cmd_lst)->outfile_name, 0);// verif si bon
+			if ((*cmd_lst)->limit_mode != NULL)
+				free((*cmd_lst)->limit_mode);
 			free(*cmd_lst);
 			(*cmd_lst) = save;
 		}

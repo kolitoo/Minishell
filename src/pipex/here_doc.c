@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/24 15:14:15 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/03/31 15:11:58 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, int i)
 		}
 		if (ft_strcmp_n(cmd_lst->infile_name[i], temp) == 0)
 			break ;
-		write(cmd->fd_infile, temp, ft_strlen(temp));
+		if (cmd_lst->cmd_option[0] == NULL && lstsize(cmd_lst) == 1)
+			write(cmd->fd_outfile, temp, ft_strlen(temp));
+		else
+			write(cmd->fd_infile, temp, ft_strlen(temp));
 		free(temp);
 	}
 	free(temp);

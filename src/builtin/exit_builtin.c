@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:40:04 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 13:52:45 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:14:07 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 				error_management(7, cmd);
 	clear_lst(&cmd_lst);
 	parent(cmd);
-	// rl_clear_history();
+	rl_clear_history();
 	free(ms->line);
 	free_tab(ms->env, 0);
 	exit (0);
@@ -46,7 +46,7 @@ void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms, int status)
 				error_management(7, cmd);
 	clear_lst(&cmd_lst);
 	free(ms->line);
-	// rl_clear_history();
+	rl_clear_history();
 	free_tab(ms->env, 0);
 	exit (0);
 }
