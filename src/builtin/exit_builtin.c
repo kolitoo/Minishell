@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:40:04 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 14:14:07 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/01 20:36:22 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	check_exit(t_cmd_lst *cmd_lst)
 void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 {
 	if (cmd_lst->limit_mode != NULL)
-	if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
-		if (unlink("/tmp/.file_temp.txt") == -1)
+		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
+			if (unlink("/tmp/.file_temp.txt") == -1)
 				error_management(7, cmd);
 	clear_lst(&cmd_lst);
 	parent(cmd);
@@ -33,7 +33,8 @@ void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 	exit (0);
 }
 
-void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms, int status)
+void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
+	t_ms *ms, int status)
 {
 	cmd->wpid = waitpid(cmd->off, &status, 0);
 	if (cmd->wpid == -1)

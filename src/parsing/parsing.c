@@ -3,40 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 17:38:30 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/01 20:20:26 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_cmd_lst	*make_cmd_lst(t_ms *ms)
+static int	launch_check(t_ms *ms)
 {
-	t_cmd_lst	*cmd_lst;
-	t_cmd_lst	*temp;
-	char	**double_tab;
-	int	i;
-
-	i = 1;
-	ms->boolean_infile = 0;
-	ms->boolean_outfile = 0;
 	if (check_fine_cote(ms->line, '\'', '\"') == ERR)
 	{
 		write(2, "dquote\n", 7);
-		return (NULL);
+		return (ERR);
 	}
 	if (check_space_chevron(ms->line) == ERR)
 	{
 		write(2, "chevron\n", 8);
-		return (NULL);
+		return (ERR);
 	}
 	if (check_pipe(ms->line) == ERR)
 	{
 		write(2, "dpipe\n", 7);
-		return (NULL);
+		return (ERR);
 	}
+	return (SUC);
+}
+
+t_cmd_lst	*make_cmd_lst(t_ms *ms)
+{
+	t_cmd_lst	*cmd_lst;
+	t_cmd_lst	*temp;
+	char		**double_tab;
+	int			i;
+
+	i = 1;
+	ms->boolean_infile = 0;
+	ms->boolean_outfile = 0;
+	if (launch_check(ms) == ERR)
+		return (NULL);
 	ms->split_pipe = split_incurve(ms->line, '|');
 	double_tab = parsing(ms->split_pipe[0], &ms);
 	cmd_lst = lstnew(double_tab, ms);
@@ -53,28 +60,28 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 	return (cmd_lst);
 }
 
-char    *parsing_chevron(char *one_cmd, t_ms **ms)
+char	*parsing_chevron(char *one_cmd, t_ms **ms)
 {
-    if (exist_chevron(one_cmd) == SUC)
-    {
-        if (her_doc_check(one_cmd) == SUC)
-        	right_check_heredoc(one_cmd, ms);
-        else
-            rights_check(one_cmd, ms, '<');
-        rights_check(one_cmd, ms, '>');
-        (*ms)->split_chevron_out = find_file(one_cmd, '>');
-        (*ms)->split_chevron_in = find_file(one_cmd, '<');
-        one_cmd = strspace_cpy(one_cmd, 0);
-        if (one_cmd == NULL)
-            return (NULL);
-    }
-    else
-    {
-	(*ms)->limit_mode = NULL;
-        (*ms)->split_chevron_in = NULL;
-        (*ms)->split_chevron_out = NULL;
-    }
-    return (one_cmd);
+	if (exist_chevron(one_cmd) == SUC)
+	{
+		if (her_doc_check(one_cmd) == SUC)
+			right_check_heredoc(one_cmd, ms);
+		else
+			rights_check(one_cmd, ms, '<');
+		rights_check(one_cmd, ms, '>');
+		(*ms)->split_chevron_out = find_file(one_cmd, '>');
+		(*ms)->split_chevron_in = find_file(one_cmd, '<');
+		one_cmd = strspace_cpy(one_cmd, 0);
+		if (one_cmd == NULL)
+			return (NULL);
+	}
+	else
+	{
+		(*ms)->limit_mode = NULL;
+		(*ms)->split_chevron_in = NULL;
+		(*ms)->split_chevron_out = NULL;
+	}
+	return (one_cmd);
 }
 
 char	**parsing(char	*one_cmd, t_ms **ms)
@@ -98,9 +105,7 @@ char	**parsing(char	*one_cmd, t_ms **ms)
 		double_tab = clean_str(double_tab);
 	}
 	else
-	{
 		write(2, "Probleme cote\n", 15);
-	}
 	free(one_cmd);//Free de tout le ms.split_pipe
 	return (double_tab);
 }

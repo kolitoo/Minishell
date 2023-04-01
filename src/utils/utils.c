@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:49:14 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 15:50:34 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/01 20:31:50 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,19 @@ int	her_doc_check(char *str)
 	return (ERR);
 }
 
-char    **clean_str(char **double_tab)
+char	**clean_str(char **double_tab)
 {
-    int    j;
+	int	j;
 
-    j = 0;
-    while (double_tab[j] != NULL)
-    {
-        if (check_cote(double_tab[j], '\'') == ERR || check_cote(double_tab[j], '\"') == ERR)
-            double_tab[j] = clear_quote(double_tab[j]);
-        j++;
-    }
-    return (double_tab);
+	j = 0;
+	while (double_tab[j] != NULL)
+	{
+		if (check_cote(double_tab[j], '\'') == ERR
+			|| check_cote(double_tab[j], '\"') == ERR)
+			double_tab[j] = clear_quote(double_tab[j]);
+		j++;
+	}
+	return (double_tab);
 }
 
 int	exist_chevron(char *str)

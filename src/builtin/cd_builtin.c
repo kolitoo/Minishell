@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:38:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 20:52:45 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/01 19:44:43 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,21 @@ int	check_cd(t_cmd_lst *cmd_lst)
 
 void	cd_builtin(char **tab, char **envp)
 {
-	char	*home;
-	int		i;
-	int		j;
+	t_var	var;
 
-	i = 0;
-	j = 0;
+	var.i = -1;
+	var.j = 0;
 	if (ft_strcmp(tab[1], "~") == 0)
 	{
-		while (envp[i] != NULL)
+		while (envp[++var.i] != NULL)
 		{
-			if (strncmp("HOME=", envp[i], 5) == 0)
+			if (strncmp("HOME=", envp[var.i], 5) == 0)
 				break ;
-			i++;
 		}
-		while (envp[i][j] != '\0')
-			j++;
-		home = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 6);
-		if (chdir(home) != 0)
+		while (envp[var.i][var.j] != '\0')
+			var.j++;
+		var.newstr = ft_substr(envp[var.i], 5, ft_strlen(envp[var.i]) - 6);
+		if (chdir(var.newstr) != 0)
 		{
 			perror("cd");
 			return ;

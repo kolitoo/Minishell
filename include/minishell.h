@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/31 14:02:09 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/01 19:29:04 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct s_var
 	int	k;
 	int	bool;
 	char	c;
+	char	*newstr;
+	char	*new_variable;
 }	t_var;
 
 typedef struct s_cmd

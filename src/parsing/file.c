@@ -6,33 +6,35 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:04:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 11:40:00 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/01 20:21:10 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char **find_file3(char *str, char **split_chevron, char *str2, t_var *var)
+static char	**find_file3(char *str, char **split_chevron,
+		char *str2, t_var *var)
 {
 	if (str[var->i] == var->c && bool_cote(str2, var->i) == 1)
+	{
+		str = put_space(str, var->c, &var->i, str2);
+		split_chevron[var->k] = malloc(sizeof(char)
+				* (len_file(str, var->i, var->c) + 1));//protect malloc
+		while ((str[var->i] != ' ' && str[var->i] != var->c
+				&& str[var->i] != '\0')
+			|| bool_cote(str2, var->i) == 0)
 		{
-			str = put_space(str, var->c, &var->i, str2);
-			split_chevron[var->k] = malloc(sizeof(char)
-					* (len_file(str, var->i, var->c) + 1));//protect malloc
-			while ((str[var->i] != ' ' && str[var->i] != var->c && str[var->i] != '\0')
-				|| bool_cote(str2, var->i) == 0)
-			{
-				split_chevron[var->k][var->j] = str[var->i];
-				str[var->i] = ' ';
-				var->i++;
-				var->j++;
-			}
-			split_chevron[var->k][var->j] = '\0';
-			if (var->j == 0)
-				split_chevron[var->k] = NULL;
-			var->k++;
+			split_chevron[var->k][var->j] = str[var->i];
+			str[var->i] = ' ';
+			var->i++;
+			var->j++;
 		}
-		return (split_chevron);
+		split_chevron[var->k][var->j] = '\0';
+		if (var->j == 0)
+			split_chevron[var->k] = NULL;
+		var->k++;
+	}
+	return (split_chevron);
 }
 
 static char	**find_file2(char *str, char **split_chevron, char *str2, char c)
@@ -65,7 +67,7 @@ char	**find_file(char *str, char c)
 	if (nb_chevron(str, c) == 0)
 		return (NULL);
 	str2 = strdup(str);
-	split_chevron = malloc(sizeof(char *) * (len_dbl_tab(str, c)));//protect malloc
+	split_chevron = malloc(sizeof(char *) * (len_dbl_tab(str, c)));
 	split_chevron = find_file2(str, split_chevron, str2, c);
 	free(str2);
 	return (split_chevron);

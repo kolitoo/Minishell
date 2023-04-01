@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:35:42 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 16:00:21 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/01 20:35:18 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,38 +97,6 @@ int	len_file(char *str, int i, char c)
 			break ;
 		len++;
 		i++;
-	}
-	return (len);
-}
-
-int	malloc_clear_quote(char *str, int i)
-{
-	int	len;
-
-	len = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\"')
-		{
-			i++;
-			while (str[i++] != '\"')
-				len++;
-			if (str[i] == '\"')
-				i++;
-		}
-		if (str[i] == '\'')
-		{
-			i++;
-			while (str[i++] != '\'')
-				len++;
-			if (str[i] == '\'')
-				i++;
-		}
-		if (str[i] != '\0' && str[i] != '\"' && str[i] != '\'')
-		{
-			len++;
-			i++;
-		}
 	}
 	return (len);
 }

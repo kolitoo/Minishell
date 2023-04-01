@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_fonction.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:45:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 17:41:08 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/01 20:32:04 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ void	lstclear(t_cmd_lst **cmd_lst)
 			save = (*cmd_lst)->next;
 			free_tab((*cmd_lst)->cmd_option, 0);
 			if ((*cmd_lst)->infile_name != NULL)
-				// free((*cmd_lst)->infile_name);
 				free_tab((*cmd_lst)->infile_name, 0);
-			// if ((*cmd_lst)->outfile_name != NULL)
-			// free((*cmd_lst)->outfile_name);
 			free_tab((*cmd_lst)->outfile_name, 0);
 			if ((*cmd_lst)->limit_mode != NULL)
 				free((*cmd_lst)->limit_mode);
