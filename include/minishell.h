@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/01 19:29:04 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:49:54 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void		close_fd(t_cmd *cmd);
 void		init_tab(t_cmd *cmd);
 void		find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void		clear_lst(t_cmd_lst **cmd_lst);
+ void		child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms);
 int			first_space(char *cmd);
 int			ft_strcmp_n(char *str1, char *str2);
 int			last_letter(char *cmd);
@@ -162,6 +163,8 @@ int			no_pipe(t_cmd_lst *cmd_lst, t_ms *ms);
 int			for_open(t_cmd_lst *cmd_lst, t_cmd *cmd);
 int			tab_len(char **tab);
 int			parent(t_cmd *cmd);
+int			open_infile(t_cmd *cmd ,t_cmd_lst *cmd_lst);
+int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst);
 
 //Builtin
 int			check_cd(t_cmd_lst *cmd_lst);

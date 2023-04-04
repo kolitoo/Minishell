@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 11:44:14 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/04 15:02:33 by lgirault         ###   ########.fr       */
+/*   Created: 2023/04/04 15:06:11 by lgirault          #+#    #+#             */
+/*   Updated: 2023/04/04 16:19:30 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-void	ft_putchar(char c, int *len)
+int	tab_len(char **tab)
 {
-	write (1, &c, 1);
-	*len = *len + 1;
+	int	i;
+
+	i = 0;
+	if (tab == NULL)
+		return (0);
+	while (tab[i] != NULL)
+	{
+		i++;
+	}
+	return (i - 1);
 }

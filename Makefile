@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/03/30 15:51:54 by abourdon         ###   ########.fr        #
+#    Updated: 2023/04/04 15:32:26 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,9 +50,12 @@ SRC = src/minishell.c \
 	src/pipex/find_good_path.c \
 	src/pipex/free_pipex.c \
 	src/pipex/here_doc.c \
-	src/pipex/make_tab_option.c \
 	src/pipex/make_tab_path.c \
 	src/pipex/utils.c \
+	src/pipex/utils2.c \
+	src/pipex/child.c \
+	src/pipex/open_outfile.c \
+	src/pipex/open_infile.c \
 
 OBJ = $(SRC:.c=.o)
 

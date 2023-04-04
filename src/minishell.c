@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/01 20:36:31 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/03 13:07:12 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,30 @@
 
 char	**set_env(char	**envp)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 	char	**env;
 
 	i = 0;
 	j = 0;
 	while (envp[i] != NULL)
 		i++;
-	env = malloc(sizeof(char *) * (i + 1));//protect malloc
+	env = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (envp[i] != NULL)
 	{
 		while (envp[i][j] != '\0')
 			j++;
 		env[i] = malloc(sizeof(char) * (j + 2));
-		j = -1;
-		while (envp[i][++j] != '\0')
+		j = 0;
+		while (envp[i][j] != '\0')
+		{
 			env[i][j] = envp[i][j];
+			j++;
+		}
 		env[i][j] = '\n';
 		j++;
-		env[i][j + 1] = '\0';
+		env[i][j] = '\0';
 		j = 0;
 		i++;
 	}

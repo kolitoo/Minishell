@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 16:11:48 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:34:31 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 
 int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 {
-	t_cmd cmd;
-	int	status;
+	t_cmd	cmd;
+	int		status;
 
 	status = 0;
 	init_tab(&cmd);
@@ -50,9 +50,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 		if (cmd.off == -1)
 			error_management(2, &cmd);
 		if (cmd.off == 0)
-		{
 			child_no_pipe(&cmd, cmd_lst, (*ms).env, ms);
-		}
 		only_last(cmd_lst, ms, &cmd, status);
 		cmd.wpid = waitpid(cmd.off, &status, 0);
 		if (cmd.wpid == -1)

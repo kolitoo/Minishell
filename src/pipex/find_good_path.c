@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:07:24 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 17:33:23 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:17:18 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	first_space(char *cmd)
 void	exit_free(char **tab_path, char *cmd)
 {
 	char	*cmd_without_opti;
-	int	i;
+	int		i;
 
 	i = 0;
 	cmd_without_opti = ft_substr(cmd, first_space(cmd), last_letter(cmd));
@@ -54,7 +54,8 @@ void	exit_free(char **tab_path, char *cmd)
 		i++;
 	}
 	ft_putchar_fd('\n', 2);
-	//ft_printf("zsh: command not found: %s\n", cmd_without_opti);//Faire un fd printf pour afficher sur la sortie 2
+	//ft_printf("zsh: command not found: %s\n", cmd_without_opti);
+	//Faire un fd printf pour afficher sur la sortie 2
 	free(cmd_without_opti);
 }
 
@@ -82,12 +83,6 @@ char	*find_good_path(char **envp, char *cmd, t_cmd *cmd1)
 	while (tab_path[i] != NULL)
 	{
 		str_cmd = ft_substr(cmd, first_space(cmd), last_letter(cmd));
-		if (str_cmd[0] == '\0')
-		{
-			exit_free(tab_path, cmd);
-			free(str_cmd);
-			return (NULL);
-		}
 		path_cmd = ft_strjoin(tab_path[i], str_cmd);
 		if (access(path_cmd, F_OK | X_OK) == 0)
 		{

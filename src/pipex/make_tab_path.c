@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:22:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 17:18:07 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:00:42 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
 	char	*cmd_without_opti;
 
-	cmd->options = cmd_lst->cmd_option;//cmd->options = tab_option(argv[cmd->i + cmd->off]);//fichier make_tab_path peut etre inutile du coup
+	cmd->options = cmd_lst->cmd_option;
 	if (cmd->options[0] == NULL)
 		return ;
 	if (where(cmd->options[0]) == 1)
@@ -73,10 +73,9 @@ void	find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 			cmd->cmd = ft_strdup(cmd_lst->cmd_option[0]);
 		else
 		{
-			cmd_without_opti = ft_substr(cmd_lst->cmd_option[0],
-					first_space(cmd_lst->cmd_option[0]),//inutile
-					last_letter(cmd_lst->cmd_option[0]));//inutile
+			cmd_without_opti = ft_strdup(cmd_lst->cmd_option[0]);
 			ft_printf("zsh: command not found: %s\n", cmd_without_opti);
+			//sortie 2 erreurs
 			free(cmd_without_opti);
 		}
 	}
