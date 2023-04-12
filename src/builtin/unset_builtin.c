@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:40 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/06 10:17:29 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:31:35 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	pos_egal(char *str)
 	return (i);
 }
 
-char	**unset_env(char *str, t_ms *ms)
+char	**unset_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	int		i;
 	int		j;
@@ -45,14 +45,19 @@ char	**unset_env(char *str, t_ms *ms)
 	i = 0;
 	j = 0;
 	k = 0;
-	new_env = malloc(sizeof(char *) * (tab_len(ms->env) + 1)); //protect
+	new_env = NULL;
+	new_env = malloc(sizeof(char *) * (tab_len(ms->env) + 1));
+	if (new_env == NULL)
+		free_builtin_export(ms, cmd_lst, new_env);
 	while (ms->env[j] != NULL)
 	{
 		if (ft_strncmp(str, ms->env[j], pos_egal(ms->env[j])) == 0)
 			j++;
 		if (ms->env[j] == NULL)
 			break ;
-		new_env[k] = malloc(sizeof(char) * (ft_strlen(ms->env[j]) + 1));//protect
+		new_env[k] = malloc(sizeof(char) * (ft_strlen(ms->env[j]) + 1));
+		if (new_env[k] == NULL)
+			free_builtin_export(ms, cmd_lst, new_env);
 		while (ms->env[j][i] != '\0')
 		{
 			new_env[k][i] = ms->env[j][i];
@@ -93,7 +98,7 @@ char	**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 				i++;
 		}
 		if (cmd_lst->cmd_option[j][i] == '\0')
-			ms->env = unset_env(cmd_lst->cmd_option[j], ms);
+			ms->env = unset_env(cmd_lst->cmd_option[j], ms, cmd_lst);
 		j++;
 	}
 	return (ms->env);

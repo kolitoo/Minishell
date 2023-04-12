@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/12 15:04:13 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:03:16 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_ms
 	int		here;
 	int		filed;
 	int		i_heredoc;
+	int		j_heredoc;
 }t_ms;
 
 typedef struct s_cmd_lst
@@ -117,18 +118,18 @@ int			len_dbl_tab(char *str, char c);
 int			len_file(char *str, int i, char c);
 int			rights_check_util(char *str, int *i, t_ms **ms, char c);
 char		*strspace_cpy(char *str, int i);
-char		**parsing(char *one_cmd, t_ms **ms);
+char    	**parsing(char    *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**split_incurve(char *str, char c);
-char		*set_dollar(char *str, t_ms **ms);
+char    	*set_dollar(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**find_file(char *str, char c);
 char		*find_variable(char *str, int i);
-char		*comp_env(char *str, t_ms **ms, int i);
-char    *replace_variable(char *str, char *envstring, char *variable);
-char    *replace_variable2(char *str, char *variable);
+char   		*comp_env(char *str, t_ms **ms, int i, t_cmd_lst *cmd_lst);
+char    	*replace_variable(char *str, char *envstring, char *variable);
+char    	*replace_variable2(char *str, char *variable);
 char		*put_space(char *str, char c, int *i, char *str2);
 char		**clean_str(char **double_tab);
 char		*clear_quote(char *str);
-char		*warning_error(char *str, int i, t_ms **ms);
+char    	*warning_error(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
 char		*neww_variable(char *new_variable, char *variable, char *envstring);
 void		lstadd_back(t_cmd_lst **lst, t_cmd_lst *new);
 void		lstclear(t_cmd_lst **cmd_lst);
@@ -140,7 +141,9 @@ void		right_check_heredoc(char *str, t_ms **ms);
 t_cmd_lst	*lstnew(char **double_tab, t_ms *ms);
 t_cmd_lst	*make_cmd_lst(t_ms *ms);
 void		handler_sigint(int signal);
-void		free_builtin(t_ms *ms, t_cmd_lst *cmd_lst, char **new_envp);
+void		free_builtin_export(t_ms *ms, t_cmd_lst *cmd_lst, char **new_envp);
+void		free_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
+void    	free_parsing(t_ms *ms, t_cmd_lst *cmd_lst, char *str);
 
 //Pipex
 char		*find_good_path(char **envp, char *cmd, t_cmd *cmd1);
@@ -177,7 +180,7 @@ int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst);
 
 //Builtin
 int			check_cd(t_cmd_lst *cmd_lst);
-int			check_echo(t_cmd_lst *cmd_lst);
+int			check_echo(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_pwd(t_cmd_lst *cmd_lst);
 int			check_env(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_unset(t_cmd_lst *cmd_lst);
@@ -189,7 +192,7 @@ void			exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms, int status)
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 char		**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
 char		**replace_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
-void		echo_builtin(char **tab, int bool);
+void		echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms);
 void		cd_builtin(char **tab, char **envp);
 void		pwd_builtin(void);
 void		only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status);

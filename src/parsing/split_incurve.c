@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_incurve.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:56:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 14:54:29 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:25:10 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	**split_incurve(char *str, char c)
 	var.j = 0;
 	res = malloc(sizeof(char *) * (count_words(str, c) + 1));
 	if (!res)
-		return (NULL);
+		return (NULL);//malloc
 	res = split_incurve2(str, res, var, c);
 	return (res);
 }

@@ -6,13 +6,13 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:35:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 15:03:21 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 17:56:04 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char    *check_n(char *str)
+char    *check_n(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 {
     int    i;
     char    *newstr;
@@ -26,7 +26,9 @@ char    *check_n(char *str)
         i++;
     if (str[i] != '\0')
         return (str);
-    newstr = malloc(sizeof(char) * 3);// proteger
+    newstr = malloc(sizeof(char) * 3);
+    if (newstr == NULL)
+	free_builtin(ms, cmd_lst);
     newstr[0] = '-';
     newstr[1] = 'n';
     newstr[2] = '\0';
@@ -69,22 +71,22 @@ int    check_e(char *str)
     
 }
 
-int    check_echo(t_cmd_lst *cmd_lst)
+int    check_echo(t_cmd_lst *cmd_lst, t_ms *ms)
 {
     if (ft_strcmp(cmd_lst->cmd_option[0], "echo") == SUC)
     {
-        cmd_lst->cmd_option[1] = check_n(cmd_lst->cmd_option[1]);
+        cmd_lst->cmd_option[1] = check_n(cmd_lst->cmd_option[1], ms, cmd_lst);
         if (ft_strcmp(cmd_lst->cmd_option[1], "-n") == SUC
             && check_e(cmd_lst->cmd_option[1]) == ERR
             && check_e(cmd_lst->cmd_option[2]) == ERR)
         {
-            echo_builtin(cmd_lst->cmd_option, 0);
+            echo_builtin(cmd_lst->cmd_option, 0, cmd_lst, ms);
             return (0);
         }
         else if (check_e(cmd_lst->cmd_option[1]) == ERR
             && check_e(cmd_lst->cmd_option[2]) == ERR)
         {
-            echo_builtin(cmd_lst->cmd_option, 1);
+            echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms);
             return (0);
         }
         printf("EXECV\n");
@@ -109,14 +111,14 @@ void	printstr(char *str)
 	}
 }
 
-void    echo_builtin(char **tab, int bool)
+void    echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms)
 {
     int    j;
 
     j = 1;
     while (tab[j] != NULL)
     {
-        tab[j] = check_n(tab[j]);
+        tab[j] = check_n(tab[j], ms, cmd_lst);
         if (ft_strcmp(tab[j], "-n") != SUC && check_e(tab[j]) == 1)
         {
             printstr(tab[j]);
