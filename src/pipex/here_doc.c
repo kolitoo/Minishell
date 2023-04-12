@@ -6,16 +6,42 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 10:36:39 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:19:06 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
+{
+	if (ms->temp == NULL)
+	{
+		free_cmd1(cmd);
+		lstclear(&cmd_lst);
+		free_tab(ms->env, 0);
+		free(ms->temp);
+		exit(2);
+	}
+	if (ft_strcmp(cmd_lst->infile_name[ms->i_heredoc], ms->temp) == 0)
+	{
+		free_cmd1(cmd);
+		lstclear(&cmd_lst);
+		free_tab(ms->env, 0);
+		free(ms->temp);
+		exit (1);
+	}
+	else
+	{
+		write(cmd->fd_infile, ms->temp, ft_strlen(ms->temp));
+		write(cmd->fd_infile, "\n", 1);
+	}
+}
+
 void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
-	//char	*temp;
 	int	test;
+
+	test = 0;
 	ms->here = 1;
 	ms->filed = fork();
 	if (ms->filed == 0)
@@ -24,24 +50,7 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 		{
 			ms->here = 1;
 			ms->temp = readline("> ");
-			if (ms->temp == NULL)
-			{
-				free_cmd1(cmd);
-				lstclear(&cmd_lst);
-				free_tab(ms->env, 0);
-				free(ms->temp);
-				exit(2);
-			}
-			if (ft_strcmp(cmd_lst->infile_name[ms->i_heredoc], ms->temp) == 0)
-			{
-				free(ms->temp);
-				exit (1);
-			}
-			else
-			{
-				write(cmd->fd_infile, ms->temp, ft_strlen(ms->temp));
-				write(cmd->fd_infile, "\n", 1);
-			}
+			read_prompt_condition(cmd, cmd_lst, ms);
 			free(ms->temp);
 		}
 	}

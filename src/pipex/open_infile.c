@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:32:38 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 10:33:44 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 12:56:03 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	open_infile_heredoc(t_cmd *cmd, t_cmd_lst *cmd_lst, int *j, t_ms *ms)
 		}
 		else
 		{
-			cmd->fd_infile = open(cmd_lst->infile_name[ms->i_heredoc], O_RDONLY);
+			cmd->fd_infile
+				= open(cmd_lst->infile_name[ms->i_heredoc], O_RDONLY);
 			*j = *j + 1;
 		}
 	}
@@ -46,7 +47,8 @@ int	open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 		while (cmd_lst->infile_name[ms->i_heredoc] != NULL)
 		{
 			if (cmd_lst->infile_mode == 1)
-				cmd->fd_infile = open(cmd_lst->infile_name[ms->i_heredoc], O_RDONLY);
+				cmd->fd_infile
+					= open(cmd_lst->infile_name[ms->i_heredoc], O_RDONLY);
 			open_infile_heredoc(cmd, cmd_lst, &j, ms);
 			if (cmd->fd_infile == -1)
 			{

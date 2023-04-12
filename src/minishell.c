@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/12 10:05:41 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 10:45:44 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ $$/      $$/ $$$$$$/ $$/   $$/ $$$$$$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$$$$$$$/ $
 void	handler_sigint(int signal)
 {
 	(void)signal;
-	if (/*ms.filed != 0 && */ms.here != 1/* && signal == SIGINT*/)
+	if (ms.here != 1)
 	{
 		ft_printf(1, "\n");
 		ft_printf(1, "\033[36m \033[1m");

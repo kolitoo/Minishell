@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:29 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/05 12:45:47 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:50:56 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ void	export_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 		if (check_forbiden_cara(cmd_lst->cmd_option[i]) == 0)
 		{
 			if (check_create_or_replace(cmd_lst->cmd_option[i], ms) == 1)
-				(*ms).env = create_env(cmd_lst->cmd_option[i], ms);
+				(*ms).env = create_env(cmd_lst->cmd_option[i], ms, cmd_lst);
 			else if (check_create_or_replace(cmd_lst->cmd_option[i], ms) == 0)
-				(*ms).env = replace_env(cmd_lst->cmd_option[i], ms);
+				(*ms).env = replace_env(cmd_lst->cmd_option[i], ms, cmd_lst);
 		}
 		else
 			ft_printf(2,

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/12 10:22:29 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:04:13 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void		right_check_heredoc(char *str, t_ms **ms);
 t_cmd_lst	*lstnew(char **double_tab, t_ms *ms);
 t_cmd_lst	*make_cmd_lst(t_ms *ms);
 void		handler_sigint(int signal);
+void		free_builtin(t_ms *ms, t_cmd_lst *cmd_lst, char **new_envp);
 
 //Pipex
 char		*find_good_path(char **envp, char *cmd, t_cmd *cmd1);
@@ -186,8 +187,8 @@ int			check_replace(char *str, t_ms *ms, int i);
 void			exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
 void			exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms, int status);
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
-char		**create_env(char *str, t_ms *ms);
-char		**replace_env(char *str, t_ms *ms);
+char		**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
+char		**replace_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
 void		echo_builtin(char **tab, int bool);
 void		cd_builtin(char **tab, char **envp);
 void		pwd_builtin(void);
