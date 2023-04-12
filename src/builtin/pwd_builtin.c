@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:14 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 20:51:12 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:22:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_pwd(t_cmd_lst *cmd_lst)
 		}
 		else
 		{
-			ft_printf("pwd: too many arguments\n");
+			ft_printf(2, "pwd: too many arguments\n");
 			return (0);
 		}
 	}
@@ -36,5 +36,5 @@ void	pwd_builtin(void)
 
 	str = malloc(sizeof(char) * PATH_MAX + 1);
 	getcwd(str, PATH_MAX);
-	ft_printf("%s\n", str);
+	ft_printf(1, "%s\n", str);
 }

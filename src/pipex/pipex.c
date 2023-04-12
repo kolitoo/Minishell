@@ -6,19 +6,19 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/04 16:22:35 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 09:59:43 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd)
+int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 {
 	cmd->fd_infile = 0;
 	cmd->fd_outfile = 0;
 	if (open_outfile(cmd, cmd_lst) == ERR)
 		return (ERR);
-	if (open_infile(cmd, cmd_lst) == ERR)
+	if (open_infile(cmd, cmd_lst, ms) == ERR)
 		return (ERR);
 	return (SUC);
 }
@@ -76,7 +76,7 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 	init(&cmd, cmd_lst, (*ms).env);
 	while (cmd_lst != NULL)
 	{
-		if (for_open(cmd_lst, &cmd) != 1)
+		if (for_open(cmd_lst, &cmd, ms) != 1)
 		{
 			cmd.pid[cmd.i] = fork();
 			if (cmd.pid[cmd.i] == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:40 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/01 19:46:30 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/06 10:17:29 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_unset(t_cmd_lst *cmd_lst)
 	if (ft_strcmp(cmd_lst->cmd_option[0], "unset") == SUC)
 	{
 		if (cmd_lst->cmd_option[1] == NULL)
-			ft_printf("unset need argument\n");
+			ft_printf(2, "unset need argument\n");
 		if (cmd_lst->cmd_option[1][0] == '-')
 			return (1);
 		return (0);
@@ -48,11 +48,11 @@ char	**unset_env(char *str, t_ms *ms)
 	new_env = malloc(sizeof(char *) * (tab_len(ms->env) + 1)); //protect
 	while (ms->env[j] != NULL)
 	{
-		if (strncmp(str, ms->env[j], ft_strlen(str)) == 0)
+		if (ft_strncmp(str, ms->env[j], pos_egal(ms->env[j])) == 0)
 			j++;
 		if (ms->env[j] == NULL)
 			break ;
-		new_env[k] = malloc(sizeof(char) * (ft_strlen(ms->env[j]) + 1));
+		new_env[k] = malloc(sizeof(char) * (ft_strlen(ms->env[j]) + 1));//protect
 		while (ms->env[j][i] != '\0')
 		{
 			new_env[k][i] = ms->env[j][i];
@@ -85,7 +85,7 @@ char	**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 		{
 			if (cmd_lst->cmd_option[j][i] == '=')
 			{
-				ft_printf("unset: %s: invalid parameter name\n",
+				ft_printf(2, "unset: %s: invalid parameter name\n",
 					cmd_lst->cmd_option[j]);
 				break ;
 			}

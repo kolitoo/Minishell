@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:22:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/04 16:00:42 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:57:25 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ void	find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 		else
 		{
 			cmd_without_opti = ft_strdup(cmd_lst->cmd_option[0]);
-			ft_printf("zsh: command not found: %s\n", cmd_without_opti);
-			//sortie 2 erreurs
+			ft_printf(2, "zsh: command not found: %s\n", cmd_without_opti);
 			free(cmd_without_opti);
 		}
 	}
@@ -100,7 +99,7 @@ char	*make_str_path(char **envp, char *cmd, t_cmd *cmd1)
 	if (envp[ijk.j] == NULL)
 	{
 		cmd_without_opti = ft_substr(cmd, first_space(cmd), last_letter(cmd));
-		ft_printf("zsh: command not found: %s\n", cmd_without_opti);
+		ft_printf(2, "zsh: command not found: %s\n", cmd_without_opti);
 		free(cmd_without_opti);
 		free_cmd1(cmd1);
 		exit(127);

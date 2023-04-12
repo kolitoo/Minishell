@@ -6,22 +6,22 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 15:17:08 by abourdon          #+#    #+#             */
-/*   Updated: 2023/01/19 11:53:42 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:14:58 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_putnbr_hexa_long(unsigned long n, char *base, int *len)
+static void	ft_putnbr_hexa_long(unsigned long n, char *base, int *len, int fd)
 {
 	if (n > 15)
 	{
-		ft_putnbr_hexa_long(n / 16, base, len);
+		ft_putnbr_hexa_long(n / 16, base, len, fd);
 	}
-	ft_putchar(base[n % 16], len);
+	ft_putchar_fd_printf(base[n % 16], len, fd);
 }
 
-void	ft_putvoid(void *ptr, int *len)
+void	ft_putvoid(void *ptr, int *len, int fd)
 {
 	unsigned long	i;
 
@@ -33,8 +33,8 @@ void	ft_putvoid(void *ptr, int *len)
 	else
 	{
 		i = (unsigned long) ptr;
-		ft_putchar('0', len);
-		ft_putchar('x', len);
-		ft_putnbr_hexa_long(i, "0123456789abcdef", len);
+		ft_putchar_fd_printf('0', len, fd);
+		ft_putchar_fd_printf('x', len, fd);
+		ft_putnbr_hexa_long(i, "0123456789abcdef", len, fd);
 	}
 }

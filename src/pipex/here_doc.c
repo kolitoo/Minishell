@@ -6,33 +6,50 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/31 17:39:47 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 10:36:39 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, int i)
+void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
-	char	*temp;
-
-	while (1)
+	//char	*temp;
+	int	test;
+	ms->here = 1;
+	ms->filed = fork();
+	if (ms->filed == 0)
 	{
-		temp = get_next_line(0);
-		if (temp == NULL)
+		while (ms->sig != 1)
 		{
-			free_cmd1(cmd);
-			exit(1);
+			ms->here = 1;
+			ms->temp = readline("> ");
+			if (ms->temp == NULL)
+			{
+				free_cmd1(cmd);
+				lstclear(&cmd_lst);
+				free_tab(ms->env, 0);
+				free(ms->temp);
+				exit(2);
+			}
+			if (ft_strcmp(cmd_lst->infile_name[ms->i_heredoc], ms->temp) == 0)
+			{
+				free(ms->temp);
+				exit (1);
+			}
+			else
+			{
+				write(cmd->fd_infile, ms->temp, ft_strlen(ms->temp));
+				write(cmd->fd_infile, "\n", 1);
+			}
+			free(ms->temp);
 		}
-		if (ft_strcmp_n(cmd_lst->infile_name[i], temp) == 0)
-			break ;
-		if (cmd_lst->cmd_option[0] == NULL && lstsize(cmd_lst) == 1)
-			write(cmd->fd_outfile, temp, ft_strlen(temp));
-		else
-			write(cmd->fd_infile, temp, ft_strlen(temp));
-		free(temp);
 	}
-	free(temp);
+	waitpid(ms->filed, &test, 0);
+	if (test == 512)
+	{
+		ms->sig = 1;
+	}
 }
 
 void	init_tab(t_cmd *cmd)

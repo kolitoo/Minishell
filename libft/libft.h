@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:59:05 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/20 14:46:13 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/05 13:54:40 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ int		ft_memcmp(const void *s1, const void *s2, size_t size);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_lstsize(t_list *lst);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strncmp(char *s1, char *s2, int n);
 int		ft_count_struct(char *str);
-int		ft_printf(const char *str, ...);
 int		ft_strlenn(const char *str);
 int		free_line(char *line);
 int		check_cara(char *str, char c, int boole);
 int		no_new_line(char *buff, char **line, int fd, int *red);
 int		init_read(char *buff, char **line, int *red, int fd);
+int		ft_printf(int fd, const char *str, ...);
 int		ft_strcmp(char *str1, char *str2);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *s);
@@ -54,7 +54,7 @@ char	*ft_strrchr(const char *str, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strtrim(char *s1, char *set);
+char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -80,12 +80,12 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
-void	ft_putnbr(int n, int *len);
-void	ft_putchar(char c, int *len);
-void	ft_putstr(char *str, int *len);
-void	ft_putnbr_unsi(unsigned int n, int *len);
-void	ft_putnb_base(unsigned int n, char *base, int *len);
-void	ft_putvoid(void *ptr, int *len);
+void	ft_putnbr(int n, int *len, int fd);
+void	ft_putchar_fd_printf(char c, int *len, int fd);
+void	ft_putstr(char *str, int *len, int fd);
+void	ft_putnbr_unsi(unsigned int n, int *len, int fd);
+void	ft_putnb_base(unsigned int n, char *base, int *len, int fd);
+void	ft_putvoid(void *ptr, int *len, int fd);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 size_t	ft_strlcpy(char *dest, const char *src, size_t n);
 size_t	ft_strlen(const char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 20:50:49 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/05 13:33:30 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	env_builtin(t_ms *ms)
 	j = 0;
 	while (ms->env[j] != NULL)
 	{
-		ft_printf("%s", ms->env[j]);
+		ft_printf(1, "%s", ms->env[j]);
 		j++;
 	}
 }

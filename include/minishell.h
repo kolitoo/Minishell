@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/04 15:49:54 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 10:22:29 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include <errno.h>
 # include <sys/wait.h>
 # include <limits.h>
+#include <signal.h>
+
 
 typedef struct s_tab
 {
@@ -71,6 +73,7 @@ typedef struct s_cmd
 typedef struct s_ms
 {
 	char	*line;
+	char	*temp;
 	char	**env;
 	char	**split_pipe;
 	char	**split_chevron_in;
@@ -80,6 +83,10 @@ typedef struct s_ms
 	int		boolean_infile;
 	int		code_erreur1;
 	int		code_erreur;
+	int		sig;
+	int		here;
+	int		filed;
+	int		i_heredoc;
 }t_ms;
 
 typedef struct s_cmd_lst
@@ -128,10 +135,11 @@ void		lstclear(t_cmd_lst **cmd_lst);
 void		free_tab(char	**tab, int i);
 void		rights_check(char *str, t_ms **ms, char c);
 void		print_map(char **map);
-void		read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, int i);
+void		read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 void		right_check_heredoc(char *str, t_ms **ms);
 t_cmd_lst	*lstnew(char **double_tab, t_ms *ms);
 t_cmd_lst	*make_cmd_lst(t_ms *ms);
+void		handler_sigint(int signal);
 
 //Pipex
 char		*find_good_path(char **envp, char *cmd, t_cmd *cmd1);
@@ -160,10 +168,10 @@ int			pipex(t_cmd_lst *cmd_lst, t_ms *ms);
 int			valid_cotev2(char *str, int i, char c);
 int			bool_cotev2(char *str, int i);
 int			no_pipe(t_cmd_lst *cmd_lst, t_ms *ms);
-int			for_open(t_cmd_lst *cmd_lst, t_cmd *cmd);
+int			for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
 int			tab_len(char **tab);
 int			parent(t_cmd *cmd);
-int			open_infile(t_cmd *cmd ,t_cmd_lst *cmd_lst);
+int			open_infile(t_cmd *cmd ,t_cmd_lst *cmd_lst, t_ms *ms);
 int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst);
 
 //Builtin
@@ -174,9 +182,12 @@ int			check_env(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_unset(t_cmd_lst *cmd_lst);
 int			check_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_exit(t_cmd_lst *cmd_lst);
+int			check_replace(char *str, t_ms *ms, int i);
 void			exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
 void			exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms, int status);
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
+char		**create_env(char *str, t_ms *ms);
+char		**replace_env(char *str, t_ms *ms);
 void		echo_builtin(char **tab, int bool);
 void		cd_builtin(char **tab, char **envp);
 void		pwd_builtin(void);

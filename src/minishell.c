@@ -6,11 +6,14 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/03 13:07:12 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 10:05:41 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+t_ms		ms;
+
 
 char	**set_env(char	**envp)
 {
@@ -28,15 +31,18 @@ char	**set_env(char	**envp)
 	{
 		while (envp[i][j] != '\0')
 			j++;
-		env[i] = malloc(sizeof(char) * (j + 2));
+		env[i] = malloc(sizeof(char) * (j + 2));//protect
 		j = 0;
 		while (envp[i][j] != '\0')
 		{
 			env[i][j] = envp[i][j];
 			j++;
 		}
-		env[i][j] = '\n';
-		j++;
+		if (env[i][j - 1] != '\n')
+		{
+			env[i][j] = '\n';
+			j++;
+		}
 		env[i][j] = '\0';
 		j = 0;
 		i++;
@@ -60,15 +66,15 @@ void	print_map(char **map)
 		if (map[j] == NULL)
 		{
 			printf("NULL\n");
-			printf("%s\n", map[j]);
 		}
+		printf("%s\n", map[j]);
 		j++;
 	}
 }
 
 void	print_minishell(void)
 {
-	ft_printf("\033[32;1m __       __  ______  __    __  ______   ______   __    __  ________  __        __       \n\
+	ft_printf(1, "\033[32;1m __       __  ______  __    __  ______   ______   __    __  ________  __        __       \n\
 /  \\     /  |/      |/  \\  /  |/      | /      \\ /  |  /  |/        |/  |      /  |\n\
 $$  \\   /$$ |$$$$$$/ $$  \\ $$ |$$$$$$/ /$$$$$$  |$$ |  $$ |$$$$$$$$/ $$ |      $$ |\n\
 $$$  \\ /$$$ |  $$ |  $$$  \\$$ |  $$ |  $$ \\__$$/ $$ |__$$ |$$ |__    $$ |      $$ |\n\
@@ -80,20 +86,49 @@ $$/      $$/ $$$$$$/ $$/   $$/ $$$$$$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$$$$$$$/ $
 \n");
 }
 
+void	handler_sigint(int signal)
+{
+	(void)signal;
+	if (/*ms.filed != 0 && */ms.here != 1/* && signal == SIGINT*/)
+	{
+		ft_printf(1, "\n");
+		ft_printf(1, "\033[36m \033[1m");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	if (ms.here == 1 && ms.filed == 0)
+	{
+		//ft_printf(1, "\033[36m \033[1m");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		// rl_redisplay();
+		//printf("2\n");
+		ms.here = 0;
+		ms.sig = 1;
+		close(0);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_ms		ms;
 	t_cmd_lst	*cmd_lst;
-	// int	i;
+
 	(void)argc;
 	(void)argv;
+	signal(SIGINT, handler_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	ms.env = set_env(envp);
-	// i = 1;
+	ms.here = 0;
 	print_minishell();
 	while (1)
 	{
-		ft_printf("\033[36m \033[1m");
-		ms.line = readline("minishell → \033[0m");
+		ms.here = 0;
+		ft_printf(1, "\033[36m \033[1m");
+		ms.line = readline("minishell →  \033[0m");
+		if (ms.line == NULL)//CTR + D
+			break ;
+		ms.sig = 0;
 		if (ms.line[0] != '\0')
 		{
 			cmd_lst = make_cmd_lst(&ms);
@@ -101,6 +136,24 @@ int	main(int argc, char **argv, char **envp)
 			add_history(ms.line);
 			if (cmd_lst != NULL)
 			{
+				if (lstsize(cmd_lst) > 1)
+					ms.code_erreur = pipex(cmd_lst, &ms);
+				else if (lstsize(cmd_lst) == 1)
+					ms.code_erreur = no_pipe(cmd_lst, &ms);
+				else
+				{
+					free(cmd_lst);
+					lstclear(&cmd_lst);
+				}
+			}
+		}
+		free(ms.line);
+	}
+	rl_clear_history();
+	free(ms.line);
+	free_tab(ms.env, 0);
+}
+
 			// 	while (cmd_lst != NULL)
 			// 	{
 			// 		printf("CMD %d :\n", i);
@@ -114,21 +167,5 @@ int	main(int argc, char **argv, char **envp)
 			// 		cmd_lst = cmd_lst->next;
 			// 		i++;
 			// 	}
-				if (lstsize(cmd_lst) > 1)
-					ms.code_erreur = pipex(cmd_lst, &ms);
-				else if (lstsize(cmd_lst) == 1)
-					ms.code_erreur = no_pipe(cmd_lst, &ms);
-				else
-				{
-					free(cmd_lst);
-					lstclear(&cmd_lst);
-				}
-			}
-		}
-		// i = 0;
-		free(ms.line);
-	}
-	rl_clear_history();
-	free(ms.line);
-	free_tab(ms.env, 0);
-}
+//pb echo -nnnnnnnnnnnnn -nnnnnnnnnnnnnnnnnnnnnn -nnnnnnnnnnnn
+//pb retour ligne heredoc

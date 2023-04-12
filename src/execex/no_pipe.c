@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/04 16:34:31 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 09:32:57 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 
 	status = 0;
 	init_tab(&cmd);
-	if (for_open(cmd_lst, &cmd) != 1)
+	if (for_open(cmd_lst, &cmd, ms) != 1)
 	{
 		cmd.off = fork();
 		if (cmd.off == -1)

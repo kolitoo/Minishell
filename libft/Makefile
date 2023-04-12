@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 13:58:40 by lgirault          #+#    #+#              #
-#    Updated: 2023/03/17 12:22:24 by lgirault         ###   ########.fr        #
+#    Updated: 2023/04/05 11:18:59 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,31 +59,29 @@ SRC =		ft_memcpy.c \
 	ft_lstiter.c \
 	ft_lstmap.c \
 	ft_printf.c \
-	ft_putchar.c \
+	ft_putchar_fd_printf.c \
 	ft_putnb_base.c \
 	ft_putnbr_unsi.c \
 	ft_putstr.c \
 	ft_putnbr.c \
 	ft_putvoid.c \
+	ft_strcmp.c \
 	get_next_line.c \
 	get_next_line_utils.c \
-	ft_strcmp.c \
 
 OBJ = $(SRC:.c=.o)
 
-%.o : %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	@$(AR) $(NAME) $(OBJ)
+	$(AR) $(NAME) $(OBJ)
 
 all: $(NAME)
 
 clean:
-	@$(RM) $(OBJ)
+	$(RM) $(OBJ)
 
 fclean: clean
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 

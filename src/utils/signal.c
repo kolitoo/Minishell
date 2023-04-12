@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 11:44:14 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/04 15:02:33 by lgirault         ###   ########.fr       */
+/*   Created: 2023/04/06 10:59:11 by lgirault          #+#    #+#             */
+/*   Updated: 2023/04/11 10:13:53 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-void	ft_putchar(char c, int *len)
-{
-	write (1, &c, 1);
-	*len = *len + 1;
-}
+// void	handler_sigint(int signal)
+// {
+// 	if (signal == SIGINT)
+// 	{
+// 		rl_replace_line(" ", 0);
+// 		ft_printf(1, "\n");
+// 		ft_printf(1, "\033[36m \033[1m");
+// 		ft_printf(1, "minishell →  \033[0m");
+// 		ms.sig = 1;
+// 	}
+// }
