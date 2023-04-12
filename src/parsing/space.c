@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 13:49:36 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/30 16:08:45 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/12 20:32:31 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,17 @@ static char	*strspace_cpy2(char *str, int i, int j, char *result)
 	return (result);
 }
 
-char	*strspace_cpy(char *str, int i)
+char	*strspace_cpy(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst)
 {
 	int		j;
 	char	*result;
 
 	j = 0;
+	result = NULL;
 	result = malloc(sizeof(char *)
 			* (countlen(str, 0, 0, 0) + 1));//protect maloc
+	if (!result)
+		free_parsing(*ms,cmd_lst, str);
 	while (str[i] == ' ' && str[i] != '\0')
 		i++;
 	if (str[i] == '\0')
