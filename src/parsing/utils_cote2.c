@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cote2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:48:12 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/01 20:34:38 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:00:25 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static char	*clear_quote3(char *str, char *newstr, int i, int j)
 	return (newstr);
 }
 
-char	*clear_quote(char *str)
+char	*clear_quote(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	int		i;
 	int		j;
@@ -112,7 +112,9 @@ char	*clear_quote(char *str)
 	j = 0;
 	len = 0;
 	clear_quote2(str, i, &len);
-	newstr = malloc(sizeof(char) * (len + 1)); // protect malloc
+	newstr = malloc(sizeof(char) * (len + 1));
+	if (newstr == NULL)
+		free_parsing(ms, cmd_lst, str);
 	i = 0;
 	newstr = clear_quote3(str, newstr, i, j);
 	free(str);

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/13 09:40:55 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:48:27 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,12 @@ void	handler_sigint(int signal)
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd_lst	*cmd_lst;
+	//int	i;
 
 	(void)argc;
 	(void)argv;
 	(void)envp;
+	//i = 0;
 	signal(SIGINT, handler_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	ms.env = set_env(envp);
@@ -144,6 +146,21 @@ int	main(int argc, char **argv, char **envp)
 			add_history(ms.line);
 			if (cmd_lst != NULL)
 			{
+				// while (cmd_lst != NULL)
+				// {
+				// 	printf("CMD %d :\n", i);
+				// 	print_map(cmd_lst->cmd_option);
+				// 	printf("TAB OUTFILE %d :\n", i);
+				// 	print_map(cmd_lst->outfile_name);
+				// 	printf("TAB INFILE %d :\n", i);
+				// 	print_map(cmd_lst->infile_name);
+				// 	printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
+				// 	printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
+				// 	printf("LIMIT MODE %d :\n", i);
+				// 	printf("%d\n", cmd_lst->limit_mode[0]);
+				// 	cmd_lst = cmd_lst->next;
+				// 	i++;
+				// }
 				if (lstsize(cmd_lst) > 1)
 					ms.code_erreur = pipex(cmd_lst, &ms);
 				else if (lstsize(cmd_lst) == 1)
@@ -155,6 +172,7 @@ int	main(int argc, char **argv, char **envp)
 				}
 			}
 		}
+		//i = 0;
 		free(ms.line);
 	}
 	rl_clear_history();
@@ -163,18 +181,5 @@ int	main(int argc, char **argv, char **envp)
 	free_tab(ms.env, 0);
 }
 
-			// 	while (cmd_lst != NULL)
-			// 	{
-			// 		printf("CMD %d :\n", i);
-			// 		print_map(cmd_lst->cmd_option);
-			// 		printf("TAB OUTFILE %d :\n", i);
-			// 		print_map(cmd_lst->outfile_name);
-			// 		printf("TAB INFILE %d :\n", i);
-			// 		print_map(cmd_lst->infile_name);
-			// 		printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
-			// 		printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
-			// 		cmd_lst = cmd_lst->next;
-			// 		i++;
-			// 	}
 //pb echo -nnnnnnnnnnnnn -nnnnnnnnnnnnnnnnnnnnnn -nnnnnnnnnnnn
 //pb retour ligne heredoc

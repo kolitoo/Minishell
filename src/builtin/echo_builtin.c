@@ -6,11 +6,71 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:35:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/13 09:36:36 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/13 17:10:38 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+// void	printchar(char c)
+// {
+// 	write(1, &c, 1);
+// }
+
+// void	printstr(char *str)
+// {
+// 	int	i;
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		printchar(str[i]);
+// 		i++;
+// 	}
+// }
+
+// int	check_echo(t_cmd_lst *cmd_lst, t_ms *ms)
+// {
+// 	(void)ms;
+// 	if (ft_strcmp(cmd_lst->cmd_option[0], "echo") == SUC)
+// 	{
+// 		if (ft_strcmp(cmd_lst->cmd_option[1], "-n") == SUC
+// 			&& ft_strcmp(cmd_lst->cmd_option[2], "-e") != 0
+// 			&& ft_strcmp(cmd_lst->cmd_option[2], "-E") != 0)
+// 		{
+// 			echo_builtin(cmd_lst->cmd_option, 1);
+// 			return (0);
+// 		}
+// 		else if (ft_strcmp(cmd_lst->cmd_option[1], "-e") != 0
+// 			&& ft_strcmp(cmd_lst->cmd_option[1], "-E") != 0
+// 			&& ft_strcmp(cmd_lst->cmd_option[2], "-e") != 0
+// 			&& ft_strcmp(cmd_lst->cmd_option[2], "-E") != 0)
+// 		{
+// 			echo_builtin(cmd_lst->cmd_option, 0);
+// 			return (0);
+// 		}
+// 	}
+// 	return (1);
+// }
+
+// void	echo_builtin(char **tab, int bool)
+// {
+// 	int	j;
+
+// 	j = 0;
+// 	if (bool == 0)
+// 		j = 1;
+// 	else if (bool == 1)
+// 		j = 2;
+// 	while (tab[j] != NULL)
+// 	{
+// 		ft_printf(1, "%s", tab[j]);
+// 		if (tab[j + 1] != NULL)
+// 			ft_printf(1, " ");
+// 		j++;
+// 	}
+// 	if (bool == 0)
+// 		ft_printf(1, "\n");
+// }
 
 char    *check_n(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 {
@@ -89,27 +149,26 @@ int    check_echo(t_cmd_lst *cmd_lst, t_ms *ms)
             echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms);
             return (0);
         }
-        printf("EXECV\n");
     }
     return (1);
 }
 
-void	printchar(char c)
-{
-	write(1, &c, 1);
-}
+// void	printchar(char c, t_cmd *cmd)
+// {
+// 	write(cmd->fd_outfile, &c, 1);
+// }
 
-void	printstr(char *str)
-{
-	int	i;
+// void	printstr(char *str, t_cmd *cmd)
+// {
+// 	int	i;
 
-	i = 0;
-	while (str[i])
-	{
-		printchar(str[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		printchar(str[i], cmd);
+// 		i++;
+// 	}
+// }
 
 void    echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms)
 {
@@ -121,12 +180,12 @@ void    echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms)
         tab[j] = check_n(tab[j], ms, cmd_lst);
         if (ft_strcmp(tab[j], "-n") != SUC && check_e(tab[j]) == 1)
         {
-            printstr(tab[j]);
+            ft_printf(1, "%s", tab[j]);
             if (tab[j + 1] != NULL)
-                printchar(' ');
+                ft_printf(1, " ");
         }
         j++;
     }
     if (bool == 1)
-        printchar('\n');
+         ft_printf(1, "\n");
 }

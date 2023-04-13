@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_chevron.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 12:40:25 by lgirault          #+#    #+#             */
-/*   Updated: 2023/03/30 14:37:01 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:52:56 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,16 @@ static int	space_chevron_utils(int *i, char *s, char c)
 	return (SUC);
 }
 
-int	check_space_chevron(char *str)
+int	check_space_chevron(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	int		i;
 	char	*s;
 
 	i = 0;
 	s = ft_strdup(str);
-	s = strspace_cpy(s, 0);
+	if (s == NULL)
+		free_parsing(ms, cmd_lst, s);
+	s = strspace_cpy(s, 0, &ms, cmd_lst);
 	if (check_more_2_chevron(s) == ERR)
 	{
 		free(s);

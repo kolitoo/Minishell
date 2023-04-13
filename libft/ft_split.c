@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 17:51:47 by lgirault          #+#    #+#             */
-/*   Updated: 2022/11/21 11:20:08 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:09:37 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ char	**ft_split(char const *s, char c)
 {
 	char	**res;
 
+	res = NULL;
 	if (s == NULL)
 		return (NULL);
 	res = malloc((count_wd(s, c) + 1) * sizeof(char *));

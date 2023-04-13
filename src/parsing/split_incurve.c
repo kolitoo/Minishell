@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:56:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 18:25:10 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:06:55 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,24 @@ int	count_line(char *str, char c, int i)
 	return (count);
 }
 
-static char	**split_incurve2(char *str, char **res, t_var var, char c)
+static char	**split_incurve2(char **res, t_var var, t_ms *ms, t_cmd_lst *cmd_lst)
 {
-	while (str[var.i] != '\0')
+	while (var.newstr[var.i] != '\0')
 	{
 		var.k = 0;
-		while (str[var.i] == c && bool_cote(str, var.i) == ERR)
+		while (var.newstr[var.i] == var.c && bool_cote(var.newstr, var.i) == ERR)
 			var.i++;
-		res[var.j] = malloc(sizeof(char) * (count_line(str, c, var.i) + 1));
+		res[var.j] = malloc(sizeof(char) * (count_line(var.newstr, var.c, var.i) + 1));
 		if (!res[var.j])
 		{
 			free_all(res, var.j);
-			return (NULL);
+			free_parsing(ms, cmd_lst, var.newstr);
 		}
-		while ((str[var.i] != c || (str[var.i] == c
-					&& bool_cote(str, var.i) == SUC))
-			&& str[var.i] != '\0')
+		while ((var.newstr[var.i] != var.c || (var.newstr[var.i] == var.c
+					&& bool_cote(var.newstr, var.i) == SUC))
+			&& var.newstr[var.i] != '\0')
 		{
-			res[var.j][var.k] = str[var.i];
+			res[var.j][var.k] = var.newstr[var.i];
 			var.i++;
 			var.k++;
 		}
@@ -91,16 +91,18 @@ static char	**split_incurve2(char *str, char **res, t_var var, char c)
 	return (res);
 }
 
-char	**split_incurve(char *str, char c)
+char	**split_incurve(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	t_var	var;
 	char	**res;
 
 	var.i = 0;
 	var.j = 0;
-	res = malloc(sizeof(char *) * (count_words(str, c) + 1));
+	var.c = c;
+	var.newstr = str;
+	res = malloc(sizeof(char *) * (count_words(var.newstr, var.c) + 1));
 	if (!res)
-		return (NULL);//malloc
-	res = split_incurve2(str, res, var, c);
+		free_parsing(ms, cmd_lst, var.newstr);
+	res = split_incurve2(res, var, ms, cmd_lst);
 	return (res);
 }

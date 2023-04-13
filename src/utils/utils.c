@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:49:14 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/01 20:31:50 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:06:07 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	her_doc_check(char *str)
 	return (ERR);
 }
 
-char	**clean_str(char **double_tab)
+char	**clean_str(char **double_tab, t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	int	j;
 
@@ -66,7 +66,7 @@ char	**clean_str(char **double_tab)
 	{
 		if (check_cote(double_tab[j], '\'') == ERR
 			|| check_cote(double_tab[j], '\"') == ERR)
-			double_tab[j] = clear_quote(double_tab[j]);
+			double_tab[j] = clear_quote(double_tab[j], ms, cmd_lst);
 		j++;
 	}
 	return (double_tab);

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 14:19:06 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/13 17:17:37 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 		free(ms->temp);
 		exit(2);
 	}
-	if (ft_strcmp(cmd_lst->infile_name[ms->i_heredoc], ms->temp) == 0)
+	if (ft_strcmp_n(cmd_lst->infile_name[ms->i_heredoc], ms->temp) == 0)
 	{
 		free_cmd1(cmd);
 		lstclear(&cmd_lst);
@@ -33,7 +33,7 @@ void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	else
 	{
 		write(cmd->fd_infile, ms->temp, ft_strlen(ms->temp));
-		write(cmd->fd_infile, "\n", 1);
+		//write(cmd->fd_infile, "\n", 1);
 	}
 }
 
@@ -50,6 +50,7 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 		{
 			ms->here = 1;
 			ms->temp = readline("> ");
+			ms->temp = ft_strjoin(ms->temp, "\n");
 			read_prompt_condition(cmd, cmd_lst, ms);
 			free(ms->temp);
 		}
