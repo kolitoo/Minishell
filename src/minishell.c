@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/12 10:45:44 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:31:23 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,19 @@ char	**set_env(char	**envp)
 	while (envp[i] != NULL)
 		i++;
 	env = malloc(sizeof(char *) * (i + 1));
+	if (env == NULL)
+		exit (1);
 	i = 0;
 	while (envp[i] != NULL)
 	{
 		while (envp[i][j] != '\0')
 			j++;
-		env[i] = malloc(sizeof(char) * (j + 2));//protect
+		env[i] = malloc(sizeof(char) * (j + 2));
+		if (env[i] == NULL)
+		{
+			free_tab(env, 0);
+			exit (1);
+		}
 		j = 0;
 		while (envp[i][j] != '\0')
 		{
@@ -116,6 +123,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	(void)envp;
 	signal(SIGINT, handler_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	ms.env = set_env(envp);
@@ -150,7 +158,8 @@ int	main(int argc, char **argv, char **envp)
 		free(ms.line);
 	}
 	rl_clear_history();
-	free(ms.line);
+	if (ms.line != NULL)
+		free(ms.line);
 	free_tab(ms.env, 0);
 }
 

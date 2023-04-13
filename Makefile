@@ -6,13 +6,13 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/04/06 11:25:19 by lgirault         ###   ########.fr        #
+#    Updated: 2023/04/13 09:01:58 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g
 LIBFT_PATH = ./libft/
 LIBFT = libft/libft.a
 RM = rm -rf
@@ -72,8 +72,13 @@ $(NAME): $(OBJ) $(LIBFT) include/minishell.h
 $(LIBFT):
 	@make --no-print-directory -C $(LIBFT_PATH)
 
+
 	
+
 all: $(NAME)
+
+# malloc_test: $(NAME)
+# 	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJ} -lreadline $(LIBFT) -L. -lmallocator
 
 clean:
 	@echo "$(BLUE)$(BOLD)Cleaning object files...$(RESET)"
