@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/12 18:03:16 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/12 20:33:04 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int			limit_mode_malloc(char *str);
 int			len_dbl_tab(char *str, char c);
 int			len_file(char *str, int i, char c);
 int			rights_check_util(char *str, int *i, t_ms **ms, char c);
-char		*strspace_cpy(char *str, int i);
+char		*strspace_cpy(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
 char    	**parsing(char    *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**split_incurve(char *str, char c);
 char    	*set_dollar(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
