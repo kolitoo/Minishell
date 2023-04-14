@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/14 15:50:41 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/14 17:16:21 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void		free_env_utils(char *new_variable, char *variable,
 void		free_env_utils2(char *variable, char *str);
 void		variable_util(t_var *var, char *str);
 void		free_file(t_var *var, t_ms *ms, t_cmd_lst *cmd_lst);
+void		launch_signal(void);
 t_cmd_lst	*lstnew(char **double_tab, t_ms *ms);
 t_cmd_lst	*make_cmd_lst(t_ms *ms);
 

@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/14 16:34:29 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/14 17:28:57 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ void	handler_sigint(int signal)
 	}
 }
 
-static	void	launch_signal(void)
-{
-	signal(SIGINT, handler_sigint);
-	signal(SIGQUIT, SIG_IGN);
-}
-
 static void	readline_ok(t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	if (ms->line[0] != '\0')
@@ -92,7 +86,10 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		ms.here = 0;
-		ft_printf(1, "\033[36m \033[1m");
+		if (ms.code_erreur == 0)
+			ft_printf(1, "👍 \033[36m\033[1m(%d) ", ms.code_erreur);
+		else
+			ft_printf(1, "👎 \033[36m\033[1m(%d) ", ms.code_erreur);
 		ms.line = readline("minishell →  \033[0m");
 		if (ms.line == NULL)
 			break ;
