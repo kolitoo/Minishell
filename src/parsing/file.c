@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:04:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/13 16:18:01 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 12:03:48 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	**find_file3(char **split_chevron, t_var *var, t_ms *ms, t_cmd_lst *cmd_lst)
+static char	**find_file3(char **split_chevron, t_var *var,
+		t_ms *ms, t_cmd_lst *cmd_lst)
 {
-	if (var->newstr[var->i] == var->c && bool_cote(var->new_variable, var->i) == 1)
+	if (var->newstr[var->i] == var->c
+		&& bool_cote(var->new_variable, var->i) == 1)
 	{
-		var->newstr = put_space(var->newstr, var->c, &var->i, var->new_variable);
+		var->newstr = put_space(var->newstr, var->c,
+				&var->i, var->new_variable);
 		split_chevron[var->k] = malloc(sizeof(char)
 				* (len_file(var->newstr, var->i, var->c) + 1));
 		if (split_chevron[var->k] == NULL)
-		{
-			free(var->new_variable);
-			free_parsing(ms, cmd_lst, var->newstr);
-		}
+			free_file(var, ms, cmd_lst);
 		while ((var->newstr[var->i] != ' ' && var->newstr[var->i] != var->c
 				&& var->newstr[var->i] != '\0')
 			|| bool_cote(var->new_variable, var->i) == 0)
@@ -41,7 +41,8 @@ static char	**find_file3(char **split_chevron, t_var *var, t_ms *ms, t_cmd_lst *
 	return (split_chevron);
 }
 
-static char	**find_file2(char **split_chevron, t_var var, t_ms *ms, t_cmd_lst *cmd_lst)
+static char	**find_file2(char **split_chevron, t_var var,
+		t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	var.j = 0;
 	var.k = 0;
@@ -51,7 +52,8 @@ static char	**find_file2(char **split_chevron, t_var var, t_ms *ms, t_cmd_lst *c
 		var.j = 0;
 		split_chevron = find_file3(split_chevron, &var, ms, cmd_lst);
 		if ((var.newstr[var.i] != '\0' && var.newstr[var.i] != var.c)
-			|| (var.newstr[var.i] == var.c && bool_cote(var.newstr, var.i) == SUC))
+			|| (var.newstr[var.i] == var.c
+				&& bool_cote(var.newstr, var.i) == SUC))
 			var.i++;
 	}
 	split_chevron[var.k] = NULL;
@@ -64,8 +66,8 @@ char	**find_file(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	char		**split_chevron;
 	char		*str2;
-	t_var	var;
-	
+	t_var		var;
+
 	str2 = NULL;
 	var.c = c;
 	var.newstr = str;
@@ -114,31 +116,29 @@ void	rights_check(char *str, t_ms **ms, char c)
 
 void	right_check_heredoc(char *str, t_ms **ms, t_cmd_lst *cmd_lst)
 {
-	int	i;
-	int	j;
-	int	len;
+	t_var	var;
 
-	i = 0;
-	j = 0;
-	len = limit_mode_malloc(str);
-	(*ms)->limit_mode = malloc(sizeof(int) * len);
+	var.i = 0;
+	var.j = 0;
+	var.len = limit_mode_malloc(str);
+	(*ms)->limit_mode = malloc(sizeof(int) * var.len);
 	if ((*ms)->limit_mode == NULL)
 		free_parsing(*ms, cmd_lst, str);
-	while (str[i] != '\0')
+	while (str[var.i] != '\0')
 	{
-		if (str[i] == '<' && str[i + 1] == '<')
+		if (str[var.i] == '<' && str[var.i + 1] == '<')
 		{
-			(*ms)->limit_mode[j] = 2;
-			j++;
-			i = i + 2;
+			(*ms)->limit_mode[var.j] = 2;
+			var.j++;
+			var.i = var.i + 2;
 		}
-		if (str[i] == '<' && str[i + 1] != '<')
+		if (str[var.i] == '<' && str[var.i + 1] != '<')
 		{
-			(*ms)->limit_mode[j] = 1;
-			j++;
-			i++;
+			(*ms)->limit_mode[var.j] = 1;
+			var.j++;
+			var.i++;
 		}
-		if (str[i] != '\0')
-			i++;
+		if (str[var.i] != '\0')
+			var.i++;
 	}
 }

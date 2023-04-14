@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:07:24 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 20:25:45 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:06:21 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int	first_space(char *cmd)
 void	exit_free(char **tab_path, char *cmd)
 {
 	char	*cmd_without_opti;
-	// int		i;
 
-	// i = 0;
 	cmd_without_opti = ft_substr(cmd, first_space(cmd), last_letter(cmd));
 	free_tab(tab_path, 0);
 	ft_printf(2, "zsh: command not found: %s\n", cmd_without_opti);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:56:44 by abourdon          #+#    #+#             */
-/*   Updated: 2023/03/31 17:38:49 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:23:59 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	valid_cote(char *str, int i, char c)
 		if ((k % 2) == 1)
 			k++;
 	}
-	if ((k % 2) == 0) //pas entre cote
+	if ((k % 2) == 0)
 		return (ERR);
 	return (SUC);
 }
@@ -42,13 +42,13 @@ int	bool_cote(char *str, int i)
 
 	one = valid_cote(str, i, '\'');
 	two = valid_cote(str, i, '\"');
-	if (one == ERR && two == SUC) //entre cote
+	if (one == ERR && two == SUC)
 		return (SUC);
-	if (one == SUC && two == ERR) //entre cote
+	if (one == SUC && two == ERR)
 		return (SUC);
-	if (one == SUC && two == SUC) //entre cote
+	if (one == SUC && two == SUC)
 		return (SUC);
-	if (one == ERR && two == ERR) //pas entre cote
+	if (one == ERR && two == ERR)
 		return (ERR);
 	return (ERR);
 }

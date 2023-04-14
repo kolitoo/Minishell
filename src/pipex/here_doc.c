@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/13 17:17:37 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:06:47 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 		exit (1);
 	}
 	else
-	{
 		write(cmd->fd_infile, ms->temp, ft_strlen(ms->temp));
-		//write(cmd->fd_infile, "\n", 1);
-	}
 }
 
 void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
@@ -57,9 +54,7 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	}
 	waitpid(ms->filed, &test, 0);
 	if (test == 512)
-	{
 		ms->sig = 1;
-	}
 }
 
 void	init_tab(t_cmd *cmd)

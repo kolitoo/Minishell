@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/13 17:11:19 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:50:41 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@
 # include <errno.h>
 # include <sys/wait.h>
 # include <limits.h>
-#include <signal.h>
-
+# include <signal.h>
 
 typedef struct s_tab
 {
@@ -44,13 +43,15 @@ typedef struct s_tab
 
 typedef struct s_var
 {
-	int	i;
-	int	j;
-	int	k;
-	int	bool;
+	int		i;
+	int		j;
+	int		k;
+	int		len;
+	int		bool;
 	char	c;
 	char	*newstr;
 	char	*new_variable;
+	char	**tab;
 }	t_var;
 
 typedef struct s_cmd
@@ -92,12 +93,12 @@ typedef struct s_ms
 
 typedef struct s_cmd_lst
 {
-	int				infile_mode;
-	int				outfile_mode;
-	int				*limit_mode;
-	char			**infile_name;
-	char			**outfile_name;
-	char			**cmd_option;
+	int					infile_mode;
+	int					outfile_mode;
+	int					*limit_mode;
+	char				**infile_name;
+	char				**outfile_name;
+	char				**cmd_option;
 	struct s_cmd_lst	*next;
 }t_cmd_lst;
 
@@ -118,18 +119,19 @@ int			len_dbl_tab(char *str, char c);
 int			len_file(char *str, int i, char c);
 int			rights_check_util(char *str, int *i, t_ms **ms, char c);
 char		*strspace_cpy(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
-char    	**parsing(char    *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst);
+char		**parsing(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**split_incurve(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
-char    	*set_dollar(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
+char		*set_dollar(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**find_file(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
 char		*find_variable(char *str, int i);
-char   		*comp_env(char *str, t_ms **ms, int i, t_cmd_lst *cmd_lst);
-char    	*replace_variable(char *str, char *envstring, char *variable);
-char    	*replace_variable2(char *str, char *variable);
+char		*comp_env(char *str, t_ms **ms, int i, t_cmd_lst *cmd_lst);
+char		*replace_variable(char *str, char *envstring, char *variable);
+char		*replace_variable2(char *str, char *variable);
 char		*put_space(char *str, char c, int *i, char *str2);
 char		**clean_str(char **double_tab, t_ms *ms, t_cmd_lst *cmd_lst);
 char		*clear_quote(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
-char    	*warning_error(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
+char		*warning_error(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
+char		**set_env(char	**envp);
 char		*neww_variable(char *new_variable, char *variable, char *envstring);
 void		lstadd_back(t_cmd_lst **lst, t_cmd_lst *new);
 void		lstclear(t_cmd_lst **cmd_lst);
@@ -138,13 +140,18 @@ void		rights_check(char *str, t_ms **ms, char c);
 void		print_map(char **map);
 void		read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 void		right_check_heredoc(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
-t_cmd_lst	*lstnew(char **double_tab, t_ms *ms);
-t_cmd_lst	*make_cmd_lst(t_ms *ms);
 void		handler_sigint(int signal);
 void		free_builtin_export(t_ms *ms, t_cmd_lst *cmd_lst, char **new_envp);
 void		free_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
-void    	free_parsing(t_ms *ms, t_cmd_lst *cmd_lst, char *str);
+void		free_parsing(t_ms *ms, t_cmd_lst *cmd_lst, char *str);
 void		free_make_cmd_lst(t_ms *ms, t_cmd_lst *cmd_lst, char **double_tab);
+void		free_env_utils(char *new_variable, char *variable,
+				char *str, int bool);
+void		free_env_utils2(char *variable, char *str);
+void		variable_util(t_var *var, char *str);
+void		free_file(t_var *var, t_ms *ms, t_cmd_lst *cmd_lst);
+t_cmd_lst	*lstnew(char **double_tab, t_ms *ms);
+t_cmd_lst	*make_cmd_lst(t_ms *ms);
 
 //Pipex
 char		*find_good_path(char **envp, char *cmd, t_cmd *cmd1);
@@ -163,7 +170,7 @@ void		close_fd(t_cmd *cmd);
 void		init_tab(t_cmd *cmd);
 void		find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void		clear_lst(t_cmd_lst **cmd_lst);
- void		child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms);
+void		child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms);
 int			first_space(char *cmd);
 int			ft_strcmp_n(char *str1, char *str2);
 int			last_letter(char *cmd);
@@ -176,28 +183,30 @@ int			no_pipe(t_cmd_lst *cmd_lst, t_ms *ms);
 int			for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
 int			tab_len(char **tab);
 int			parent(t_cmd *cmd);
-int			open_infile(t_cmd *cmd ,t_cmd_lst *cmd_lst, t_ms *ms);
+int			open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst);
 
 //Builtin
 int			check_cd(t_cmd_lst *cmd_lst);
-int    			check_echo(t_cmd_lst *cmd_lst, t_ms *ms);
+int			check_echo(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_pwd(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_env(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_unset(t_cmd_lst *cmd_lst);
 int			check_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_exit(t_cmd_lst *cmd_lst);
 int			check_replace(char *str, t_ms *ms, int i);
-void			exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
-void			exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms, int status);
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 char		**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
 char		**replace_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
-void    	echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms);
+void		exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
+void		exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
+				t_ms *ms, int status);
+void		echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms);
 void		cd_builtin(char **tab, char **envp);
 void		pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
 void		only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status);
 void		export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 void		env_builtin(t_ms *ms);
+void		solo_export(t_ms *ms, t_cmd_lst *cmd_lst);
 
 #endif

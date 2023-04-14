@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
+#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/04/13 09:01:58 by lgirault         ###   ########.fr        #
+#    Updated: 2023/04/14 16:30:02 by abourdon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ RESET=\033[0m
 	
 SRC = src/minishell.c \
 	src/parsing/space.c \
+	src/parsing/create_env.c \
 	src/parsing/parsing.c \
 	src/parsing/split_incurve.c \
 	src/parsing/utils_chevron.c \
@@ -34,6 +35,7 @@ SRC = src/minishell.c \
 	src/parsing/env_utils.c \
 	src/parsing/env_utils2.c \
 	src/utils/free.c \
+	src/utils/free2.c \
 	src/utils/lst_fonction.c \
 	src/utils/malloc.c \
 	src/utils/utils.c \
@@ -76,9 +78,6 @@ $(LIBFT):
 	
 
 all: $(NAME)
-
-# malloc_test: $(NAME)
-# 	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ ${OBJ} -lreadline $(LIBFT) -L. -lmallocator
 
 clean:
 	@echo "$(BLUE)$(BOLD)Cleaning object files...$(RESET)"

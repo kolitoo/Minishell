@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:40 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 18:31:35 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:05:44 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,45 +35,48 @@ int	pos_egal(char *str)
 	return (i);
 }
 
-char	**unset_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
+static char	**unset_env2(char *str, t_ms *ms, t_cmd_lst *cmd_lst, t_var var)
 {
-	int		i;
-	int		j;
-	int		k;
-	char	**new_env;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	new_env = NULL;
-	new_env = malloc(sizeof(char *) * (tab_len(ms->env) + 1));
-	if (new_env == NULL)
-		free_builtin_export(ms, cmd_lst, new_env);
-	while (ms->env[j] != NULL)
+	while (ms->env[var.j] != NULL)
 	{
-		if (ft_strncmp(str, ms->env[j], pos_egal(ms->env[j])) == 0)
-			j++;
-		if (ms->env[j] == NULL)
+		if (ft_strncmp(str, ms->env[var.j], pos_egal(ms->env[var.j])) == 0)
+			var.j++;
+		if (ms->env[var.j] == NULL)
 			break ;
-		new_env[k] = malloc(sizeof(char) * (ft_strlen(ms->env[j]) + 1));
-		if (new_env[k] == NULL)
-			free_builtin_export(ms, cmd_lst, new_env);
-		while (ms->env[j][i] != '\0')
+		var.tab[var.k] = malloc(sizeof(char) * (ft_strlen(ms->env[var.j]) + 1));
+		if (var.tab[var.k] == NULL)
+			free_builtin_export(ms, cmd_lst, var.tab);
+		while (ms->env[var.j][var.i] != '\0')
 		{
-			new_env[k][i] = ms->env[j][i];
-			i++;
+			var.tab[var.k][var.i] = ms->env[var.j][var.i];
+			var.i++;
 		}
-		new_env[k][i] = '\0';
-		i = 0;
-		if (ms->env[j] != NULL)
+		var.tab[var.k][var.i] = '\0';
+		var.i = 0;
+		if (ms->env[var.j] != NULL)
 		{
-			k++;
-			j++;
+			var.k++;
+			var.j++;
 		}
 	}
-	new_env[k] = NULL;
+	var.tab[var.k] = NULL;
+	return (var.tab);
+}
+
+char	**unset_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
+{
+	t_var	var;
+
+	var.i = 0;
+	var.j = 0;
+	var.k = 0;
+	var.tab = NULL;
+	var.tab = malloc(sizeof(char *) * (tab_len(ms->env) + 1));
+	if (var.tab == NULL)
+		free_builtin_export(ms, cmd_lst, var.tab);
+	var.tab = unset_env2(str, ms, cmd_lst, var);
 	free(ms->env);
-	return (new_env);
+	return (var.tab);
 }
 
 char	**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms)

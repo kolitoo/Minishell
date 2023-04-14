@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 13:49:36 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/13 13:06:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:23:44 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*strspace_cpy(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst)
 	result = malloc(sizeof(char *)
 			* (countlen(str, 0, 0, 0) + 1));
 	if (!result)
-		free_parsing(*ms,cmd_lst, str);
+		free_parsing(*ms, cmd_lst, str);
 	while (str[i] == ' ' && str[i] != '\0')
 		i++;
 	if (str[i] == '\0')

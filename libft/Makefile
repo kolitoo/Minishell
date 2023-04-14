@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
+#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 13:58:40 by lgirault          #+#    #+#              #
-#    Updated: 2023/04/05 11:18:59 by lgirault         ###   ########.fr        #
+#    Updated: 2023/04/14 16:32:14 by abourdon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,12 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra
 AR = ar rcs
 RM = rm -rf
+
+GREEN=\033[33;32m
+BLUE=\033[0;34m
+BOLD=\033[1m
+RESET=\033[0m
+
 SRC =		ft_memcpy.c \
 	ft_isalpha.c \
 	ft_memmove.c \
@@ -71,17 +77,21 @@ SRC =		ft_memcpy.c \
 
 OBJ = $(SRC:.c=.o)
 
-
+%.o : %.c
+	@$(CC) $(CFLAGS) -c $< -o $@ 
+	
 $(NAME): $(OBJ)
-	$(AR) $(NAME) $(OBJ)
+	@$(AR) $(NAME) $(OBJ)
 
 all: $(NAME)
 
 clean:
-	$(RM) $(OBJ)
+	@echo "$(BLUE)$(BOLD)Cleaning libft files...$(RESET)"
+	@$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	@echo "$(BLUE)$(BOLD)Cleaning $(NAME)...$(RESET)"
+	@$(RM) $(NAME)
 
 re: fclean all
 

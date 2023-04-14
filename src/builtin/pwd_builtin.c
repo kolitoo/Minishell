@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:14 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/13 13:17:50 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:41:04 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	char	*str;
 
-	str = malloc(sizeof(char) * PATH_MAX + 1);//proteger
+	str = malloc(sizeof(char) * PATH_MAX + 1);
 	if (str == NULL)
 		free_builtin(ms, cmd_lst);
 	getcwd(str, PATH_MAX);

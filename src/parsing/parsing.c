@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/13 16:47:28 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 12:05:47 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_cmd_lst	*make_cmd_lst(t_ms *ms)
 {
 	t_cmd_lst	*cmd_lst;
 	t_cmd_lst	*temp;
-	char	**double_tab;
-	int	i;
+	char		**double_tab;
+	int			i;
 
 	i = 1;
 	cmd_lst = NULL;
@@ -75,8 +75,6 @@ char	*parsing_chevron(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst)
 		(*ms)->split_chevron_out = find_file(one_cmd, '>', *ms, cmd_lst);
 		(*ms)->split_chevron_in = find_file(one_cmd, '<', *ms, cmd_lst);
 		one_cmd = strspace_cpy(one_cmd, 0, ms, cmd_lst);
-		// if (one_cmd == NULL)
-		// 	return (NULL);
 	}
 	else
 	{
@@ -87,19 +85,25 @@ char	*parsing_chevron(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst)
 	return (one_cmd);
 }
 
-char	**parsing(char    *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst)
+static char	*make_one_cmd(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst)
+{
+	one_cmd = strspace_cpy(one_cmd, 0, ms, cmd_lst);
+	one_cmd = parsing_chevron(one_cmd, ms, cmd_lst);
+	one_cmd = set_dollar(one_cmd, ms, cmd_lst);
+	return (one_cmd);
+}
+
+char	**parsing(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst)
 {
 	char	**double_tab;
 
 	double_tab = NULL;
 	if (check_fine_cote(one_cmd, '\'', '\"') == 0)
 	{
-		one_cmd = strspace_cpy(one_cmd, 0, ms, cmd_lst);
-		one_cmd = parsing_chevron(one_cmd, ms, cmd_lst);
-		one_cmd = set_dollar(one_cmd, ms, cmd_lst);
+		one_cmd = make_one_cmd(one_cmd, ms, cmd_lst);
 		if (nb_cote(one_cmd) == 0)
 		{
-			double_tab = ft_split(one_cmd, ' ');//protect si split fail
+			double_tab = ft_split(one_cmd, ' ');
 			if (!double_tab)
 				free_parsing(*ms, cmd_lst, one_cmd);
 		}

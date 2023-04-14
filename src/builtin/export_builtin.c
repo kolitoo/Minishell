@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:29 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 14:50:56 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:47:22 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_create_or_replace(char *str, t_ms *ms)
 	return (1);
 }
 
-int	test(char *str, int i, int j)
+static int	check_forbiden_cara2(char *str, int i, int j)
 {
 	while (str[i] != '=')
 	{
@@ -92,7 +92,7 @@ int	check_forbiden_cara(char *str)
 	if (str[i] == '\0' || i == 0)
 		return (1);
 	i = 0;
-	if (test(str, i, j) == 1)
+	if (check_forbiden_cara2(str, i, j) == 1)
 		return (1);
 	return (0);
 }

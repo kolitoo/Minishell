@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_incurve.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:56:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/13 13:06:55 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:22:52 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,31 @@ static void	free_all(char **res, int j)
 	free(res);
 }
 
-int	count_line(char *str, char c, int i)
+int	count_line(t_var var)
 {
 	int	count;
 
 	count = 0;
-	while ((str[i] != c || (str[i] == c && bool_cote(str, i) == SUC))
-		&& str[i] != '\0')
+	while ((var.newstr[var.i] != var.c || (var.newstr[var.i] == var.c
+				&& bool_cote(var.newstr, var.i) == SUC))
+		&& var.newstr[var.i] != '\0')
 	{
-		i++;
+		var.i++;
 		count++;
 	}
 	return (count);
 }
 
-static char	**split_incurve2(char **res, t_var var, t_ms *ms, t_cmd_lst *cmd_lst)
+static char	**split_incurve2(char **res, t_var var,
+			t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	while (var.newstr[var.i] != '\0')
 	{
 		var.k = 0;
-		while (var.newstr[var.i] == var.c && bool_cote(var.newstr, var.i) == ERR)
+		while (var.newstr[var.i] == var.c
+			&& bool_cote(var.newstr, var.i) == ERR)
 			var.i++;
-		res[var.j] = malloc(sizeof(char) * (count_line(var.newstr, var.c, var.i) + 1));
+		res[var.j] = malloc(sizeof(char) * (count_line(var) + 1));
 		if (!res[var.j])
 		{
 			free_all(res, var.j);
