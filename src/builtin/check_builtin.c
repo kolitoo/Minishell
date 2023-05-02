@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:55 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/14 15:51:16 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:25:44 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status)
 		&& cmd_lst->cmd_option[1][0] != '-')
 		unset_builtin(cmd_lst, ms);
 	if (status == 0 && cmd_lst->next == NULL
-		&& ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC)
+		&& ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC && (cmd_lst->cmd_option[2] == NULL || cmd_lst->cmd_option[1] == NULL))
 		exit_builtin_execex(cmd_lst, cmd, ms, status);
 	if (status == 1 && cmd_lst->next == NULL
-		&& ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC)
+		&& ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC && (cmd_lst->cmd_option[2] == NULL || cmd_lst->cmd_option[1] == NULL))
 		exit_builtin_pipex(cmd_lst, cmd, ms);
 }

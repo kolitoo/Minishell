@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   no_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/26 13:34:39 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/02 13:14:27 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 		redir(0, cmd->fd_outfile, cmd);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile != 0)
 		redir(cmd->fd_infile, cmd->fd_outfile, cmd);
-	if (check_builtin(cmd_lst, ms) != 0)
+	if (check_builtin(cmd_lst, ms) == 1 && cmd_lst->test == 1)
 	{
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->cmd == NULL)

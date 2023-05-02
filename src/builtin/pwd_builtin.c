@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:14 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/14 10:41:04 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/02 13:21:31 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,8 @@ int	check_pwd(t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	if (ft_strcmp(cmd_lst->cmd_option[0], "pwd") == SUC)
 	{
-		if (cmd_lst->cmd_option[1] == NULL)
-		{
-			pwd_builtin(ms, cmd_lst);
-			return (0);
-		}
-		else
-		{
-			ft_printf(2, "pwd: too many arguments\n");
-			return (0);
-		}
+		pwd_builtin(ms, cmd_lst);
+		return (0);
 	}
 	return (1);
 }
