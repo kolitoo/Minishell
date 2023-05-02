@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:16:17 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/02 10:28:18 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/02 10:59:03 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,17 @@ void	solo_export(t_ms *ms, t_cmd_lst *cmd_lst)
 			ft_printf(1, "%c", ms->env[j][i++]);
 		ft_printf(1, "\"\n");
 		j++;
+	}
+}
+
+void	set_dollar3(char *str, int *i)
+{
+	if (str[*i] == '\'')
+	{
+		*i = *i + 1;
+		while (str[*i] != '\'')
+			*i = *i + 1;
+		if (str[*i] == '\'')
+			*i = *i + 1;
 	}
 }

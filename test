@@ -1,0 +1,2 @@
+echo "exit_code ->$? user ->$USER home -> $HOME" 
+(exit_code ->0 user ->abourdon home -> /mnt/nfs/homes/abourdon)

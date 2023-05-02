@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/14 17:16:21 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/02 10:59:38 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void		free_parsing(t_ms *ms, t_cmd_lst *cmd_lst, char *str);
 void		free_make_cmd_lst(t_ms *ms, t_cmd_lst *cmd_lst, char **double_tab);
 void		free_env_utils(char *new_variable, char *variable,
 				char *str, int bool);
+void		set_dollar3(char *str, int *i);
 void		free_env_utils2(char *variable, char *str);
 void		variable_util(t_var *var, char *str);
 void		free_file(t_var *var, t_ms *ms, t_cmd_lst *cmd_lst);
