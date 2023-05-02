@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:38:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/01 19:44:43 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:42:39 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,17 @@ int	check_cd(t_cmd_lst *cmd_lst)
 	return (1);
 }
 
-void	cd_builtin(char **tab, char **envp)
+void	cd_builtin(char **tab, char **envp, t_ms *ms)
 {
 	t_var	var;
 
 	var.i = -1;
 	var.j = 0;
+	if (tab[2] != NULL)
+	{
+		ms->builtin_code = 1;
+		return ;
+	}
 	if (ft_strcmp(tab[1], "~") == 0)
 	{
 		while (envp[++var.i] != NULL)
@@ -43,6 +48,7 @@ void	cd_builtin(char **tab, char **envp)
 	}
 	else if (chdir(tab[1]) != 0)
 	{
+		ms->builtin_code = 1;
 		perror("cd");
 		return ;
 	}

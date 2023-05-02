@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/02 12:21:28 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:07:25 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_ms
 	int		filed;
 	int		i_heredoc;
 	int		j_heredoc;
+	int		builtin_code;
 }t_ms;
 
 typedef struct s_cmd_lst
@@ -205,7 +206,7 @@ void		exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
 void		exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 				t_ms *ms, int status);
 void		echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms);
-void		cd_builtin(char **tab, char **envp);
+void		cd_builtin(char **tab, char **envp, t_ms *ms);
 void		pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
 void		only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status);
 void		export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);

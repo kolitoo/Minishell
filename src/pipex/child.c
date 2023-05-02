@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:07:42 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/13 16:58:55 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/02 13:30:08 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms)
 	else
 		middle_child(cmd);
 	close_all(cmd);
-	if (check_builtin(cmd_lst, ms) != 0)
+	if (check_builtin(cmd_lst, ms) == 1 && cmd_lst->test == 1)
 	{
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->i != 0 && cmd->cmd == NULL)

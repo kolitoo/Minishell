@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:29 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/14 15:47:22 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:32:03 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_create_or_replace(char *str, t_ms *ms)
 
 static int	check_forbiden_cara2(char *str, int i, int j)
 {
-	while (str[i] != '=')
+	while (str[i] != '=' && str[i] != '\0')
 	{
 		if ((str[i] >= 0 && str[i] <= 35) || (str[i] >= 37 && str[i] <= 47)
 			|| (str[i] >= 58 && str[i] <= 60) || (str[i] >= 62 && str[i] <= 64)
@@ -87,12 +87,24 @@ int	check_forbiden_cara(char *str)
 
 	i = 0;
 	j = 0;
-	while (str[i] != '\0' && str[i] != '=')
-		i++;
-	if (str[i] == '\0' || i == 0)
-		return (1);
+	// while (str[i] != '\0' && str[i] != '=')
+	// 	i++;
+	// if (str[i] == '\0' || i == 0)
+	// 	return (1);
 	i = 0;
 	if (check_forbiden_cara2(str, i, j) == 1)
+		return (1);
+	return (0);
+}
+
+int	check_egal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != '=')
+		i++;
+	if (str[i] == '\0')
 		return (1);
 	return (0);
 }
@@ -106,14 +118,26 @@ void	export_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 	{
 		if (check_forbiden_cara(cmd_lst->cmd_option[i]) == 0)
 		{
-			if (check_create_or_replace(cmd_lst->cmd_option[i], ms) == 1)
-				(*ms).env = create_env(cmd_lst->cmd_option[i], ms, cmd_lst);
-			else if (check_create_or_replace(cmd_lst->cmd_option[i], ms) == 0)
-				(*ms).env = replace_env(cmd_lst->cmd_option[i], ms, cmd_lst);
+			if (check_egal(cmd_lst->cmd_option[i]) == 0)
+			{
+				if (cmd_lst->cmd_option[1][0] == '=')
+				{
+					ms->builtin_code = 1;
+					return ;
+				}
+				else if (check_create_or_replace(cmd_lst->cmd_option[i], ms) == 1)
+					(*ms).env = create_env(cmd_lst->cmd_option[i], ms, cmd_lst);
+				else if (check_create_or_replace(cmd_lst->cmd_option[i], ms) == 0)
+					(*ms).env = replace_env(cmd_lst->cmd_option[i], ms, cmd_lst);
+			}
+			else
+			{
+				ms->builtin_code = 0;
+				return ;
+			}
 		}
 		else
-			ft_printf(2,
-				"export: not an identifier: %s\n", cmd_lst->cmd_option[i]);
+			ms->builtin_code = 1;
 		i++;
 	}
 }
