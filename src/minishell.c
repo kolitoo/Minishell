@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/03 11:28:00 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 14:48:53 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 	g_ms.env = set_env(envp);
 	g_ms.here = 0;
 	g_ms.builtin_code = 0;
-	//print_minishell();
+	print_minishell();
 	while (1)
 	{
 		g_ms.here = 0;
@@ -92,6 +92,14 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		g_ms.sig = 0;
 		readline_ok(&g_ms, cmd_lst);
+		free(g_ms.line);
+	}
+	rl_clear_history();
+	if (g_ms.line != NULL)
+		free(g_ms.line);
+	free_tab(g_ms.env, 0);
+}
+
 		// if (g_ms.line[0] != '\0')
 		// {
 		// 	cmd_lst = make_cmd_lst(&g_ms);
@@ -110,29 +118,3 @@ int	main(int argc, char **argv, char **envp)
 		// 		}
 		// 	}
 		// }
-		free(g_ms.line);
-	}
-	rl_clear_history();
-	if (g_ms.line != NULL)
-		free(g_ms.line);
-	free_tab(g_ms.env, 0);
-}
-
-// while (cmd_lst != NULL)
-// {
-// 	printf("CMD %d :\n", i);
-// 	print_map(cmd_lst->cmd_option);
-// 	printf("TAB OUTFILE %d :\n", i);
-// 	print_map(cmd_lst->outfile_name);
-// 	printf("TAB INFILE %d :\n", i);
-// 	print_map(cmd_lst->infile_name);
-// 	printf("INFILE MODE : %d\n", cmd_lst->infile_mode);
-// 	printf("OUTFILE MODE : %d\n", cmd_lst->outfile_mode);
-// 	printf("LIMIT MODE %d :\n", i);
-// 	printf("%d\n", cmd_lst->limit_mode[0]);
-// 	cmd_lst = cmd_lst->next;
-// 	i++;
-// }
-
-//pb echo -nnnnnnnnnnnnn -nnnnnnnnnnnnnnnnnnnnnn -nnnnnnnnnnnn
-//pb retour ligne heredoc
