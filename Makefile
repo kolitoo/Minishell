@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/05/03 09:55:05 by lgirault         ###   ########.fr        #
+#    Updated: 2023/05/03 10:29:00 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC = src/minishell.c \
 	src/builtin/unset_builtin.c \
 	src/builtin/env_builtin.c \
 	src/builtin/exit_builtin.c \
+	src/builtin/exit_builtin2.c \
 	src/builtin/export_builtin2.c \
 	src/builtin/export_builtin3.c \
 	src/pipex/pipex.c \

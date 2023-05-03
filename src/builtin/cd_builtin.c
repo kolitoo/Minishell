@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:38:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 09:29:40 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:26:24 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	cd_builtin(char **tab, char **envp, t_ms *ms)
 	var.j = 0;
 	if (tab[2] != NULL)
 	{
-		return (ms->builtin_code = 1, (void)0);//A verifier
+		return (ms->builtin_code = 1, (void)0);
 	}
 	if (ft_strcmp(tab[1], "~") == 0)
 	{

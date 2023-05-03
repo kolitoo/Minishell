@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:40:04 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 10:06:01 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:24:39 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,50 +30,27 @@ int	check_exit(t_cmd_lst *cmd_lst)
 	return (1);
 }
 
-static unsigned long long	ft_atoi(const char *str, t_ms *ms)
+unsigned long long	ft_atoi(const char *str, t_ms *ms)
 {
-	int			i;
-	int			sign;
-	long long	nb;
-	long long	old_nb;
+	t_atoi	var;
 
-	i = 0;
-	sign = 1;
-	nb = 0;
-	while (str[i] == ' ' || str[i] == '\f'
-		|| str[i] == '\t' || str[i] == '\n' || str[i] == '\r' || str[i] == '\v')
+	var.i = 0;
+	var.sign = 1;
+	var.nb = 0;
+	while (str[var.i] == ' ' || str[var.i] == '\f'
+		|| str[var.i] == '\t' || str[var.i] == '\n'
+		|| str[var.i] == '\r' || str[var.i] == '\v')
 	{
-	i++;
+	var.i++;
 	}
-	if (str[i] == '-' || str[i] == '+')
+	if (str[var.i] == '-' || str[var.i] == '+')
 	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
+		if (str[var.i] == '-')
+			var.sign *= -1;
+		var.i++;
 	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		old_nb = nb;
-		nb = nb * 10 + str[i] - 48;
-		if (sign > 0)
-		{
-			if (nb < old_nb)
-			{
-				ms->builtin_code = 1;
-				break ;
-			}
-		}
-		else
-		{
-			if (nb * -1 > old_nb * -1)
-			{
-				ms->builtin_code = 1;
-				break ;
-			}
-		}
-	i++;
-	}
-	return (sign * nb);
+	ft_atoi2(&var, ms, str);
+	return (var.sign * var.nb);
 }
 
 int	check_nbr(char *str)
@@ -100,10 +77,7 @@ void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 
 	arg_exit = 0;
 	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL)
-	{
-		ms->builtin_code = 1;
-		return ;
-	}
+		return (ms->builtin_code = 1, (void)0);
 	if (cmd_lst->limit_mode != NULL)
 		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 			if (unlink("/tmp/.file_temp.txt") == -1)
@@ -119,12 +93,8 @@ void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 				arg_exit = 2;
 		}
 	}
-	clear_lst(&cmd_lst);
 	parent(cmd);
-	rl_clear_history();
-	free(ms->line);
-	free_tab(ms->env, 0);
-	exit (arg_exit);
+	exit_builtin_free(cmd_lst, ms, arg_exit);
 }
 
 void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
@@ -134,10 +104,7 @@ void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 
 	arg_exit = 0;
 	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL)
-	{
-		ms->builtin_code = 1;
-		return ;
-	}
+		return (ms->builtin_code = 1, (void)0);
 	cmd->wpid = waitpid(cmd->off, &status, 0);
 	if (cmd->wpid == -1)
 		error_management(8, cmd);
@@ -149,18 +116,12 @@ void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 				error_management(7, cmd);
 	if (cmd_lst->cmd_option[1] != NULL)
 	{
+		arg_exit = ft_atoi(cmd_lst->cmd_option[1], ms);
 		if (check_nbr(cmd_lst->cmd_option[1]) == 1)
 			arg_exit = 2;
 		else
-		{
-			arg_exit = ft_atoi(cmd_lst->cmd_option[1], ms);
 			if (ms->builtin_code != 0)
 				arg_exit = 2;
-		}
 	}
-	clear_lst(&cmd_lst);
-	free(ms->line);
-	rl_clear_history();
-	free_tab(ms->env, 0);
-	exit (arg_exit);
+	exit_builtin_free(cmd_lst, ms, arg_exit);
 }

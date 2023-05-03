@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/03 09:54:36 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:18:07 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ typedef struct s_tab
 	int	j;
 	int	k;
 }	t_tab;
+
+typedef struct s_atoi
+{
+	int			i;
+	int			sign;
+	long long	nb;
+	long long	old_nb;
+}	t_atoi;
 
 typedef struct s_var
 {
@@ -206,6 +214,7 @@ char		**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
 void		exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
 void		exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 				t_ms *ms, int status);
+void		exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms, long long arg_exit);
 void		echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms);
 void		cd_builtin(char **tab, char **envp, t_ms *ms);
 void		pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
@@ -213,5 +222,6 @@ void		only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status);
 void		export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 void		env_builtin(t_ms *ms);
 void		solo_export(t_ms *ms, t_cmd_lst *cmd_lst);
+void		ft_atoi2(t_atoi *var, t_ms *ms, const char *str);
 
 #endif

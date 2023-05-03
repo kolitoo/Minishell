@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/02 11:00:00 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:26:49 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,6 @@ static char	*set_dollar2(char *str, int *i, t_ms **ms, t_cmd_lst *cmd_lst)
 			*i = *i + 1;
 	}
 	set_dollar3(str, i);
-	// if (str[*i] == '\'')
-	// {
-	// 	*i = *i + 1;
-	// 	while (str[*i] != '\'')
-	// 		*i = *i + 1;
-	// 	if (str[*i] == '\'')
-	// 		*i = *i + 1;
-	// }
 	return (str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:29 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 09:55:50 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:26:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,14 @@ void	export_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 			if (check_egal(cmd_lst->cmd_option[i]) == 0)
 			{
 				if (cmd_lst->cmd_option[1][0] == '=')
-					return (ms->builtin_code = 1, (void)0);//cc
+					return (ms->builtin_code = 1, (void)0);
 				else if (check_crt_or_rplc(cmd_lst->cmd_option[i], ms) == 1)
 					(*ms).env = create_env(cmd_lst->cmd_option[i], ms, cmd_lst);
 				else if (check_crt_or_rplc(cmd_lst->cmd_option[i], ms) == 0)
 					(*ms).env = replac_env(cmd_lst->cmd_option[i], ms, cmd_lst);
 			}
 			else
-				return (ms->builtin_code = 0, (void)0);//cc
+				return (ms->builtin_code = 0, (void)0);
 		}
 		else
 			ms->builtin_code = 1;
