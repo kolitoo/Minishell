@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:49:14 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/13 11:06:07 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:08:41 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	rights_check_util(char *str, int *i, t_ms **ms, char c)
 char	*put_space(char *str, char c, int *i, char *str2)
 {
 	while ((str[*i] == c && bool_cote(str2, *i) == ERR)
-		|| (str[*i] == ' ' && bool_cote(str2, *i) == ERR))
+		|| (str[*i] <= ' ' && bool_cote(str2, *i) == ERR))
 	{
 		str[*i] = ' ';
 		*i = *i + 1;

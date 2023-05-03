@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 14:48:40 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:02:23 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static char	*set_dollar2(char *str, int *i, t_ms **ms, t_cmd_lst *cmd_lst)
 				*i = 0;
 				break ;
 			}
-			if (str[*i] == '$' && str[*i + 1] != '\0' && str[*i + 1] != ' '
+			if (str[*i] == '$' && str[*i + 1] != '\0' && str[*i + 1] > ' '
 				&& str[*i + 1] != '\'' && str[*i + 1] != '\"' )
 			{
 				str = comp_env(str, ms, *i, cmd_lst);
@@ -121,7 +121,7 @@ char	*set_dollar(char *str, t_ms **ms, t_cmd_lst *cmd_lst)
 			i = 0;
 		}
 		str = set_dollar2(str, &i, ms, cmd_lst);
-		if (str[i] == '$' && str[i + 1] != '\0' && str[i + 1] != ' '
+		if (str[i] == '$' && str[i + 1] != '\0' && str[i + 1] > ' '
 			&& str[i + 1] != '\'' && str[i + 1] != '\"' )
 		{
 			str = comp_env(str, ms, i, cmd_lst);

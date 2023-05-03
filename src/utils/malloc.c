@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:35:42 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/01 20:35:18 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:08:23 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	len_file(char *str, int i, char c)
 	len = 0;
 	while (str[i] != '\0')
 	{
-		if ((str[i] == ' ' || str[i] == c || str[i] == '\0')
+		if ((str[i] <= ' ' || str[i] == c || str[i] == '\0')
 			&& bool_cote(str, i) == ERR)
 			break ;
 		len++;

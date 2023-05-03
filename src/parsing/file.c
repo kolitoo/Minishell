@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:04:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/26 13:09:22 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:02:37 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**find_file3(char **split_chevron, t_var *var,
 				* (len_file(var->newstr, var->i, var->c) + 1));
 		if (split_chevron[var->k] == NULL)
 			free_file(var, ms, cmd_lst);
-		while ((var->newstr[var->i] != ' ' && var->newstr[var->i] != var->c
+		while ((var->newstr[var->i] > ' ' && var->newstr[var->i] != var->c
 				&& var->newstr[var->i] != '\0')
 			|| bool_cote(var->new_variable, var->i) == 0)
 		{

@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/05/03 10:29:00 by lgirault         ###   ########.fr        #
+#    Updated: 2023/05/03 15:23:46 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC = src/minishell.c \
 	src/parsing/create_env.c \
 	src/parsing/parsing.c \
 	src/parsing/split_incurve.c \
+	src/parsing/split_incurve3.c \
 	src/parsing/utils_chevron.c \
 	src/parsing/utils_cote.c \
 	src/parsing/utils_cote2.c \

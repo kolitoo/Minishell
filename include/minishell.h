@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/03 11:18:07 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:23:10 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int			rights_check_util(char *str, int *i, t_ms **ms, char c);
 char		*strspace_cpy(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**parsing(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**split_incurve(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
+char		**split_incurv3(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
 char		*set_dollar(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**find_file(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
 char		*find_variable(char *str, int i);

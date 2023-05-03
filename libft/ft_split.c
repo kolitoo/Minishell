@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 17:51:47 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/13 10:09:37 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:05:46 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int	count_wd(char const *s, char c)
 	i = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] == c)
+		while (s[i] && s[i] <= c)
 			i++;
 		j = 0;
-		while (s[i] && s[i] != c)
+		while (s[i] && s[i] > c)
 		{
 			j++;
 			i++;
@@ -42,7 +42,7 @@ static char	*gen_wd(const char *s, char c, int *i)
 	char	*res;
 
 	j = 0;
-	while (s[*i] && s[*i] != c)
+	while (s[*i] && s[*i] > c)
 	{
 		j++;
 		*i += 1;
@@ -51,7 +51,7 @@ static char	*gen_wd(const char *s, char c, int *i)
 	if (!res)
 		return (NULL);
 	*i -= j;
-	while (s[*i] && s[*i] != c)
+	while (s[*i] && s[*i] > c)
 	{
 		*res++ = s[*i];
 		*i += 1;
@@ -79,9 +79,9 @@ static char	**ft_split2(char **res, char const *s, char c)
 	j = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] == c)
+		while (s[i] && s[i] <= c)
 			i++;
-		if (s[i] && s[i] != c)
+		if (s[i] && s[i] > c)
 		{
 			res[j] = gen_wd(s, c, &i);
 			if (!res[j++])
