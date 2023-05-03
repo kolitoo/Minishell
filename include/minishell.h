@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/02 17:07:25 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:19:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ int			for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
 int			tab_len(char **tab);
 int			parent(t_cmd *cmd);
 int			open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
-int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst);
+int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 
 //Builtin
 int			check_cd(t_cmd_lst *cmd_lst);

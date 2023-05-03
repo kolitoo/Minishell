@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:40:04 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/02 17:09:14 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:18:46 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,6 @@ int	check_exit(t_cmd_lst *cmd_lst)
 	}
 	cmd_lst->test = 1;
 	return (1);
-}
-
-void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
-{
-	if (cmd_lst->limit_mode != NULL)
-		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
-			if (unlink("/tmp/.file_temp.txt") == -1)
-				error_management(7, cmd);
-	clear_lst(&cmd_lst);
-	parent(cmd);
-	rl_clear_history();
-	free(ms->line);
-	free_tab(ms->env, 0);
-	exit (0);
 }
 
 static unsigned long long    ft_atoi(const char *str, t_ms *ms)
@@ -103,6 +89,39 @@ int	check_nbr(char *str)
 		i++;
 	}
 	return (0);
+}
+
+void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
+{
+	long long	arg_exit;
+	
+	arg_exit = 0;
+	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL)
+	{
+		ms->builtin_code = 1;
+		return ;
+	}
+	if (cmd_lst->limit_mode != NULL)
+		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
+			if (unlink("/tmp/.file_temp.txt") == -1)
+				error_management(7, cmd);
+	if (cmd_lst->cmd_option[1] != NULL)
+	{
+		if (check_nbr(cmd_lst->cmd_option[1]) == 1)
+			arg_exit = 2;
+		else
+		{
+			arg_exit = ft_atoi(cmd_lst->cmd_option[1], ms);
+			if (ms->builtin_code != 0)
+				arg_exit = 2;
+		}
+	}
+	clear_lst(&cmd_lst);
+	parent(cmd);
+	rl_clear_history();
+	free(ms->line);
+	free_tab(ms->env, 0);
+	exit (0);
 }
 
 void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,

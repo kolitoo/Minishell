@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:32:38 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 12:56:03 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:47:58 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,11 @@ int	open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 			if (cmd->fd_infile == -1)
 			{
 				file_error(1, cmd_lst, ms->i_heredoc);
+				ms->builtin_code = 1;//ajout pb tester
 				return (ERR);
 			}
 			if (ms->sig == 1)
-			{
 				return (ERR);
-			}
 			ms->i_heredoc++;
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/26 13:32:08 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:12:43 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 {
+	int	test;
+
+	test = 0;
 	cmd->fd_infile = 0;
 	cmd->fd_outfile = 0;
-	if (open_outfile(cmd, cmd_lst) == ERR)
+	if (open_outfile(cmd, cmd_lst, ms) == ERR)
+	{
 		return (ERR);
+	}
 	if (open_infile(cmd, cmd_lst, ms) == ERR)
 		return (ERR);
 	return (SUC);
@@ -76,7 +81,7 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 	init(&cmd, cmd_lst, (*ms).env);
 	while (cmd_lst != NULL)
 	{
-		if (for_open(cmd_lst, &cmd, ms) != 1)
+		if (for_open(cmd_lst, &cmd, ms) != 8)
 		{
 			cmd.pid[cmd.i] = fork();
 			if (cmd.pid[cmd.i] == -1)
