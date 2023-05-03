@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:16:37 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/02 19:09:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 09:15:37 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	open_outfile_append(t_cmd *cmd, t_cmd_lst *cmd_lst, int i, t_ms *ms)
 int	check_infile(t_cmd_lst *cmd_lst)
 {
 	int	i;
-	
+
 	i = 0;
 	while (cmd_lst->infile_name[i] != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 11:31:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/12 17:41:13 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 09:48:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	cpy_old_env(char **new_envp, t_ms *ms, t_cmd_lst *cmd_lst)
 	}
 }
 
-char	**replace_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
+char	**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 {
 	char	**new_envp;
 

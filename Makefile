@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/04/14 16:30:02 by abourdon         ###   ########.fr        #
+#    Updated: 2023/05/03 09:55:05 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRC = src/minishell.c \
 	src/builtin/env_builtin.c \
 	src/builtin/exit_builtin.c \
 	src/builtin/export_builtin2.c \
+	src/builtin/export_builtin3.c \
 	src/pipex/pipex.c \
 	src/pipex/find_good_path.c \
 	src/pipex/free_pipex.c \

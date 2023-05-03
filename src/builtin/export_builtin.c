@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:29 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/02 14:32:03 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 09:55:50 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_replace(char *str, t_ms *ms, int i)
 	return (0);
 }
 
-int	check_create_or_replace(char *str, t_ms *ms)
+int	check_crt_or_rplc(char *str, t_ms *ms)
 {
 	int	i;
 	int	j;
@@ -87,24 +87,8 @@ int	check_forbiden_cara(char *str)
 
 	i = 0;
 	j = 0;
-	// while (str[i] != '\0' && str[i] != '=')
-	// 	i++;
-	// if (str[i] == '\0' || i == 0)
-	// 	return (1);
 	i = 0;
 	if (check_forbiden_cara2(str, i, j) == 1)
-		return (1);
-	return (0);
-}
-
-int	check_egal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '=')
-		i++;
-	if (str[i] == '\0')
 		return (1);
 	return (0);
 }
@@ -121,20 +105,14 @@ void	export_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 			if (check_egal(cmd_lst->cmd_option[i]) == 0)
 			{
 				if (cmd_lst->cmd_option[1][0] == '=')
-				{
-					ms->builtin_code = 1;
-					return ;
-				}
-				else if (check_create_or_replace(cmd_lst->cmd_option[i], ms) == 1)
+					return (ms->builtin_code = 1, (void)0);//cc
+				else if (check_crt_or_rplc(cmd_lst->cmd_option[i], ms) == 1)
 					(*ms).env = create_env(cmd_lst->cmd_option[i], ms, cmd_lst);
-				else if (check_create_or_replace(cmd_lst->cmd_option[i], ms) == 0)
-					(*ms).env = replace_env(cmd_lst->cmd_option[i], ms, cmd_lst);
+				else if (check_crt_or_rplc(cmd_lst->cmd_option[i], ms) == 0)
+					(*ms).env = replac_env(cmd_lst->cmd_option[i], ms, cmd_lst);
 			}
 			else
-			{
-				ms->builtin_code = 0;
-				return ;
-			}
+				return (ms->builtin_code = 0, (void)0);//cc
 		}
 		else
 			ms->builtin_code = 1;

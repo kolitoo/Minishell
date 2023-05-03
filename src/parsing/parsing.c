@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/26 13:29:23 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/03 09:06:27 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ char	*parsing_chevron(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst)
 		(*ms)->split_chevron_out = find_file(one_cmd, '>', *ms, cmd_lst);
 		(*ms)->split_chevron_in = find_file(one_cmd, '<', *ms, cmd_lst);
 		if ((*ms)->split_chevron_out != NULL)
-			(*ms)->split_chevron_out = clean_str((*ms)->split_chevron_out, *ms, cmd_lst);
+			(*ms)->split_chevron_out = clean_str((*ms)->split_chevron_out,
+					*ms, cmd_lst);
 		if ((*ms)->split_chevron_in != NULL)
-			(*ms)->split_chevron_in = clean_str((*ms)->split_chevron_in, *ms, cmd_lst);
+			(*ms)->split_chevron_in = clean_str((*ms)->split_chevron_in,
+					*ms, cmd_lst);
 		one_cmd = strspace_cpy(one_cmd, 0, ms, cmd_lst);
 	}
 	else

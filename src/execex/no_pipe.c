@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/02 17:27:04 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 09:13:33 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,21 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 	}
 }
 
+int	no_pipe2(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
+{
+	clear_lst(&cmd_lst);
+	if (ms->builtin_code == 0)
+		return (cmd->exit_status);
+	else
+		return (ms->builtin_code);
+}
+
 int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	t_cmd	cmd;
 	int		status;
-	int		statuss;
 
 	status = 0;
-	statuss = 0;
 	init_tab(&cmd);
 	if (for_open(cmd_lst, &cmd, ms) != 1)
 	{
@@ -53,7 +60,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 			error_management(2, &cmd);
 		if (cmd.off == 0)
 			child_no_pipe(&cmd, cmd_lst, (*ms).env, ms);
-		only_last(cmd_lst, ms, &cmd, statuss);
+		only_last(cmd_lst, ms, &cmd, status);
 		cmd.wpid = waitpid(cmd.off, &status, 0);
 		if (cmd.wpid == -1)
 			error_management(8, &cmd);
@@ -64,9 +71,5 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 			if (unlink("/tmp/.file_temp.txt") == -1)
 				error_management(7, &cmd);
-	clear_lst(&cmd_lst);
-	if (ms->builtin_code == 0)
-		return (cmd.exit_status);
-	else
-		return (ms->builtin_code);
+	return (no_pipe2(&cmd, cmd_lst, ms));
 }

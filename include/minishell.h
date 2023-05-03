@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/02 18:19:15 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 09:54:36 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,9 +199,10 @@ int			check_unset(t_cmd_lst *cmd_lst);
 int			check_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_exit(t_cmd_lst *cmd_lst);
 int			check_replace(char *str, t_ms *ms, int i);
+int			check_egal(char *str);
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 char		**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
-char		**replace_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
+char		**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
 void		exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
 void		exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 				t_ms *ms, int status);

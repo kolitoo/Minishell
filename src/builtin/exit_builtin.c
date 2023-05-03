@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:40:04 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/02 17:18:46 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:06:01 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	check_exit(t_cmd_lst *cmd_lst)
 {
-	if (ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC && (cmd_lst->cmd_option[2] == NULL || cmd_lst->cmd_option[1] == NULL))
+	if (ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC
+		&& (cmd_lst->cmd_option[2] == NULL || cmd_lst->cmd_option[1] == NULL))
 	{
 		cmd_lst->test = 0;
 		return (0);
@@ -29,54 +30,56 @@ int	check_exit(t_cmd_lst *cmd_lst)
 	return (1);
 }
 
-static unsigned long long    ft_atoi(const char *str, t_ms *ms)
+static unsigned long long	ft_atoi(const char *str, t_ms *ms)
 {
-    int                i;
-    int                sign;
-    long long	nb;
-    long long	old_nb;
+	int			i;
+	int			sign;
+	long long	nb;
+	long long	old_nb;
 
-    i = 0;
-    sign = 1;
-    nb = 0;
-    while (str[i] == ' ' || str[i] == '\f'
-        || str[i] == '\t' || str[i] == '\n' || str[i] == '\r' || str[i] == '\v')
-    {
-        i++;
-    }
-    if (str[i] == '-' || str[i] == '+')
-    {
-        if (str[i] == '-')
-            sign *= -1;
-        i++;
-    }
-    while (str[i] >= 48 && str[i] <= 57)
-    {
-	old_nb = nb;
-        nb = nb * 10 + str[i] - 48;
-	if (sign > 0)
+	i = 0;
+	sign = 1;
+	nb = 0;
+	while (str[i] == ' ' || str[i] == '\f'
+		|| str[i] == '\t' || str[i] == '\n' || str[i] == '\r' || str[i] == '\v')
 	{
-		if (nb < old_nb)
-		{
-			ms->builtin_code = 1;
-			break ;
-		}
+	i++;
 	}
-	else
-		if (nb * -1 > old_nb * -1)
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		old_nb = nb;
+		nb = nb * 10 + str[i] - 48;
+		if (sign > 0)
 		{
-			ms->builtin_code = 1;
-			break ;
+			if (nb < old_nb)
+			{
+				ms->builtin_code = 1;
+				break ;
+			}
 		}
-        i++;
-    }
-    return (sign * nb);
+		else
+		{
+			if (nb * -1 > old_nb * -1)
+			{
+				ms->builtin_code = 1;
+				break ;
+			}
+		}
+	i++;
+	}
+	return (sign * nb);
 }
 
 int	check_nbr(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i] != '\0')
 	{
@@ -94,7 +97,7 @@ int	check_nbr(char *str)
 void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 {
 	long long	arg_exit;
-	
+
 	arg_exit = 0;
 	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL)
 	{
@@ -121,14 +124,14 @@ void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 	rl_clear_history();
 	free(ms->line);
 	free_tab(ms->env, 0);
-	exit (0);
+	exit (arg_exit);
 }
 
 void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 	t_ms *ms, int status)
 {
 	long long	arg_exit;
-	
+
 	arg_exit = 0;
 	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL)
 	{
