@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/04 09:52:17 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:05:45 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ char		*strspace_cpy(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**parsing(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**split_incurve(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
 char		**split_incurv3(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
+char		**ft_split2(char const *s, char c);
 char		*set_dollar(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**find_file(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
 char		*find_variable(char *str, int i);
@@ -200,7 +201,7 @@ int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 
 //Builtin
 int			check_cd(t_cmd_lst *cmd_lst);
-int			check_echo(t_cmd_lst *cmd_lst, t_ms *ms);
+int			check_echo(t_cmd_lst *cmd_lst, t_ms *ms, int i);
 int			check_pwd(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_env(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_unset(t_cmd_lst *cmd_lst);
@@ -208,6 +209,8 @@ int			check_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_exit(t_cmd_lst *cmd_lst);
 int			check_replace(char *str, t_ms *ms, int i);
 int			check_egal(char *str);
+int			check_if_unset(char *str, t_ms *ms);
+int			pos_egal(char *str);
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 char		**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
 char		**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
@@ -223,5 +226,6 @@ void		export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 void		env_builtin(t_ms *ms);
 void		solo_export(t_ms *ms, t_cmd_lst *cmd_lst);
 void		ft_atoi2(t_atoi *var, t_ms *ms, const char *str);
+void		cd_localise(t_ms *ms, t_cmd_lst *cmd_lst);
 
 #endif

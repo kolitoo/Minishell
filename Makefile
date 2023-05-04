@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/05/03 15:23:46 by lgirault         ###   ########.fr        #
+#    Updated: 2023/05/04 13:30:49 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC = src/minishell.c \
 	src/utils/malloc.c \
 	src/utils/utils.c \
 	src/utils/signal.c \
+	src/utils/ft_split2.c \
 	src/execex/no_pipe.c \
 	src/builtin/check_builtin.c \
 	src/builtin/echo_builtin.c \

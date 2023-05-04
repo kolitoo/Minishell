@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 17:51:47 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 13:24:38 by lgirault         ###   ########.fr       */
+/*   Created: 2023/05/04 13:51:05 by lgirault          #+#    #+#             */
+/*   Updated: 2023/05/04 13:51:07 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
 static int	count_wd(char const *s, char c)
 {
@@ -22,10 +22,10 @@ static int	count_wd(char const *s, char c)
 	i = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] <= c)
+		while (s[i] && s[i] == c)
 			i++;
 		j = 0;
-		while (s[i] && s[i] > c)
+		while (s[i] && s[i] != c)
 		{
 			j++;
 			i++;
@@ -42,7 +42,7 @@ static char	*gen_wd(const char *s, char c, int *i)
 	char	*res;
 
 	j = 0;
-	while (s[*i] && s[*i] > c)
+	while (s[*i] && s[*i] != c)
 	{
 		j++;
 		*i += 1;
@@ -51,7 +51,7 @@ static char	*gen_wd(const char *s, char c, int *i)
 	if (!res)
 		return (NULL);
 	*i -= j;
-	while (s[*i] && s[*i] > c)
+	while (s[*i] && s[*i] != c)
 	{
 		*res++ = s[*i];
 		*i += 1;
@@ -70,7 +70,7 @@ static void	free_all(char **res, int j)
 	free(res);
 }
 
-static char	**ft_split2(char **res, char const *s, char c)
+static char	**ft_split3(char **res, char const *s, char c)
 {
 	int	i;
 	int	j;
@@ -79,9 +79,9 @@ static char	**ft_split2(char **res, char const *s, char c)
 	j = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] <= c)
+		while (s[i] && s[i] == c)
 			i++;
-		if (s[i] && s[i] > c)
+		if (s[i] && s[i] != c)
 		{
 			res[j] = gen_wd(s, c, &i);
 			if (!res[j++])
@@ -95,7 +95,7 @@ static char	**ft_split2(char **res, char const *s, char c)
 	return (res);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split2(char const *s, char c)
 {
 	char	**res;
 
@@ -105,6 +105,6 @@ char	**ft_split(char const *s, char c)
 	res = malloc((count_wd(s, c) + 1) * sizeof(char *));
 	if (!res)
 		return (NULL);
-	res = ft_split2(res, s, c);
+	res = ft_split3(res, s, c);
 	return (res);
 }

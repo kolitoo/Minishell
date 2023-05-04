@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/04 10:06:16 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:07:22 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 	g_ms.env = set_env(envp);
 	g_ms.here = 0;
 	g_ms.builtin_code = 0;
-	//print_minishell();
+	print_minishell();
 	while (1)
 	{
 		g_ms.here = 0;
@@ -99,22 +99,3 @@ int	main(int argc, char **argv, char **envp)
 		free(g_ms.line);
 	free_tab(g_ms.env, 0);
 }
-
-		// if (g_ms.line[0] != '\0')
-		// {
-		// 	cmd_lst = make_cmd_lst(&g_ms);
-		// 	g_ms.code_erreur1 = g_ms.code_erreur;
-		// 	add_history(g_ms.line);
-		// 	if (cmd_lst != NULL)
-		// 	{
-		// 		if (lstsize(cmd_lst) > 1)
-		// 			g_ms.code_erreur = pipex(cmd_lst, &g_ms);
-		// 		else if (lstsize(cmd_lst) == 1)
-		// 			g_ms.code_erreur = no_pipe(cmd_lst, &g_ms);
-		// 		else
-		// 		{
-		// 			free(cmd_lst);
-		// 			lstclear(&cmd_lst);
-		// 		}
-		// 	}
-		// }

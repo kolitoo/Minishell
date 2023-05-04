@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:16:17 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/04 10:11:00 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:51:31 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static	char	**set_env2(char **envp, char **env, int i, int j)
 			env[i][j] = envp[i][j];
 			j++;
 		}
-		// if (env[i][j - 1] != '\n')
-		// 	env[i][j++] = '\n';
 		env[i][j] = '\0';
 		j = 0;
 		i++;
@@ -79,7 +77,7 @@ void	solo_export(t_ms *ms, t_cmd_lst *cmd_lst)
 		}
 		ft_printf(1, "\"");
 		i = i + 1;
-		while (ms->env[j][i] != '\n')
+		while (ms->env[j][i] != '\0')
 			ft_printf(1, "%c", ms->env[j][i++]);
 		ft_printf(1, "\"\n");
 		j++;

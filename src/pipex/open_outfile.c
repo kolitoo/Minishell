@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:16:37 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 14:54:49 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:53:29 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	open_outfile_append(t_cmd *cmd, t_cmd_lst *cmd_lst, int i, t_ms *ms)
 	return (SUC);
 }
 
-
 int	open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	int	i;
@@ -68,30 +67,3 @@ int	open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	}
 	return (SUC);
 }
-
-// int	open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (cmd_lst->outfile_name != NULL)
-// 	{
-// 		if (cmd_lst->infile_name != NULL && check_infile(cmd_lst) == 1)
-// 		{
-// 			ms->builtin_code = 1;
-// 			return (ERR);
-// 		}
-// 		while (cmd_lst->outfile_name[i] != NULL)
-// 		{
-// 			if (open_outfile_trunc(cmd, cmd_lst, i, ms) == 1)
-// 				return (ERR);
-// 			if (open_outfile_append(cmd, cmd_lst, i, ms) == 1)
-// 				return (ERR);
-// 			if (cmd_lst->outfile_mode == 3)
-// 				open(cmd_lst->outfile_name[i], O_WRONLY | O_CREAT,
-// 					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-// 			i++;
-// 		}
-// 	}
-// 	return (SUC);
-// }

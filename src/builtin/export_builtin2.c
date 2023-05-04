@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 11:31:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 10:15:09 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:01:02 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 	if (new_envp == NULL)
 		free_builtin_export(ms, cmd_lst, new_envp);
 	cpy_env(ms, new_envp, &i, cmd_lst);
-	new_envp[i] = malloc(sizeof(char) * (ft_strlen(str) + 2));
+	new_envp[i] = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (new_envp[i] == NULL)
 		free_builtin_export(ms, cmd_lst, new_envp);
 	while (str[j] != '\0')
@@ -54,8 +54,6 @@ char	**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 		new_envp[i][j] = str[j];
 		j++;
 	}
-	//new_envp[i][j] = '\n';
-	j++;
 	new_envp[i++][j] = '\0';
 	new_envp[i] = NULL;
 	free_tab((*ms).env, 0);
@@ -72,7 +70,7 @@ void	cpy_new_env(char *str, char **new_envp, t_ms *ms, t_cmd_lst *cmd_lst)
 		new_envp[ms->i_heredoc][ms->j_heredoc] = str[ms->j_heredoc];
 		ms->j_heredoc = ms->j_heredoc + 1;
 	}
-	//new_envp[ms->i_heredoc][ms->j_heredoc] = '\n';
+	new_envp[ms->i_heredoc][ms->j_heredoc] = '\0';
 	ms->j_heredoc = ms->j_heredoc + 1;
 }
 

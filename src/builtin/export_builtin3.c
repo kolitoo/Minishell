@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:53:28 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 14:59:18 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:06:14 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,3 @@ int	check_egal(char *str)
 		return (1);
 	return (0);
 }
-	

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:40 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/14 11:05:44 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:59:45 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**unset_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 	if (var.tab == NULL)
 		free_builtin_export(ms, cmd_lst, var.tab);
 	var.tab = unset_env2(str, ms, cmd_lst, var);
-	free(ms->env);
+	free_tab(ms->env, 0);
 	return (var.tab);
 }
 
@@ -100,7 +100,7 @@ char	**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 			else
 				i++;
 		}
-		if (cmd_lst->cmd_option[j][i] == '\0')
+		if (check_if_unset(cmd_lst->cmd_option[j], ms) == 0)
 			ms->env = unset_env(cmd_lst->cmd_option[j], ms, cmd_lst);
 		j++;
 	}

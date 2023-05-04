@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:35:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 10:47:23 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:05:28 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,34 +74,31 @@ int	check_e(char *str, int i)
 		return (ERR);
 }
 
-int    check_echo(t_cmd_lst *cmd_lst, t_ms *ms)
+int	check_echo(t_cmd_lst *cmd_lst, t_ms *ms, int i)
 {
-    int    i;
-
-    i = 0;
-    if (ft_strcmp(cmd_lst->cmd_option[0], "echo") == SUC)
-    {
-        if (cmd_lst->cmd_option[1] == NULL || cmd_lst->cmd_option[1][0] == '\0')
-        {
-            echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms);
-            return (0);
-        }
-        cmd_lst->cmd_option[1] = check_n(cmd_lst->cmd_option[1], ms, cmd_lst);
-        if (ft_strcmp(cmd_lst->cmd_option[1], "-n") == SUC
-            && check_e(cmd_lst->cmd_option[1], i) == ERR
-            && check_e(cmd_lst->cmd_option[2], i) == ERR)
-        {
-            echo_builtin(cmd_lst->cmd_option, 0, cmd_lst, ms);
-            return (0);
-        }
-        else if (check_e(cmd_lst->cmd_option[1], i) == ERR
-            && check_e(cmd_lst->cmd_option[2], i) == ERR)
-        {
-            echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms);
-            return (0);
-        }
-    }
-    return (1);
+	if (ft_strcmp(cmd_lst->cmd_option[0], "echo") == SUC)
+	{
+		if (cmd_lst->cmd_option[1] == NULL || cmd_lst->cmd_option[1][0] == '\0')
+		{
+			echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms);
+			return (0);
+		}
+		cmd_lst->cmd_option[1] = check_n(cmd_lst->cmd_option[1], ms, cmd_lst);
+		if (ft_strcmp(cmd_lst->cmd_option[1], "-n") == SUC
+			&& check_e(cmd_lst->cmd_option[1], i) == ERR
+			&& check_e(cmd_lst->cmd_option[2], i) == ERR)
+		{
+			echo_builtin(cmd_lst->cmd_option, 0, cmd_lst, ms);
+			return (0);
+		}
+		else if (check_e(cmd_lst->cmd_option[1], i) == ERR
+			&& check_e(cmd_lst->cmd_option[2], i) == ERR)
+		{
+			echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms);
+			return (0);
+		}
+	}
+	return (1);
 }
 
 void	echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms)

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 10:09:25 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:09:29 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 	}
 	else
 		free_cmd2(cmd, envp, cmd_lst);
-	printf("%s\n", cmd->cmd);
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");
