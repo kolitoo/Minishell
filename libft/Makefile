@@ -6,7 +6,7 @@
 #    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 13:58:40 by lgirault          #+#    #+#              #
-#    Updated: 2023/04/14 16:32:14 by abourdon         ###   ########.fr        #
+#    Updated: 2023/05/04 14:26:25 by abourdon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,12 +81,12 @@ OBJ = $(SRC:.c=.o)
 	@$(CC) $(CFLAGS) -c $< -o $@ 
 	
 $(NAME): $(OBJ)
+	@echo "$(BLUE)$(BOLD)Compiling $(NAME)...$(RESET)"
 	@$(AR) $(NAME) $(OBJ)
 
 all: $(NAME)
 
 clean:
-	@echo "$(BLUE)$(BOLD)Cleaning libft files...$(RESET)"
 	@$(RM) $(OBJ)
 
 fclean: clean

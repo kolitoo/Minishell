@@ -6,11 +6,29 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 13:09:29 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 20:41:34 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst)
+{
+	int	i;
+
+	i = 0;
+	if (cmd_lst->outfile_name != NULL)
+	{
+		while (i < tab_len(cmd_lst->outfile_name) + 1 && cmd.tab_close_outfile[i] != -1)
+		{
+			if (close(cmd.tab_close_outfile[i]) == -1)
+			{
+				printf("TEST0");
+			}
+			i++;
+		}
+	}
+}
 
 void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 {
@@ -28,7 +46,10 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 			free_cmd(cmd, envp, cmd_lst);
 	}
 	else
+	{
+		close_fichier(*cmd, cmd_lst);//close ici
 		free_cmd2(cmd, envp, cmd_lst);
+	}
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");
@@ -40,11 +61,14 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 int	no_pipe2(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	clear_lst(&cmd_lst);
+	if (cmd->tab_close_outfile != NULL)
+		free(cmd->tab_close_outfile);
 	if (ms->builtin_code == 0)
 		return (cmd->exit_status);
 	else
 		return (ms->builtin_code);
 }
+
 
 int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 {
@@ -52,7 +76,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 	int		status;
 
 	status = 0;
-	init_tab(&cmd);
+	init_tab(&cmd, cmd_lst);
 	if (for_open(cmd_lst, &cmd, ms) != 1)
 	{
 		cmd.off = fork();
@@ -67,6 +91,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 		if (WIFEXITED(status) != 0)
 			cmd.exit_status = WEXITSTATUS(status);
 	}
+	close_fichier(cmd, cmd_lst);//close ici prendre en compte le -1 on close jusauq fin ou -1
 	if (cmd_lst->limit_mode != NULL && cmd_lst->cmd_option[0] != NULL)
 		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 			if (unlink("/tmp/.file_temp.txt") == -1)

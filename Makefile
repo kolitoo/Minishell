@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
+#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/05/04 13:30:49 by lgirault         ###   ########.fr        #
+#    Updated: 2023/05/04 14:25:42 by abourdon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,7 @@ clean:
 fclean: clean
 	@echo "$(BLUE)$(BOLD)Cleaning $(NAME)...$(RESET)"
 	@$(RM) $(NAME)
+	@make fclean --no-print-directory -C $(LIBFT_PATH)
 
 re: fclean all
 

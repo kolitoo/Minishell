@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/04 14:05:45 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 20:40:54 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_cmd
 	int		*pipefd;
 	int		fd_infile;
 	int		fd_outfile;
+	int		*tab_close_outfile;
 	int		i;
 }	t_cmd;
 
@@ -180,7 +181,7 @@ void		redir(int start, int end, t_cmd *cmd);
 void		free_cmd1(t_cmd *cmd);
 void		file_error(int code_error, t_cmd_lst *cmd_lst, int i);
 void		close_fd(t_cmd *cmd);
-void		init_tab(t_cmd *cmd);
+void		init_tab(t_cmd *cmd, t_cmd_lst *cmd_lst);
 void		find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void		clear_lst(t_cmd_lst **cmd_lst);
 void		child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms);
@@ -220,6 +221,7 @@ void		exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 void		exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms, long long arg_exit);
 void		echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms);
 void		cd_builtin(char **tab, char **envp, t_ms *ms);
+void		cd_alone(char **envp);
 void		pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
 void		only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status);
 void		export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);

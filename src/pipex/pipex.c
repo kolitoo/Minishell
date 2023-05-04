@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/02 19:12:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 20:14:07 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	t_cmd	cmd;
 
-	init_tab(&cmd);
+	init_tab(&cmd, cmd_lst);
 	init(&cmd, cmd_lst, (*ms).env);
 	while (cmd_lst != NULL)
 	{

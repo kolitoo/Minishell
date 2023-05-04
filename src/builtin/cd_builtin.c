@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:38:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 13:57:38 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:30:57 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,21 @@ void	cd_localise(t_ms *ms, t_cmd_lst *cmd_lst)
 	free(var.newstr);
 }
 
-int	check_cd(t_cmd_lst *cmd_lst)
+void	cd_alone(char **envp)
 {
-	if (ft_strcmp(cmd_lst->cmd_option[0], "cd") == SUC)
-		return (0);
-	return (1);
+	t_var	var;
+
+	var.i = -1;
+	var.j = 0;
+	while (envp[++var.i] != NULL)
+		if (strncmp("HOME=", envp[var.i], 5) == 0)
+			break ;
+	while (envp[var.i][var.j] != '\0')
+		var.j++;
+	var.newstr = ft_substr(envp[var.i], 5, ft_strlen(envp[var.i]) - 5);
+	printf("%s\n", var.newstr);
+	if (chdir(var.newstr) != 0)
+		return ;
 }
 
 void	cd_builtin(char **tab, char **envp, t_ms *ms)
@@ -113,7 +123,7 @@ void	cd_builtin(char **tab, char **envp, t_ms *ms)
 				break ;
 		while (envp[var.i][var.j] != '\0')
 			var.j++;
-		var.newstr = ft_substr(envp[var.i], 5, ft_strlen(envp[var.i]) - 6);
+		var.newstr = ft_substr(envp[var.i], 5, ft_strlen(envp[var.i]) - 5);
 		if (chdir(var.newstr) != 0)
 			return ;
 	}

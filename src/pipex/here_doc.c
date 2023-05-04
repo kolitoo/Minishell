@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/14 11:06:47 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/04 20:30:03 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,20 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 		ms->sig = 1;
 }
 
-void	init_tab(t_cmd *cmd)
+void	init_tab(t_cmd *cmd, t_cmd_lst *cmd_lst)
 {
 	cmd->pipefd = NULL;
 	cmd->pid = NULL;
 	cmd->cmd = NULL;
 	cmd->options = NULL;
+	cmd->tab_close_outfile = NULL;
+	(void)cmd_lst;
+	if (cmd_lst->outfile_name != NULL)
+		cmd->tab_close_outfile = malloc(sizeof(int) * (tab_len(cmd_lst->outfile_name) + 1));
+	if (cmd->tab_close_outfile == NULL)
+	{
+		//protect
+	}
 }
 
 void	close_fd(t_cmd *cmd)

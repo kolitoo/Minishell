@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:59:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/02 17:34:33 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 20:41:52 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	free_cmd(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 		free(cmd->pipefd);
 	if (cmd->pid)
 		free(cmd->pid);
+	if (cmd->tab_close_outfile != NULL)
+		free(cmd->tab_close_outfile);
 	lstclear(&cmd_lst);
 	if (envp != NULL)
 		free_tab(envp, 0);
@@ -78,6 +80,8 @@ void	free_cmd1(t_cmd *cmd)
 		free(cmd->pipefd);
 	if (cmd->pid != NULL)
 		free(cmd->pid);
+	if (cmd->tab_close_outfile != NULL)
+		free(cmd->tab_close_outfile);
 }
 
 void	free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
@@ -88,6 +92,8 @@ void	free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 		free(cmd->pipefd);
 	if (cmd->pid)
 		free(cmd->pid);
+	if (cmd->tab_close_outfile != NULL)
+		free(cmd->tab_close_outfile);
 	lstclear(&cmd_lst);
 	if (envp != NULL)
 		free_tab(envp, 0);

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:14 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/02 13:21:31 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:49:54 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void	pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst)
 		free_builtin(ms, cmd_lst);
 	getcwd(str, PATH_MAX);
 	ft_printf(1, "%s\n", str);
+	free(str);
 }
