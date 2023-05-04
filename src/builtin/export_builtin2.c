@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 11:31:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 09:48:15 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:15:09 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 		new_envp[i][j] = str[j];
 		j++;
 	}
-	new_envp[i][j] = '\n';
+	//new_envp[i][j] = '\n';
 	j++;
 	new_envp[i++][j] = '\0';
 	new_envp[i] = NULL;
@@ -72,7 +72,7 @@ void	cpy_new_env(char *str, char **new_envp, t_ms *ms, t_cmd_lst *cmd_lst)
 		new_envp[ms->i_heredoc][ms->j_heredoc] = str[ms->j_heredoc];
 		ms->j_heredoc = ms->j_heredoc + 1;
 	}
-	new_envp[ms->i_heredoc][ms->j_heredoc] = '\n';
+	//new_envp[ms->i_heredoc][ms->j_heredoc] = '\n';
 	ms->j_heredoc = ms->j_heredoc + 1;
 }
 

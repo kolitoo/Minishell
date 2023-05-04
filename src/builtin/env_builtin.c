@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/05 13:33:30 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:17:23 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	env_builtin(t_ms *ms)
 	while (ms->env[j] != NULL)
 	{
 		ft_printf(1, "%s", ms->env[j]);
+		ft_printf(1, "\n");
 		j++;
 	}
 }

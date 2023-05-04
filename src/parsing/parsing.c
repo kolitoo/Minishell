@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 09:06:27 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:59:59 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@ static int	launch_check(t_ms *ms, t_cmd_lst *cmd_lst)
 	if (check_fine_cote(ms->line, '\'', '\"') == ERR)
 	{
 		write(2, "dquote\n", 7);
+		ms->code_erreur = 1;
 		return (ERR);
 	}
 	if (check_space_chevron(ms->line, ms, cmd_lst) == ERR)
 	{
 		write(2, "chevron\n", 8);
+		ms->code_erreur = 1;
 		return (ERR);
 	}
 	if (check_pipe(ms->line) == ERR)
 	{
 		write(2, "dpipe\n", 7);
+		ms->code_erreur = 1;
 		return (ERR);
 	}
 	return (SUC);

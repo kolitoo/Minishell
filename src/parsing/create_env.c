@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:16:17 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/03 09:05:22 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:11:00 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static	char	**set_env2(char **envp, char **env, int i, int j)
 			env[i][j] = envp[i][j];
 			j++;
 		}
-		if (env[i][j - 1] != '\n')
-			env[i][j++] = '\n';
+		// if (env[i][j - 1] != '\n')
+		// 	env[i][j++] = '\n';
 		env[i][j] = '\0';
 		j = 0;
 		i++;

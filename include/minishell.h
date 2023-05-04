@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/03 15:23:10 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 09:52:17 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void		lstadd_back(t_cmd_lst **lst, t_cmd_lst *new);
 void		lstclear(t_cmd_lst **cmd_lst);
 void		free_tab(char	**tab, int i);
 void		rights_check(char *str, t_ms **ms, char c);
-void		print_map(char **map);
 void		read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 void		right_check_heredoc(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
 void		handler_sigint(int signal);

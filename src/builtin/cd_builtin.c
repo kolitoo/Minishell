@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:38:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 11:26:24 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/04 09:30:20 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_cd(t_cmd_lst *cmd_lst)
 	return (1);
 }
 
-void	cd_builtin(char **tab, char **envp, t_ms *ms)
+void	cd_builtin(char **tab, char **envp, t_ms *ms)//pb cd-
 {
 	t_var	var;
 

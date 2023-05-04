@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 13:49:36 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/03 15:07:41 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:04:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,15 @@ static void	check_pipe2(char *str, int *i)
 		while (str[*i] != '\"')
 			*i = *i + 1;
 		if (str[*i] == '\"')
-		*i = *i + 1;
+			*i = *i + 1;
 	}
 	if (str[*i] == '\'')
 	{
 		*i = *i + 1;
 		while (str[*i] != '\'')
-			i++;
+			*i = *i + 1;
 		if (str[*i] == '\'')
-		*i = *i + 1;
+			*i = *i + 1;
 	}
 }
 
