@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 14:56:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:19:04 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	if (ms->temp == NULL)
 	{
-		close_fichier(*cmd, cmd_lst);//seulement
+		close_fichier(*cmd, cmd_lst);
 		close(cmd->fd_infile);
+		close_all(cmd);
 		free_cmd1(cmd);
 		lstclear(&cmd_lst);
 		free_tab(ms->env, 0);
@@ -28,6 +29,7 @@ void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	{
 		close_fichier(*cmd, cmd_lst);
 		close(cmd->fd_infile);
+		close_all(cmd);
 		free_cmd1(cmd);
 		lstclear(&cmd_lst);
 		free_tab(ms->env, 0);
@@ -52,6 +54,7 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 			ms->here = 1;
 			ms->temp = readline("> ");
 			ms->temp = ft_strjoin(ms->temp, "\n");
+			ms->temp = set_dollar(ms->temp, &ms, cmd_lst);
 			read_prompt_condition(cmd, cmd_lst, ms);
 			free(ms->temp);
 		}

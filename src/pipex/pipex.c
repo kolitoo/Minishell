@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 15:20:13 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:59:20 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,6 @@ int	parent(t_cmd *cmd)
 			cmd->exit_status = WEXITSTATUS(status);
 		cmd->i--;
 	}
-	// if (cmd->tab_close_outfile != NULL)
-	// 	free(cmd->tab_close_outfile);
-	// if (cmd->tab_close_infile != NULL)
-	// 	free(cmd->tab_close_infile);
 	free(cmd->pipefd);
 	free(cmd->pid);
 	return (cmd->exit_status);
@@ -87,7 +83,8 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 		init_tab_closefile(&cmd, cmd_lst);
 		if (for_open(cmd_lst, &cmd, ms) != 8)
 		{
-			ms->cat_grep = check_cat_grep(cmd_lst);
+			if (ms->lock_cat != 1)
+				ms->cat_grep = check_cat_grep(cmd_lst, ms);
 			cmd.pid[cmd.i] = fork();
 			if (cmd.pid[cmd.i] == -1)
 				error_management(2, &cmd);

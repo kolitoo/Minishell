@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/05 16:04:28 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:42:22 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_ms
 	int		j_heredoc;
 	int		builtin_code;
 	int		cat_grep;
+	int		lock_cat;
 }t_ms;
 
 typedef struct s_cmd_lst
@@ -131,7 +132,7 @@ int			limit_mode_malloc(char *str);
 int			len_dbl_tab(char *str, char c);
 int			len_file(char *str, int i, char c);
 int			rights_check_util(char *str, int *i, t_ms **ms, char c);
-int			check_cat_grep(t_cmd_lst *cmd_lst);
+int		check_cat_grep(t_cmd_lst *cmd_lst, t_ms *ms);
 char		*strspace_cpy(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**parsing(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**split_incurve(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);

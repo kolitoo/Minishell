@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 14:36:17 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:41:23 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 	}
 	else
 	{
-		close_fichier(*cmd, cmd_lst);//close ici
+		close_fichier(*cmd, cmd_lst);
 		free_cmd2(cmd, envp, cmd_lst);
 	}
+	close_fichier(*cmd, cmd_lst);
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");
@@ -93,7 +94,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 	init_tab_closefile(&cmd, cmd_lst);
 	if (for_open(cmd_lst, &cmd, ms) != 1)
 	{
-		ms->cat_grep = check_cat_grep(cmd_lst);
+		ms->cat_grep = check_cat_grep(cmd_lst, ms);
 		cmd.off = fork();
 		if (cmd.off == -1)
 			error_management(2, &cmd);

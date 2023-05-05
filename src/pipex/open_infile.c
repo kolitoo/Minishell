@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:32:38 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 15:04:42 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:39:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	open_infile_heredoc(t_cmd *cmd, t_cmd_lst *cmd_lst, int *j, t_ms *ms)
 			close(cmd->fd_infile);
 			cmd->fd_infile = open("/tmp/.file_temp.txt", O_RDONLY);
 			if (*j + 1 < tab_len(cmd_lst->infile_name))
+			{
+				//close(cmd->fd_infile);
 				unlink("/tmp/.file_temp.txt");
+			}
 			cmd->tab_close_infile[ms->i_heredoc] = cmd->fd_infile;
 			*j = *j + 1;
 		}

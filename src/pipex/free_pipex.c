@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:59:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 15:57:18 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:47:26 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	free_cmd1(t_cmd *cmd)
 
 void	free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
+	close_fichier(*cmd, cmd_lst);
 	if (cmd->cmd != NULL)
 		free(cmd->cmd);
 	if (cmd->pipefd != NULL)

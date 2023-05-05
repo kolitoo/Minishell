@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:40 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 13:59:45 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:31:53 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**unset_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 	var.j = 0;
 	var.k = 0;
 	var.tab = NULL;
-	var.tab = malloc(sizeof(char *) * (tab_len(ms->env) + 1));
+	var.tab = malloc(sizeof(char *) * (tab_len(ms->env) + 2));
 	if (var.tab == NULL)
 		free_builtin_export(ms, cmd_lst, var.tab);
 	var.tab = unset_env2(str, ms, cmd_lst, var);
