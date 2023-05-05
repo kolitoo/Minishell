@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:59:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 20:41:52 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:57:18 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	free_cmd(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 		free(cmd->pid);
 	if (cmd->tab_close_outfile != NULL)
 		free(cmd->tab_close_outfile);
+	if (cmd->tab_close_infile != NULL)
+		free(cmd->tab_close_infile);
 	lstclear(&cmd_lst);
 	if (envp != NULL)
 		free_tab(envp, 0);
@@ -82,6 +84,8 @@ void	free_cmd1(t_cmd *cmd)
 		free(cmd->pid);
 	if (cmd->tab_close_outfile != NULL)
 		free(cmd->tab_close_outfile);
+	if (cmd->tab_close_infile != NULL)
+		free(cmd->tab_close_infile);
 }
 
 void	free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
@@ -94,10 +98,33 @@ void	free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 		free(cmd->pid);
 	if (cmd->tab_close_outfile != NULL)
 		free(cmd->tab_close_outfile);
+	if (cmd->tab_close_infile != NULL)
+		free(cmd->tab_close_infile);
 	lstclear(&cmd_lst);
 	if (envp != NULL)
 		free_tab(envp, 0);
 	exit(0);
+}
+
+
+void	free_cmd4(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
+{
+	close_fichier(*cmd, cmd_lst);
+	close_all(cmd);
+	if (cmd->cmd != NULL)
+		free(cmd->cmd);
+	if (cmd->pipefd != NULL)
+		free(cmd->pipefd);
+	if (cmd->pid)
+		free(cmd->pid);
+	if (cmd->tab_close_outfile != NULL)
+		free(cmd->tab_close_outfile);
+	if (cmd->tab_close_infile != NULL)
+		free(cmd->tab_close_infile);
+	lstclear(&cmd_lst);
+	if (envp != NULL)
+		free_tab(envp, 0);
+	exit(1);
 }
 // if (cmd->options != NULL)
 // 	free_tab(cmd->options, 0);

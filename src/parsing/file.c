@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:04:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 15:02:37 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:53:57 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static char	**find_file3(char **split_chevron, t_var *var,
 			var->j++;
 		}
 		split_chevron[var->k][var->j] = '\0';
+		split_chevron[var->k] = set_dollar(split_chevron[var->k], &ms, cmd_lst);
 		if (var->j == 0)
 			split_chevron[var->k] = NULL;
 		var->k++;

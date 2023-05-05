@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/04 19:39:39 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:07:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@ $$/      $$/ $$$$$$/ $$/   $$/ $$$$$$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$$$$$$$/ $
 void	handler_sigint(int signal)
 {
 	(void)signal;
-	if (g_ms.here != 1)
+	if (g_ms.here != 1 && g_ms.cat_grep != 0)
+		ft_printf(1, "\n");
+	else if (g_ms.here != 1)
 	{
 		ft_printf(1, "\n");
 		ft_printf(1, "\033[36m \033[1m");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_ms.code_erreur = 130;
 	}
 	if (g_ms.here == 1 && g_ms.filed == 0)
 	{
@@ -80,12 +83,12 @@ int	main(int argc, char **argv, char **envp)
 	launch_signal();
 	cmd_lst = NULL;
 	g_ms.env = set_env(envp);
-	g_ms.here = 0;
-	g_ms.builtin_code = 0;
-	print_minishell();
+	//print_minishell();
 	while (1)
 	{
+		g_ms.builtin_code = 0;
 		g_ms.here = 0;
+		g_ms.cat_grep = 0;
 		ft_printf(1, "\033[36m \033[1m");
 		g_ms.line = readline("minishell →  \033[0m");
 		if (g_ms.line == NULL)

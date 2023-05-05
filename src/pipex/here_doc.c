@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 20:30:03 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:56:43 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	if (ms->temp == NULL)
 	{
+		close_fichier(*cmd, cmd_lst);//seulement
+		close(cmd->fd_infile);
 		free_cmd1(cmd);
 		lstclear(&cmd_lst);
 		free_tab(ms->env, 0);
@@ -24,6 +26,8 @@ void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	}
 	if (ft_strcmp_n(cmd_lst->infile_name[ms->i_heredoc], ms->temp) == 0)
 	{
+		close_fichier(*cmd, cmd_lst);
+		close(cmd->fd_infile);
 		free_cmd1(cmd);
 		lstclear(&cmd_lst);
 		free_tab(ms->env, 0);
@@ -54,21 +58,37 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	}
 	waitpid(ms->filed, &test, 0);
 	if (test == 512)
+	{
 		ms->sig = 1;
+		ms->builtin_code = 130;
+	}
 }
 
 void	init_tab(t_cmd *cmd, t_cmd_lst *cmd_lst)
 {
+	(void)cmd_lst;
 	cmd->pipefd = NULL;
 	cmd->pid = NULL;
 	cmd->cmd = NULL;
 	cmd->options = NULL;
+}
+
+void	init_tab_closefile(t_cmd *cmd, t_cmd_lst *cmd_lst)
+{
 	cmd->tab_close_outfile = NULL;
-	(void)cmd_lst;
+	cmd->tab_close_infile = NULL;
 	if (cmd_lst->outfile_name != NULL)
-		cmd->tab_close_outfile = malloc(sizeof(int) * (tab_len(cmd_lst->outfile_name) + 1));
+		cmd->tab_close_outfile = calloc((tab_len(cmd_lst->outfile_name) + 1), sizeof(int));
 	if (cmd->tab_close_outfile == NULL)
 	{
+		//close_fichier(*cmd, cmd_lst);
+		//protect
+	}
+	if (cmd_lst->infile_name != NULL)
+		cmd->tab_close_infile = ft_calloc((tab_len(cmd_lst->infile_name) + 1), sizeof(int));
+	if (cmd->tab_close_infile == NULL)
+	{
+		//close_fichier(*cmd, cmd_lst);
 		//protect
 	}
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/05/04 14:25:42 by abourdon         ###   ########.fr        #
+#    Updated: 2023/05/05 16:07:21 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC = src/minishell.c \
 	src/execex/no_pipe.c \
 	src/builtin/check_builtin.c \
 	src/builtin/echo_builtin.c \
+	src/builtin/echo_builtin2.c \
 	src/builtin/cd_builtin.c \
 	src/builtin/pwd_builtin.c \
 	src/builtin/export_builtin.c \

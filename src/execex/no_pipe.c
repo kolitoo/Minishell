@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 20:41:34 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:36:17 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,23 @@ void	close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst)
 	i = 0;
 	if (cmd_lst->outfile_name != NULL)
 	{
-		while (i < tab_len(cmd_lst->outfile_name) + 1 && cmd.tab_close_outfile[i] != -1)
+		while (i < tab_len(cmd_lst->outfile_name) + 1 && cmd.tab_close_outfile[i] != -1 && cmd.tab_close_outfile[i] != 0)
 		{
 			if (close(cmd.tab_close_outfile[i]) == -1)
 			{
-				printf("TEST0");
+				//printf("PB outfile close");
+			}
+			i++;
+		}
+	}
+	i = 0;
+	if (cmd_lst->infile_name != NULL)
+	{
+		while (i < tab_len(cmd_lst->infile_name) + 1 && cmd.tab_close_infile[i] != -1 && cmd.tab_close_infile[i] != 0)
+		{
+			if (close(cmd.tab_close_infile[i]) == -1)
+			{
+				//printf("PB infile close");
 			}
 			i++;
 		}
@@ -63,12 +75,13 @@ int	no_pipe2(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	clear_lst(&cmd_lst);
 	if (cmd->tab_close_outfile != NULL)
 		free(cmd->tab_close_outfile);
+	if (cmd->tab_close_infile != NULL)
+		free(cmd->tab_close_infile);
 	if (ms->builtin_code == 0)
 		return (cmd->exit_status);
 	else
 		return (ms->builtin_code);
 }
-
 
 int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 {
@@ -77,8 +90,10 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 
 	status = 0;
 	init_tab(&cmd, cmd_lst);
+	init_tab_closefile(&cmd, cmd_lst);
 	if (for_open(cmd_lst, &cmd, ms) != 1)
 	{
+		ms->cat_grep = check_cat_grep(cmd_lst);
 		cmd.off = fork();
 		if (cmd.off == -1)
 			error_management(2, &cmd);

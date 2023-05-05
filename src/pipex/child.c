@@ -6,53 +6,65 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:07:42 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 11:15:50 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:41:00 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	first_child(t_cmd *cmd)
+void	first_child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
-	redir(0, cmd->pipefd[1], cmd);
+	if (redir(0, cmd->pipefd[1], cmd) == 1)
+		free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile == 0)
-		redir(cmd->fd_infile, cmd->pipefd[1], cmd);
+		if (redir(cmd->fd_infile, cmd->pipefd[1], cmd) == 1)
+			free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile == 0 && cmd->fd_outfile != 0)
-		redir(0, cmd->fd_outfile, cmd);
+		if (redir(0, cmd->fd_outfile, cmd) == 1)
+			free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile != 0)
-		redir(cmd->fd_infile, cmd->fd_outfile, cmd);
+		if (redir(cmd->fd_infile, cmd->fd_outfile, cmd) == 1)
+			free_cmd4(cmd, envp, cmd_lst);
 }
 
-void	last_child(t_cmd *cmd)
+void	last_child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
-	redir(cmd->pipefd[(cmd->i * 2) - 2], 1, cmd);
+	if (redir(cmd->pipefd[(cmd->i * 2) - 2], 1, cmd) == 1)
+		free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile == 0)
-		redir(cmd->fd_infile, 1, cmd);
+		if (redir(cmd->fd_infile, 1, cmd) == 1)
+			free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile == 0 && cmd->fd_outfile != 0)
-		redir(cmd->pipefd[(cmd->i * 2) - 2], cmd->fd_outfile, cmd);
+		if (redir(cmd->pipefd[(cmd->i * 2) - 2], cmd->fd_outfile, cmd) == 1)
+			free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile != 0)
-		redir(cmd->fd_infile, cmd->fd_outfile, cmd);
+		if (redir(cmd->fd_infile, cmd->fd_outfile, cmd) == 1)
+			free_cmd4(cmd, envp, cmd_lst);
 }
 
-void	middle_child(t_cmd *cmd)
+void	middle_child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
-	redir(cmd->pipefd[(cmd->i - 1) * 2], cmd->pipefd[(cmd->i * 2) + 1], cmd);
+	if (redir(cmd->pipefd[(cmd->i - 1) * 2], cmd->pipefd[(cmd->i * 2) + 1], cmd) == 1)
+		free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile == 0)
-		redir(cmd->fd_infile, cmd->pipefd[(cmd->i * 2) + 1], cmd);
+		if (redir(cmd->fd_infile, cmd->pipefd[(cmd->i * 2) + 1], cmd) == 1)
+			free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile == 0 && cmd->fd_outfile != 0)
-		redir(cmd->pipefd[(cmd->i - 1) * 2], cmd->fd_outfile, cmd);
+		if (redir(cmd->pipefd[(cmd->i - 1) * 2], cmd->fd_outfile, cmd) == 1)
+			free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile != 0)
-		redir(cmd->fd_infile, cmd->fd_outfile, cmd);
+		if (redir(cmd->fd_infile, cmd->fd_outfile, cmd) == 1)
+			free_cmd4(cmd, envp, cmd_lst);
 }
 
 void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	if (cmd->i == 0)
-		first_child(cmd);
+		first_child(cmd, envp, cmd_lst);
 	else if (cmd->i == cmd->nbr_cmd - 1)
-		last_child(cmd);
+		last_child(cmd, envp, cmd_lst);
 	else
-		middle_child(cmd);
+		middle_child(cmd, envp, cmd_lst);
 	close_all(cmd);
 	if (check_builtin(cmd_lst, ms) == 1 && cmd_lst->test == 1)
 	{
@@ -63,11 +75,15 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms)
 			free_cmd2(cmd, envp, cmd_lst);
 	}
 	else
+	{
+		close_fichier(*cmd, cmd_lst);
 		free_cmd2(cmd, envp, cmd_lst);
+	}
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");
 		free_cmd1(cmd);
+		lstclear(&cmd_lst);
 		exit(127);
 	}
 }

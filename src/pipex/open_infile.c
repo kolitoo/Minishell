@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:32:38 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 09:15:12 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:04:42 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ void	open_infile_heredoc(t_cmd *cmd, t_cmd_lst *cmd_lst, int *j, t_ms *ms)
 			cmd->fd_infile = open("/tmp/.file_temp.txt", O_RDONLY);
 			if (*j + 1 < tab_len(cmd_lst->infile_name))
 				unlink("/tmp/.file_temp.txt");
+			cmd->tab_close_infile[ms->i_heredoc] = cmd->fd_infile;
 			*j = *j + 1;
 		}
 		else
 		{
 			cmd->fd_infile
 				= open(cmd_lst->infile_name[ms->i_heredoc], O_RDONLY);
+			cmd->tab_close_infile[ms->i_heredoc] = cmd->fd_infile;
 			*j = *j + 1;
 		}
 	}
@@ -47,8 +49,11 @@ int	open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 		while (cmd_lst->infile_name[ms->i_heredoc] != NULL)
 		{
 			if (cmd_lst->infile_mode == 1)
+			{
 				cmd->fd_infile
 					= open(cmd_lst->infile_name[ms->i_heredoc], O_RDONLY);
+				cmd->tab_close_infile[ms->i_heredoc] = cmd->fd_infile;
+			}
 			open_infile_heredoc(cmd, cmd_lst, &j, ms);
 			if (cmd->fd_infile == -1)
 			{

@@ -1,8 +1,0 @@
-Pb cd tout seul
-pwd leak
-leak de fd
-"$variable" dans un heredoc -> export le path
-valeur retour de ctrl + c ?
-ctrl + c dans le cat affichage pas ouf apres
-ecarriot pour les test minishell
--g makefile

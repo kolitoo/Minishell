@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:38:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 18:30:57 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:24:17 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,12 @@ void	cd_alone(char **envp)
 	while (envp[var.i][var.j] != '\0')
 		var.j++;
 	var.newstr = ft_substr(envp[var.i], 5, ft_strlen(envp[var.i]) - 5);
-	printf("%s\n", var.newstr);
 	if (chdir(var.newstr) != 0)
+	{
+		free(var.newstr);
 		return ;
+	}
+	free(var.newstr);
 }
 
 void	cd_builtin(char **tab, char **envp, t_ms *ms)

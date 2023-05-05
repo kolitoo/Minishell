@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 20:14:07 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:20:13 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,12 @@ int	parent(t_cmd *cmd)
 			cmd->exit_status = WEXITSTATUS(status);
 		cmd->i--;
 	}
+	// if (cmd->tab_close_outfile != NULL)
+	// 	free(cmd->tab_close_outfile);
+	// if (cmd->tab_close_infile != NULL)
+	// 	free(cmd->tab_close_infile);
 	free(cmd->pipefd);
 	free(cmd->pid);
-	close_fd(cmd);
 	return (cmd->exit_status);
 }
 
@@ -81,8 +84,10 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 	init(&cmd, cmd_lst, (*ms).env);
 	while (cmd_lst != NULL)
 	{
+		init_tab_closefile(&cmd, cmd_lst);
 		if (for_open(cmd_lst, &cmd, ms) != 8)
 		{
+			ms->cat_grep = check_cat_grep(cmd_lst);
 			cmd.pid[cmd.i] = fork();
 			if (cmd.pid[cmd.i] == -1)
 				error_management(2, &cmd);
@@ -94,6 +99,11 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 			if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 				if (unlink("/tmp/.file_temp.txt") == -1)
 					error_management(7, &cmd);
+		close_fichier(cmd, cmd_lst);
+		if (cmd.tab_close_outfile != NULL)
+			free(cmd.tab_close_outfile);
+		if (cmd.tab_close_infile != NULL)
+			free(cmd.tab_close_infile);
 		clear_lst(&cmd_lst);
 		cmd.i++;
 	}

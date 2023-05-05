@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   echo_builtin2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 10:59:11 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 13:33:59 by lgirault         ###   ########.fr       */
+/*   Created: 2023/05/05 16:02:59 by lgirault          #+#    #+#             */
+/*   Updated: 2023/05/05 16:04:10 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	launch_signal(void)
+int    check_backslashzero(t_var *var, char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 {
-	signal(SIGINT, handler_sigint);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-int	check_cat_grep(t_cmd_lst *cmd_lst)
-{
-	if (ft_strcmp(cmd_lst->cmd_option[0], "cat") == 0)
-		return (1);
-	if (ft_strcmp(cmd_lst->cmd_option[0], "grep") == 0 && cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[1][0] == '\0')
-		return (1);
-	return (0);
+    if (str[var->i] == '\0')
+    {
+        var->newstr = malloc(sizeof(char) * 2);
+        if (var->newstr == NULL)
+            free_builtin(ms, cmd_lst);
+        var->newstr[0] = '-';
+        var->newstr[1] = '\0';
+        free(str);
+        return (1);
+    }
+    return (0);
 }
