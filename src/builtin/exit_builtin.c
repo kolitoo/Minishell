@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:40:04 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 11:00:26 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 14:28:57 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,20 @@ int	check_exit(t_cmd_lst *cmd_lst)
 	if (ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC
 		&& (cmd_lst->cmd_option[1] == NULL || cmd_lst->cmd_option[2] == NULL))
 	{
-		cmd_lst->test = 0;
+		if (cmd_lst->cmd_option[1] != NULL && check_nbr(cmd_lst->cmd_option[1]) == 1)
+			ft_printf(2, "exit: numeric argument required\n");
+		return (0);
+	}
+	else if (ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC && check_nbr(cmd_lst->cmd_option[1]) == 1)
+	{
+		ft_printf(2, "exit: numeric argument required\n");
 		return (0);
 	}
 	else if (ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC)
 	{
 		ft_printf(2, "exit: too many arguments\n");
-		cmd_lst->test = 2;
 		return (0);
 	}
-	cmd_lst->test = 1;
 	return (1);
 }
 
@@ -71,30 +75,18 @@ int	check_nbr(char *str)
 	return (0);
 }
 
-void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
+int	str_is_dig(char *str)
 {
-	long long	arg_exit;
+	int	i;
 
-	arg_exit = 0;
-	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL)
-		return (ms->builtin_code = 1, (void)0);
-	if (cmd_lst->limit_mode != NULL)
-		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
-			if (unlink("/tmp/.file_temp.txt") == -1)
-				error_management(7, cmd);
-	if (cmd_lst->cmd_option[1] != NULL)
+	i = 0;
+	while (str[i] != '\0')
 	{
-		if (check_nbr(cmd_lst->cmd_option[1]) == 1)
-			arg_exit = 2;
-		else
-		{
-			arg_exit = ft_atoi(cmd_lst->cmd_option[1], ms);
-			if (ms->builtin_code != 0)
-				arg_exit = 2;
-		}
+		if (ft_isdigit(str[i]) == 0)
+			return (1);
+		i++;
 	}
-	parent(cmd);
-	exit_builtin_free(cmd_lst, ms, arg_exit);
+	return (0);
 }
 
 void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
@@ -103,7 +95,7 @@ void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 	long long	arg_exit;
 
 	arg_exit = 0;
-	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL)
+	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL && str_is_dig(cmd_lst->cmd_option[1]) == 0)
 		return (ms->builtin_code = 1, (void)0);
 	cmd->wpid = waitpid(cmd->off, &status, 0);
 	if (cmd->wpid == -1)
@@ -123,5 +115,5 @@ void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 			if (ms->builtin_code != 0)
 				arg_exit = 2;
 	}
-	exit_builtin_free(cmd_lst, ms, arg_exit);
+	exit_builtin_free(cmd_lst, ms, arg_exit, *cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:29 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 14:49:52 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:34:01 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ void    export_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
                 else if (check_add(cmd_lst->cmd_option[i], ms) == 1)
                 {
                     printf("concatener\n");
+		    (*ms).env = conca_env(cmd_lst->cmd_option[i], ms, cmd_lst);
                 }
                 else if (check_add(cmd_lst->cmd_option[i], ms) == 0)
                 {

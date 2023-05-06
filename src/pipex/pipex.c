@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 18:59:20 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 18:17:46 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 {
-	int	test;
-
-	test = 0;
 	cmd->fd_infile = 0;
 	cmd->fd_outfile = 0;
 	if (open_outfile(cmd, cmd_lst, ms) == ERR)
@@ -52,7 +49,7 @@ void	init(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 /*ON fait un pipe pour chaque paire de commande la
 premiere fois on fait un pipe de 2 * 0*/
 
-int	parent(t_cmd *cmd)
+int	parent(t_cmd *cmd, t_ms *ms)
 {
 	int	status;
 
@@ -69,7 +66,10 @@ int	parent(t_cmd *cmd)
 	}
 	free(cmd->pipefd);
 	free(cmd->pid);
-	return (cmd->exit_status);
+	if (ms->builtin_code == 0)
+		return (cmd->exit_status);
+	else
+		return (ms->builtin_code);
 }
 
 int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
@@ -80,30 +80,23 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 	init(&cmd, cmd_lst, (*ms).env);
 	while (cmd_lst != NULL)
 	{
-		init_tab_closefile(&cmd, cmd_lst);
-		if (for_open(cmd_lst, &cmd, ms) != 8)
-		{
-			if (ms->lock_cat != 1)
-				ms->cat_grep = check_cat_grep(cmd_lst, ms);
-			cmd.pid[cmd.i] = fork();
-			if (cmd.pid[cmd.i] == -1)
-				error_management(2, &cmd);
-			if (cmd.pid[cmd.i] == 0)
-				child(&cmd, (*ms).env, cmd_lst, ms);
-		}
+		init_tab_closefile(&cmd, cmd_lst, ms);
+		for_open(cmd_lst, &cmd, ms);
+		if (ms->lock_cat != 1)
+			ms->cat_grep = check_cat_grep(cmd_lst, ms);
+		cmd.pid[cmd.i] = fork();
+		if (cmd.pid[cmd.i] == -1)
+			error_management(2, &cmd);
+		if (cmd.pid[cmd.i] == 0)
+			child(&cmd, (*ms).env, cmd_lst, ms);
+		close_fichier(cmd, cmd_lst);
 		only_last(cmd_lst, ms, &cmd, 1);
 		if (cmd_lst->limit_mode != NULL && cmd_lst->cmd_option[0] != NULL)
 			if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 				if (unlink("/tmp/.file_temp.txt") == -1)
 					error_management(7, &cmd);
-		close_fichier(cmd, cmd_lst);
-		if (cmd.tab_close_outfile != NULL)
-			free(cmd.tab_close_outfile);
-		if (cmd.tab_close_infile != NULL)
-			free(cmd.tab_close_infile);
 		clear_lst(&cmd_lst);
 		cmd.i++;
 	}
-	parent(&cmd);
-	return (cmd.exit_status);
+	return (parent(&cmd, ms));
 }

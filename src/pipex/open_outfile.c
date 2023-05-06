@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:16:37 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 14:20:06 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 11:21:18 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	open_outfile_append(t_cmd *cmd, t_cmd_lst *cmd_lst, int i, t_ms *ms)
 		file_error(9, cmd_lst, i);
 		return (ERR);
 	}
-	cmd->tab_close_outfile[i] = cmd->fd_outfile;//si rate il y aura un -1 prendre en compte pour le close
+	cmd->tab_close_outfile[i] = cmd->fd_outfile;
 	return (SUC);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:06:11 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 20:10:55 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 14:21:06 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ int	check_if_unset(char *str, t_ms *ms)
 int	check_cd(t_cmd_lst *cmd_lst)
 {
 	if (ft_strcmp(cmd_lst->cmd_option[0], "cd") == SUC)
+	{
+		if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL)
+			ft_printf(2, "cd : too many arguments\n");
 		return (0);
+	}
 	return (1);
 }

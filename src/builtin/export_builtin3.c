@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:53:28 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 14:51:09 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:33:18 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,42 @@ int    check_add(char *str, t_ms *ms)
         j++;
     }
     return (0);
+}
+
+int	pos_plus(char *str)
+{
+	int	i;
+
+	i = 0;
+	while ( str[i] != '\0')
+	{
+		if (str[i] == '+')
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+char	**conca_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
+{
+	int	j;
+	char	*straveg;
+	char	*strapeg;
+	char	*strfinal;
+	
+	j = 0;
+	straveg = ft_substr(str, 0, pos_plus(str) + 1);//protect
+	strapeg = ft_substr(str, pos_plus(str) + 2, ft_strlen(str) - pos_plus(str));//protect
+	straveg[pos_plus(str)] = '=';
+	while (ms->env[j] != NULL)
+	{
+		if (ft_strncmp(straveg, ms->env[j], pos_egal(ms->env[j])) == 0)
+		{
+			free(straveg);
+			strfinal = join2(ms->env[j], strapeg);//protect
+			ms->env = replac_env(strfinal, ms, cmd_lst, 1);
+		}
+		j++;
+	}
+	return (ms->env);
 }

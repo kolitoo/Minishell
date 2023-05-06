@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/03 15:02:23 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 10:07:48 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,6 @@ char	*set_dollar(char *str, t_ms **ms, t_cmd_lst *cmd_lst)
 		if (str[i] != '\0' && str[i] != '\'' && str[i] != '\"')
 			i++;
 	}
+	str = dollar_last_check(str, ms, cmd_lst);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:55 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 18:36:03 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 15:41:49 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,15 @@ int	check_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 
 void	only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status)
 {
+	ms->builtin_code = 0;//patch pb code erreur
 	if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)
 	{
 		if (cmd_lst->cmd_option[1] == NULL)
-			cd_alone((*ms).env);
+			cd_alone((*ms).env, ms, cmd_lst);
 		else if (cmd_lst->cmd_option[1][0] == '-' && cmd_lst->cmd_option[1][1] == '\0')
 			cd_localise(ms, cmd_lst);
 		else
-			cd_builtin(cmd_lst->cmd_option, (*ms).env, ms);
+			cd_builtin(cmd_lst->cmd_option, ms, cmd_lst);
 	}
 	if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0],
 			"export") == 0 && cmd_lst->cmd_option[1] != NULL
@@ -59,5 +60,5 @@ void	only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status)
 		exit_builtin_execex(cmd_lst, cmd, ms, status);
 	if (status == 1 && cmd_lst->next == NULL
 		&& ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC)
-		exit_builtin_pipex(cmd_lst, cmd, ms);
+		exit_builtin_pipex(cmd_lst, ms);
 }

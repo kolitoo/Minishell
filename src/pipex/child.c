@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:07:42 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 18:47:41 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 11:18:58 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms)
 	else
 		middle_child(cmd, envp, cmd_lst);
 	close_all(cmd);
-	if (check_builtin(cmd_lst, ms) == 1 && cmd_lst->test == 1)
+	if (check_builtin(cmd_lst, ms) == 1)
 	{
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->i != 0 && cmd->cmd == NULL)
@@ -76,7 +76,6 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms)
 	}
 	else
 		free_cmd2(cmd, envp, cmd_lst);
-		//close_fichier(*cmd, cmd_lst);
 	close_fichier(*cmd, cmd_lst);
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:59:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 18:47:26 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:23:01 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,18 @@ void	clear_lst(t_cmd_lst **cmd_lst)
 
 void	free_cmd(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
+	close_fichier(*cmd, cmd_lst);
 	if (cmd->cmd != NULL)
 		free(cmd->cmd);
 	if (cmd->pipefd != NULL)
 		free(cmd->pipefd);
 	if (cmd->pid)
 		free(cmd->pid);
-	if (cmd->tab_close_outfile != NULL)
-		free(cmd->tab_close_outfile);
-	if (cmd->tab_close_infile != NULL)
-		free(cmd->tab_close_infile);
 	lstclear(&cmd_lst);
 	if (envp != NULL)
 		free_tab(envp, 0);
 	exit(127);
 }
-// if (cmd->options != NULL)
-// 	free_tab(cmd->options, 0);
-//enlever psk dans make_tab_path/find_path/ligne67 on dit cmd->options
-// = cmd_lst->cmd_option donc il sera free quand on free la liste
 
 void	free_cmd1(t_cmd *cmd)
 {
@@ -97,10 +90,6 @@ void	free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 		free(cmd->pipefd);
 	if (cmd->pid)
 		free(cmd->pid);
-	if (cmd->tab_close_outfile != NULL)
-		free(cmd->tab_close_outfile);
-	if (cmd->tab_close_infile != NULL)
-		free(cmd->tab_close_infile);
 	lstclear(&cmd_lst);
 	if (envp != NULL)
 		free_tab(envp, 0);
@@ -118,16 +107,8 @@ void	free_cmd4(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 		free(cmd->pipefd);
 	if (cmd->pid)
 		free(cmd->pid);
-	if (cmd->tab_close_outfile != NULL)
-		free(cmd->tab_close_outfile);
-	if (cmd->tab_close_infile != NULL)
-		free(cmd->tab_close_infile);
 	lstclear(&cmd_lst);
 	if (envp != NULL)
 		free_tab(envp, 0);
 	exit(1);
 }
-// if (cmd->options != NULL)
-// 	free_tab(cmd->options, 0);
-//enlever psk dans make_tab_path/find_path/ligne67 on dit cmd->options
-// = cmd_lst->cmd_option donc il sera free quand on free la liste

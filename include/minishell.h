@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/05 18:42:22 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:33:47 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ typedef struct s_cmd_lst
 	int					infile_mode;
 	int					outfile_mode;
 	int					*limit_mode;
-	int					test;
 	char				**infile_name;
 	char				**outfile_name;
 	char				**cmd_option;
@@ -147,6 +146,7 @@ char		*replace_variable2(char *str, char *variable);
 char		*put_space(char *str, char c, int *i, char *str2);
 char		**clean_str(char **double_tab, t_ms *ms, t_cmd_lst *cmd_lst);
 char		*clear_quote(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
+char		*join2(char *s1, char *s2);
 char		*warning_error(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**set_env(char	**envp);
 char		*neww_variable(char *new_variable, char *variable, char *envstring);
@@ -201,11 +201,11 @@ int			bool_cotev2(char *str, int i);
 int			no_pipe(t_cmd_lst *cmd_lst, t_ms *ms);
 int			for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
 int			tab_len(char **tab);
-int			parent(t_cmd *cmd);
+int			parent(t_cmd *cmd, t_ms *ms);
 int			open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 void			close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst);
-void			init_tab_closefile(t_cmd *cmd, t_cmd_lst *cmd_lst);
+void			init_tab_closefile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 
 //Builtin
 int			check_cd(t_cmd_lst *cmd_lst);
@@ -224,19 +224,24 @@ int		check_backslashzero(t_var *var, char *str, t_ms *ms, t_cmd_lst *cmd_lst);
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 char    	**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool);
 char    	**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool);
-void		exit_builtin_pipex(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms);
+char		**conca_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
 void		exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
-				t_ms *ms, int status);
-void		exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms, long long arg_exit);
+			t_ms *ms, int status);
+void		exit_builtin_pipex(t_cmd_lst *cmd_lst, t_ms *ms);
+void		exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms, long long arg_exit, t_cmd cmd);
 void		echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms);
-void		cd_builtin(char **tab, char **envp, t_ms *ms);
-void		cd_alone(char **envp);
+char    	*dollar_last_check(char *str,t_ms **ms, t_cmd_lst *cmd_lst);
+void		cd_builtin(char **tab, t_ms *ms, t_cmd_lst *cmd_lst);
+void		cd_alone(char **envp, t_ms *ms, t_cmd_lst *cmd_lst);
 void		pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
 void		only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status);
 void		export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 void		env_builtin(t_ms *ms);
 void		solo_export(t_ms *ms, t_cmd_lst *cmd_lst);
+unsigned long long	ft_atoi(const char *str, t_ms *ms);
 void		ft_atoi2(t_atoi *var, t_ms *ms, const char *str);
-void		cd_localise(t_ms *ms, t_cmd_lst *cmd_lst);
+void		cd_localise( t_ms *ms, t_cmd_lst *cmd_lst);
+int		str_is_dig(char *str);
+int		check_nbr(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 18:17:27 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 11:21:43 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,11 @@ int	redir(int start, int end, t_cmd *cmd)
 	(void)cmd;
 	if (dup2(start, 0) == -1)
 	{
-		//free_cmd1(cmd);
 		return (1);
-		//exit(EXIT_FAILURE);
 	}
 	if (dup2(end, 1) == -1)
 	{
-		//free_cmd1(cmd);
 		return (1);
-		//exit(EXIT_FAILURE);
 	}
 	return (0);
 }

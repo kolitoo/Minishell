@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 18:19:04 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/06 18:29:57 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,24 @@
 
 void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
-	if (ms->temp == NULL)
+	if (ms->temp == NULL && ms->sig != 1)
 	{
 		close_fichier(*cmd, cmd_lst);
 		close(cmd->fd_infile);
-		close_all(cmd);
+		if (cmd->nbr_cmd > 1)
+			close_all(cmd);
+		free_cmd1(cmd);
+		lstclear(&cmd_lst);
+		free_tab(ms->env, 0);
+		free(ms->temp);
+		exit(1);
+	}
+	if (ms->temp == NULL && ms->sig == 1)
+	{
+		close_fichier(*cmd, cmd_lst);
+		close(cmd->fd_infile);
+		if (cmd->nbr_cmd > 1)
+			close_all(cmd);
 		free_cmd1(cmd);
 		lstclear(&cmd_lst);
 		free_tab(ms->env, 0);
@@ -29,7 +42,8 @@ void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	{
 		close_fichier(*cmd, cmd_lst);
 		close(cmd->fd_infile);
-		close_all(cmd);
+		if (cmd->nbr_cmd > 1)
+			close_all(cmd);
 		free_cmd1(cmd);
 		lstclear(&cmd_lst);
 		free_tab(ms->env, 0);
@@ -54,7 +68,8 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 			ms->here = 1;
 			ms->temp = readline("> ");
 			ms->temp = ft_strjoin(ms->temp, "\n");
-			ms->temp = set_dollar(ms->temp, &ms, cmd_lst);
+			if (ms->temp != NULL)
+				ms->temp = set_dollar(ms->temp, &ms, cmd_lst);
 			read_prompt_condition(cmd, cmd_lst, ms);
 			free(ms->temp);
 		}
@@ -76,23 +91,24 @@ void	init_tab(t_cmd *cmd, t_cmd_lst *cmd_lst)
 	cmd->options = NULL;
 }
 
-void	init_tab_closefile(t_cmd *cmd, t_cmd_lst *cmd_lst)
+void	init_tab_closefile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	cmd->tab_close_outfile = NULL;
 	cmd->tab_close_infile = NULL;
 	if (cmd_lst->outfile_name != NULL)
-		cmd->tab_close_outfile = calloc((tab_len(cmd_lst->outfile_name) + 1), sizeof(int));
-	if (cmd->tab_close_outfile == NULL)
 	{
-		//close_fichier(*cmd, cmd_lst);
-		//protect
+		cmd->tab_close_outfile = calloc((tab_len(cmd_lst->outfile_name) + 1), sizeof(int));
+		if (cmd->tab_close_outfile == NULL && tab_len(cmd_lst->outfile_name) + 1 > 0)
+			free_cmd(cmd, ms->env, cmd_lst);
 	}
 	if (cmd_lst->infile_name != NULL)
-		cmd->tab_close_infile = ft_calloc((tab_len(cmd_lst->infile_name) + 1), sizeof(int));
-	if (cmd->tab_close_infile == NULL)
 	{
-		//close_fichier(*cmd, cmd_lst);
-		//protect
+		cmd->tab_close_infile = ft_calloc((tab_len(cmd_lst->infile_name) + 1), sizeof(int));
+		if (cmd->tab_close_infile == NULL && tab_len(cmd_lst->outfile_name) + 1 > 0)
+		{
+			free(cmd->tab_close_outfile);
+			free_cmd(cmd, ms->env, cmd_lst);
+		}
 	}
 }
 
