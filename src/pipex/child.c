@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:07:42 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/06 11:18:58 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 13:42:54 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	last_child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 
 void	middle_child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
-	if (redir(cmd->pipefd[(cmd->i - 1) * 2], cmd->pipefd[(cmd->i * 2) + 1], cmd) == 1)
+	if (redir(cmd->pipefd[(cmd->i - 1) * 2],
+			cmd->pipefd[(cmd->i * 2) + 1], cmd) == 1)
 		free_cmd4(cmd, envp, cmd_lst);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile == 0)
 		if (redir(cmd->fd_infile, cmd->pipefd[(cmd->i * 2) + 1], cmd) == 1)

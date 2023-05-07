@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/05/05 16:07:21 by lgirault         ###   ########.fr        #
+#    Updated: 2023/05/07 16:27:14 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC = src/minishell.c \
 	src/utils/signal.c \
 	src/utils/ft_split2.c \
 	src/execex/no_pipe.c \
+	src/execex/close_file.c \
 	src/builtin/check_builtin.c \
 	src/builtin/echo_builtin.c \
 	src/builtin/echo_builtin2.c \
@@ -55,16 +56,19 @@ SRC = src/minishell.c \
 	src/builtin/exit_builtin2.c \
 	src/builtin/export_builtin2.c \
 	src/builtin/export_builtin3.c \
+	src/builtin/export_builtin4.c \
 	src/pipex/pipex.c \
 	src/pipex/find_good_path.c \
 	src/pipex/free_pipex.c \
 	src/pipex/here_doc.c \
+	src/pipex/here_doc2.c \
 	src/pipex/make_tab_path.c \
 	src/pipex/utils.c \
 	src/pipex/utils2.c \
 	src/pipex/child.c \
 	src/pipex/open_outfile.c \
 	src/pipex/open_infile.c \
+	src/pipex/error_managment.c \
 
 OBJ = $(SRC:.c=.o)
 

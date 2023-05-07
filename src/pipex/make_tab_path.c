@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:22:27 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 13:32:29 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:02:42 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ char	*make_str_path(char **envp, char *cmd, t_cmd *cmd1)
 	{
 		ft_printf(2, "zsh: command not found: %s\n", cmd);
 		free_cmd1(cmd1);
+		if (cmd1->tab_close_outfile != NULL)
+			free(cmd1->tab_close_outfile);
+		if (cmd1->tab_close_infile != NULL)
+			free(cmd1->tab_close_infile);
 		exit(127);
 	}
 	return (make_str_path_2(envp, ijk));

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:32:38 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 19:54:27 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:44:27 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,8 @@ int	open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 			}
 			open_infile_heredoc(cmd, cmd_lst, &j, ms);
 			if (cmd->fd_infile == -1)
-			{
-				file_error(1, cmd_lst, ms->i_heredoc);
-				ms->builtin_code = 1;
-				return (ERR);
-			}
+				return (file_error(1, cmd_lst, ms->i_heredoc,
+						*cmd), ms->builtin_code = 1, ERR);
 			if (ms->sig == 1)
 				return (ERR);
 			ms->i_heredoc++;

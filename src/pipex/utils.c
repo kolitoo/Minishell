@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/06 11:21:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:20:40 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*low(char *str)
 	return (s);
 }
 
-void	file_error(int code_error, t_cmd_lst *cmd_lst, int i)
+void	file_error(int code_error, t_cmd_lst *cmd_lst, int i, t_cmd cmd)
 {
 	char	*test;
 
@@ -50,12 +50,12 @@ void	file_error(int code_error, t_cmd_lst *cmd_lst, int i)
 	{
 		write(2, "zsh: ", 5);
 		test = low(strerror(errno));
-		write(2, test, ft_strlen(test));
-		write(2, ": ", 2);
-		write(2, cmd_lst->outfile_name[i],
-			ft_strlen(cmd_lst->outfile_name[i]));
-		write(2, "\n", 1);
+		ft_printf(2, "%s: %s\n", test, cmd_lst->outfile_name[i]);
 	}
+	if (cmd.tab_close_outfile != NULL && cmd.nbr_cmd == 1)
+		free(cmd.tab_close_outfile);
+	if (cmd.tab_close_infile != NULL && cmd.nbr_cmd == 1)
+		free(cmd.tab_close_infile);
 	free(test);
 }
 

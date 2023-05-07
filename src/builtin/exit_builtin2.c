@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:26:03 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/06 14:07:59 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:34:49 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	ft_atoi2(t_atoi *var, t_ms *ms, const char *str)
 	}
 }
 
-void	exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms, long long arg_exit, t_cmd cmd)
+void	exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms,
+			long long arg_exit, t_cmd cmd)
 {
 	close_fichier(cmd, cmd_lst);
 	if (cmd.tab_close_outfile != NULL)
@@ -54,7 +55,8 @@ void	exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms, long long arg_exit, t_cmd c
 
 void	exit_builtin_pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 {
-	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL && str_is_dig(cmd_lst->cmd_option[1]) == 0)
+	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL
+		&& str_is_dig(cmd_lst->cmd_option[1]) == 0)
 		return (ms->builtin_code = 1, (void)0);
 	if (cmd_lst->cmd_option[1] != NULL)
 	{

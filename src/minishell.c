@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/06 14:07:38 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 13:33:38 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,14 @@ static void	readline_ok(t_ms *g_ms, t_cmd_lst *cmd_lst)
 	}
 }
 
+void	init_minishell(void)
+{
+	g_ms.builtin_code = 0;
+	g_ms.here = 0;
+	g_ms.cat_grep = 0;
+	g_ms.lock_cat = 0;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd_lst	*cmd_lst;
@@ -86,10 +94,7 @@ int	main(int argc, char **argv, char **envp)
 	//print_minishell();
 	while (1)
 	{
-		g_ms.builtin_code = 0;
-		g_ms.here = 0;
-		g_ms.cat_grep = 0;
-		g_ms.lock_cat = 0;
+		init_minishell();
 		ft_printf(1, "\033[36m \033[1m");
 		g_ms.line = readline("minishell →  \033[0m");
 		if (g_ms.line == NULL)

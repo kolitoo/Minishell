@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:06:11 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/06 14:21:06 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 13:08:24 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,31 @@ int	check_cd(t_cmd_lst *cmd_lst)
 		return (0);
 	}
 	return (1);
+}
+
+char	*join2(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = -1;
+	j = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlenn(s1) + ft_strlenn(s2) + 1));
+	if (!str)
+		return (free(s2), NULL);
+	while (s1[++i] != '\0')
+	{
+		str[j++] = s1[i];
+	}
+	i = -1;
+	while (s2[++i] != '\0')
+	{
+		str[j++] = s2[i];
+	}
+	str[j] = '\0';
+	free (s2);
+	return (str);
 }

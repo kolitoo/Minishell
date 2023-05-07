@@ -6,36 +6,36 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:35:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/05 16:01:47 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:47:40 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char    *check_n(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
+char	*check_n(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 {
-    t_var    var;
+	t_var	var;
 
-    var.i = 0;
-    var.newstr = NULL;
-    if (str[var.i] == '-')
-        var.i++;
-    else
-        return (str);
-    if (check_backslashzero(&var, str, ms, cmd_lst) == 1)
-        return (var.newstr);
-    while (str[var.i] == 'n')
-        var.i++;
-    if (str[var.i] != '\0')
-        return (str);
-    var.newstr = malloc(sizeof(char) * 3);
-    if (var.newstr == NULL)
-        free_builtin(ms, cmd_lst);
-    var.newstr[0] = '-';
-    var.newstr[1] = 'n';
-    var.newstr[2] = '\0';
-    free(str);
-    return (var.newstr);
+	var.i = 0;
+	var.newstr = NULL;
+	if (str[var.i] == '-')
+		var.i++;
+	else
+		return (str);
+	if (check_backslashzero(&var, str, ms, cmd_lst) == 1)
+		return (var.newstr);
+	while (str[var.i] == 'n')
+		var.i++;
+	if (str[var.i] != '\0')
+		return (str);
+	var.newstr = malloc(sizeof(char) * 3);
+	if (var.newstr == NULL)
+		free_builtin(ms, cmd_lst);
+	var.newstr[0] = '-';
+	var.newstr[1] = 'n';
+	var.newstr[2] = '\0';
+	free(str);
+	return (var.newstr);
 }
 
 static int	check_e2(char *str)

@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/06 19:33:47 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:48:31 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_var
 	char	c;
 	char	*newstr;
 	char	*new_variable;
+	char	*strfin;
 	char	**tab;
 }	t_var;
 
@@ -131,7 +132,7 @@ int			limit_mode_malloc(char *str);
 int			len_dbl_tab(char *str, char c);
 int			len_file(char *str, int i, char c);
 int			rights_check_util(char *str, int *i, t_ms **ms, char c);
-int		check_cat_grep(t_cmd_lst *cmd_lst, t_ms *ms);
+int			check_cat_grep(t_cmd_lst *cmd_lst, t_ms *ms);
 char		*strspace_cpy(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**parsing(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**split_incurve(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
@@ -155,6 +156,7 @@ void		lstclear(t_cmd_lst **cmd_lst);
 void		free_tab(char	**tab, int i);
 void		rights_check(char *str, t_ms **ms, char c);
 void		read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
+void		read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 void		right_check_heredoc(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
 void		handler_sigint(int signal);
 void		free_builtin_export(t_ms *ms, t_cmd_lst *cmd_lst, char **new_envp);
@@ -182,14 +184,16 @@ void		free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void		free_cmd4(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void		here_doc(int argc, char **argv, t_cmd *cmd);
 void		close_all(t_cmd *cmd);
-int		redir(int start, int end, t_cmd *cmd);
 void		free_cmd1(t_cmd *cmd);
-void		file_error(int code_error, t_cmd_lst *cmd_lst, int i);
+void		file_error(int code_error, t_cmd_lst *cmd_lst, int i, t_cmd cmd);
 void		close_fd(t_cmd *cmd);
 void		init_tab(t_cmd *cmd, t_cmd_lst *cmd_lst);
 void		find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void		clear_lst(t_cmd_lst **cmd_lst);
 void		child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms);
+void		init_tab_closefile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
+void		close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst);
+int			redir(int start, int end, t_cmd *cmd);
 int			first_space(char *cmd);
 int			ft_strcmp_n(char *str1, char *str2);
 int			last_letter(char *cmd);
@@ -204,8 +208,6 @@ int			tab_len(char **tab);
 int			parent(t_cmd *cmd, t_ms *ms);
 int			open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
-void			close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst);
-void			init_tab_closefile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 
 //Builtin
 int			check_cd(t_cmd_lst *cmd_lst);
@@ -215,22 +217,27 @@ int			check_env(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_unset(t_cmd_lst *cmd_lst);
 int			check_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_exit(t_cmd_lst *cmd_lst);
-int    			check_replace(char *str, t_ms *ms, int i, int bool);
+int			check_replace(char *str, t_ms *ms, int i, int bool);
 int			check_egal(char *str);
 int			check_if_unset(char *str, t_ms *ms);
 int			pos_egal(char *str);
-int    			check_add(char *str, t_ms *ms);
-int		check_backslashzero(t_var *var, char *str, t_ms *ms, t_cmd_lst *cmd_lst);
+int			check_add(char *str, t_ms *ms);
+int			check_backslashzero(t_var *var, char *str, t_ms *ms,
+				t_cmd_lst *cmd_lst);
+int			str_is_dig(char *str);
+int			check_nbr(char *str);
+int			pos_plus(char *str);
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
-char    	**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool);
-char    	**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool);
+char		**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool);
+char		**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool);
 char		**conca_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
 void		exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
-			t_ms *ms, int status);
+				t_ms *ms, int status);
 void		exit_builtin_pipex(t_cmd_lst *cmd_lst, t_ms *ms);
-void		exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms, long long arg_exit, t_cmd cmd);
+void		exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms,
+				long long arg_exit, t_cmd cmd);
 void		echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms);
-char    	*dollar_last_check(char *str,t_ms **ms, t_cmd_lst *cmd_lst);
+char		*dollar_last_check(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
 void		cd_builtin(char **tab, t_ms *ms, t_cmd_lst *cmd_lst);
 void		cd_alone(char **envp, t_ms *ms, t_cmd_lst *cmd_lst);
 void		pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
@@ -241,7 +248,5 @@ void		solo_export(t_ms *ms, t_cmd_lst *cmd_lst);
 unsigned long long	ft_atoi(const char *str, t_ms *ms);
 void		ft_atoi2(t_atoi *var, t_ms *ms, const char *str);
 void		cd_localise( t_ms *ms, t_cmd_lst *cmd_lst);
-int		str_is_dig(char *str);
-int		check_nbr(char *str);
 
 #endif

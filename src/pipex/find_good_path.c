@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:07:24 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 09:03:54 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 11:56:15 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*find_good_path(char **envp, char *cmd, t_cmd *cmd1)
 	while (tab_path[i] != NULL)
 	{
 		path_cmd = ft_strjoin(tab_path[i], cmd);
+		if (path_cmd == NULL)
+			exit(EXIT_FAILURE);
 		if (access(path_cmd, F_OK | X_OK) == 0)
 		{
 			free_tab(tab_path, 0);

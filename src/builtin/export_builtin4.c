@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   export_builtin4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 11:01:45 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 10:55:28 by lgirault         ###   ########.fr       */
+/*   Created: 2023/05/07 13:00:13 by lgirault          #+#    #+#             */
+/*   Updated: 2023/05/07 13:00:45 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_strncmp(char *s1, char *s2, int n)
+int	pos_plus(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (n == 0)
-		return (0);
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0' && i < n - 1)
+	while (str[i] != '\0')
+	{
+		if (str[i] == '+')
+			return (i);
 		i++;
-	return (s1[i] - s2[i]);
+	}
+	return (0);
 }

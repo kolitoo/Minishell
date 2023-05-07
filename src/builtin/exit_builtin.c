@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:40:04 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/06 14:28:57 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:43:40 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ int	check_exit(t_cmd_lst *cmd_lst)
 	if (ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC
 		&& (cmd_lst->cmd_option[1] == NULL || cmd_lst->cmd_option[2] == NULL))
 	{
-		if (cmd_lst->cmd_option[1] != NULL && check_nbr(cmd_lst->cmd_option[1]) == 1)
+		if (cmd_lst->cmd_option[1] != NULL
+			&& check_nbr(cmd_lst->cmd_option[1]) == 1)
 			ft_printf(2, "exit: numeric argument required\n");
 		return (0);
 	}
-	else if (ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC && check_nbr(cmd_lst->cmd_option[1]) == 1)
+	else if (ft_strcmp(cmd_lst->cmd_option[0], "exit") == SUC
+		&& check_nbr(cmd_lst->cmd_option[1]) == 1)
 	{
 		ft_printf(2, "exit: numeric argument required\n");
 		return (0);
@@ -95,7 +97,8 @@ void	exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 	long long	arg_exit;
 
 	arg_exit = 0;
-	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL && str_is_dig(cmd_lst->cmd_option[1]) == 0)
+	if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[2] != NULL
+		&& str_is_dig(cmd_lst->cmd_option[1]) == 0)
 		return (ms->builtin_code = 1, (void)0);
 	cmd->wpid = waitpid(cmd->off, &status, 0);
 	if (cmd->wpid == -1)

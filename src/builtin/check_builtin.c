@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:55 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/06 15:41:49 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:38:35 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,22 @@ int	check_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
 
 void	only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status)
 {
-	ms->builtin_code = 0;//patch pb code erreur
-	if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)
+	ms->builtin_code = 0;
+	if (cmd->nbr_cmd == 1 && ft_strcmp(cmd_lst->cmd_option[0], "cd") == 0)
 	{
 		if (cmd_lst->cmd_option[1] == NULL)
 			cd_alone((*ms).env, ms, cmd_lst);
-		else if (cmd_lst->cmd_option[1][0] == '-' && cmd_lst->cmd_option[1][1] == '\0')
+		else if (cmd_lst->cmd_option[1][0] == '-'
+				&& cmd_lst->cmd_option[1][1] == '\0')
 			cd_localise(ms, cmd_lst);
 		else
 			cd_builtin(cmd_lst->cmd_option, ms, cmd_lst);
 	}
-	if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0],
+	if (cmd->nbr_cmd == 1 && ft_strcmp(cmd_lst->cmd_option[0],
 			"export") == 0 && cmd_lst->cmd_option[1] != NULL
 		&& cmd_lst->cmd_option[1][0] != '-')
 		export_builtin(cmd_lst, ms);
-	if (cmd_lst->next == NULL && ft_strcmp(cmd_lst->cmd_option[0],
+	if (cmd->nbr_cmd == 1 && ft_strcmp(cmd_lst->cmd_option[0],
 			"unset") == SUC && cmd_lst->cmd_option[1] != NULL
 		&& cmd_lst->cmd_option[1][0] != '-')
 		unset_builtin(cmd_lst, ms);

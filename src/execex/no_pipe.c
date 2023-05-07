@@ -6,45 +6,11 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/06 18:17:57 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:12:23 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst)
-{
-	int	i;
-
-	i = 0;
-	if (cmd_lst->outfile_name != NULL)
-	{
-		while (i < tab_len(cmd_lst->outfile_name) + 1 && cmd.tab_close_outfile[i] != -1 && cmd.tab_close_outfile[i] != 0)
-		{
-			if (close(cmd.tab_close_outfile[i]) == -1)
-			{
-				ft_printf(2, "PB outfile close\n");
-			}
-			i++;
-		}
-	}
-	i = 0;
-	if (cmd_lst->infile_name != NULL)
-	{
-		while (i < tab_len(cmd_lst->infile_name) + 1 && cmd.tab_close_infile[i] != -1 && cmd.tab_close_infile[i] != 0)
-		{
-			if (close(cmd.tab_close_infile[i]) == -1)
-			{
-				ft_printf(2, "PB infile close\n");
-			}
-			i++;
-		}
-	}
-	if (cmd.tab_close_outfile != NULL)
-		free(cmd.tab_close_outfile);
-	if (cmd.tab_close_infile != NULL)
-		free(cmd.tab_close_infile);
-}
 
 void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 {
@@ -62,10 +28,7 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 			free_cmd(cmd, envp, cmd_lst);
 	}
 	else
-	{
-		//close_fichier(*cmd, cmd_lst);
 		free_cmd2(cmd, envp, cmd_lst);
-	}
 	close_fichier(*cmd, cmd_lst);
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
@@ -77,6 +40,10 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 
 int	no_pipe2(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
+	if (access("/tmp/.file_temp.txt", F_OK) == 0)
+		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
+			if (unlink("/tmp/.file_temp.txt") == -1)
+				error_management(7, cmd);
 	clear_lst(&cmd_lst);
 	if (ms->builtin_code == 0)
 		return (cmd->exit_status);
@@ -109,9 +76,5 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 		if (WIFEXITED(status) != 0)
 			cmd.exit_status = WEXITSTATUS(status);
 	}
-	if (cmd_lst->limit_mode != NULL && cmd_lst->cmd_option[0] != NULL)
-		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
-			if (unlink("/tmp/.file_temp.txt") == -1)
-				error_management(7, &cmd);
 	return (no_pipe2(&cmd, cmd_lst, ms));
 }

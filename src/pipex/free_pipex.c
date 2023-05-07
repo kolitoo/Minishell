@@ -6,32 +6,11 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:59:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/06 17:23:01 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 16:26:19 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	error_management(int code_error, t_cmd *cmd)
-{
-	if (code_error == 2)
-		perror("Error launch child procces");
-	if (code_error == 3)
-		write(2, "Number argument invalid\n", 24);
-	if (code_error == 4)
-		perror("Error fonction dup2");
-	if (code_error == 5)
-		perror("Error fonction pipe");
-	if (code_error == 6)
-		perror ("Error fonction close");
-	if (code_error == 7)
-		perror ("Error fonction unlink");
-	if (code_error == 8)
-		perror ("Error fonction waitpid");
-	if (code_error != 3)
-		free_cmd1(cmd);
-	exit(EXIT_FAILURE);
-}
 
 void	clear_lst(t_cmd_lst **cmd_lst)
 {
@@ -75,10 +54,6 @@ void	free_cmd1(t_cmd *cmd)
 		free(cmd->pipefd);
 	if (cmd->pid != NULL)
 		free(cmd->pid);
-	if (cmd->tab_close_outfile != NULL)
-		free(cmd->tab_close_outfile);
-	if (cmd->tab_close_infile != NULL)
-		free(cmd->tab_close_infile);
 }
 
 void	free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
@@ -95,7 +70,6 @@ void	free_cmd2(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 		free_tab(envp, 0);
 	exit(0);
 }
-
 
 void	free_cmd4(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 {
