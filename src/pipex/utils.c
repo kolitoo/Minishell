@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 14:20:40 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:34:13 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@ void	file_error(int code_error, t_cmd_lst *cmd_lst, int i, t_cmd cmd)
 		ft_printf(2, "%s: %s\n", test, cmd_lst->outfile_name[i]);
 	}
 	if (cmd.tab_close_outfile != NULL && cmd.nbr_cmd == 1)
-		free(cmd.tab_close_outfile);
-	if (cmd.tab_close_infile != NULL && cmd.nbr_cmd == 1)
-		free(cmd.tab_close_infile);
+		close_fichier(cmd, cmd_lst);
+	// if (cmd.tab_close_outfile != NULL && cmd.nbr_cmd == 1)
+	// 	free(cmd.tab_close_outfile);
+	// if (cmd.tab_close_infile != NULL && cmd.nbr_cmd == 1)
+	// 	free(cmd.tab_close_infile);
 	free(test);
 }
 
