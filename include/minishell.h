@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/08 14:33:22 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:01:39 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,8 +245,8 @@ void		only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status);
 void		export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 void		env_builtin(t_ms *ms);
 void		solo_export(t_ms *ms, t_cmd_lst *cmd_lst);
-unsigned long long	ft_atoi(const char *str, t_ms *ms);
 void		ft_atoi2(t_atoi *var, t_ms *ms, const char *str);
 void		cd_localise( t_ms *ms, t_cmd_lst *cmd_lst);
+unsigned long long		ft_atoi(const char *str, t_ms *ms);
 
 #endif

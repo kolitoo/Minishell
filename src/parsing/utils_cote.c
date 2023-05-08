@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:56:44 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/08 13:26:50 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:19:09 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,29 @@ int	nb_cote(char *str)
 
 int	check_fine_cote(char *line, char c, char cote)
 {
-	int	i;
-	int	k;
+	t_var	var;
 
-	i = 0;
-	k = 1;
-	while (line[i] != '\0')
+	var.i = 0;
+	var.k = 1;
+	while (line[var.i] != '\0')
 	{
-		if (line[i] == cote)
-			k = k * -1;
-		if (line[i] == c && k > 0)
+		if (line[var.i] == cote)
+			var.k = var.k * -1;
+		if (line[var.i] == c && var.k > 0)
 		{
-			i++;
-			while (line[i] != c)
+			var.i++;
+			while (line[var.i] != c)
 			{
-				if (line[i] != '\0')
-					i++;
-				if (line[i] == '\0')
+				if (line[var.i] != '\0')
+					var.i++;
+				if (line[var.i] == '\0')
 					return (ERR);
 			}
 		}
-		if (line[i] != '\0')
-			i++;
+		if (line[var.i] != '\0')
+			var.i++;
 	}
-	if (k < 0)
+	if (var.k < 0)
 		return (ERR);
 	return (SUC);
 }

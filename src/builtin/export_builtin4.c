@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtin4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 13:00:13 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 13:00:45 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:28:33 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,18 @@ int	pos_plus(char *str)
 			return (i);
 		i++;
 	}
+	return (0);
+}
+
+int	check_forbiden_cara(char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	i = 0;
+	if (check_forbiden_cara2(str, i, j) == 1)
+		return (1);
 	return (0);
 }

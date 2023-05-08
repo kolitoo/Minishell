@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_outfile.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:16:37 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 14:09:04 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:27:46 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,26 @@ int	open_outfile_append(t_cmd *cmd, t_cmd_lst *cmd_lst, int i, t_ms *ms)
 	return (SUC);
 }
 
+static int	check_infile(t_cmd_lst *cmd_lst)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_lst->infile_name[i] != NULL)
+	{
+		if (access(cmd_lst->infile_name[i], F_OK | R_OK) == 1)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	int	i;
 
 	i = 0;
-	if (cmd_lst->outfile_name != NULL)
+	if (cmd_lst->outfile_name != NULL && check_infile(cmd_lst) == 0)
 	{
 		while (cmd_lst->outfile_name[i] != NULL)
 		{

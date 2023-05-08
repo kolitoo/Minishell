@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtin2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 11:31:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 12:33:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:12:16 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,65 +35,32 @@ void	cpy_env(t_ms *ms, char **new_envp, int *i, t_cmd_lst *cmd_lst)
 
 char	**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool)
 {
+	t_var	var;
 	char	**new_envp;
-	int		i;
-	int		j;
-	int		k;
 
-	i = 0;
-	j = 0;
-	k = 0;
+	var.i = 0;
+	var.j = 0;
+	var.k = 0;
 	new_envp = NULL;
 	new_envp = malloc(sizeof(char *) * (tab_len((*ms).env) + 3));
 	if (new_envp == NULL)
 		free_builtin_export(ms, cmd_lst, new_envp);
-	cpy_env(ms, new_envp, &i, cmd_lst);
-	new_envp[i] = malloc(sizeof(char) * (ft_strlen(str) + 1));
-	if (new_envp[i] == NULL)
+	cpy_env(ms, new_envp, &var.i, cmd_lst);
+	new_envp[var.i] = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (new_envp[var.i] == NULL)
 		free_builtin_export(ms, cmd_lst, new_envp);
-	while (str[k] != '\0')
+	while (str[var.k] != '\0')
 	{
 		if (bool == 0)
-		{
-			if (str[k] == '+' && str[k + 1] == '=')
-				k++;
-		}
-		new_envp[i][j] = str[k];
-		j++;
-	k++;
+			if (str[var.k] == '+' && str[var.k + 1] == '=')
+				var.k++;
+		new_envp[var.i][var.j++] = str[var.k++];
 	}
-	new_envp[i++][j] = '\0';
-	new_envp[i] = NULL;
+	new_envp[var.i++][var.j] = '\0';
+	new_envp[var.i] = NULL;
 	free_tab((*ms).env, 0);
 	return (new_envp);
 }
-
-// char	**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
-// {
-// 	char	**new_envp;
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	j = 0;
-// 	new_envp = NULL;
-// 	new_envp = malloc(sizeof(char *) * (tab_len((*ms).env) + 3));
-// 	if (new_envp == NULL)
-// 		free_builtin_export(ms, cmd_lst, new_envp);
-// 	cpy_env(ms, new_envp, &i, cmd_lst);
-// 	new_envp[i] = malloc(sizeof(char) * (ft_strlen(str) + 1));
-// 	if (new_envp[i] == NULL)
-// 		free_builtin_export(ms, cmd_lst, new_envp);
-// 	while (str[j] != '\0')
-// 	{
-// 		new_envp[i][j] = str[j];
-// 		j++;
-// 	}
-// 	new_envp[i++][j] = '\0';
-// 	new_envp[i] = NULL;
-// 	free_tab((*ms).env, 0);
-// 	return (new_envp);
-// }
 
 void	cpy_new_env(char *str, char **new_envp, t_ms *ms, t_cmd_lst *cmd_lst)
 {
@@ -135,7 +102,7 @@ char	**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool)
 		free_builtin_export(ms, cmd_lst, new_envp);
 	while ((*ms).env[ms->i_heredoc] != NULL)
 	{
-		if (check_replace(str, ms, ms->i_heredoc, bool) == 1) //BOOL 1 POUR = BOOL 0 POUR +=
+		if (check_replace(str, ms, ms->i_heredoc, bool) == 1)
 			cpy_new_env(str, new_envp, ms, cmd_lst);
 		else
 			cpy_old_env(new_envp, ms, cmd_lst);
@@ -148,30 +115,3 @@ char	**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool)
 	ms->i_heredoc = 0;
 	return (new_envp);
 }
-
-// char	**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
-// {
-// 	char	**new_envp;
-
-// 	ms->i_heredoc = 0;
-// 	ms->j_heredoc = 0;
-// 	new_envp = NULL;
-// 	(void)cmd_lst;
-// 	new_envp = malloc(sizeof(char *) * (tab_len((*ms).env) + 2));
-// 	if (new_envp == NULL)
-// 		free_builtin_export(ms, cmd_lst, new_envp);
-// 	while ((*ms).env[ms->i_heredoc] != NULL)
-// 	{
-// 		if (check_replace(str, ms, ms->i_heredoc) == 0)
-// 			cpy_new_env(str, new_envp, ms, cmd_lst);
-// 		else
-// 			cpy_old_env(new_envp, ms, cmd_lst);
-// 		new_envp[ms->i_heredoc][ms->j_heredoc] = '\0';
-// 		ms->j_heredoc = 0;
-// 		ms->i_heredoc++;
-// 	}
-// 	new_envp[ms->i_heredoc] = NULL;
-// 	free_tab((*ms).env, 0);
-// 	ms->i_heredoc = 0;
-// 	return (new_envp);
-// }
