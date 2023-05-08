@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:17:26 by lgirault          #+#    #+#             */
-/*   Updated: 2022/11/23 10:44:38 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:36:59 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	size_malloc(int n)
 
 	i = 0;
 	ret = 0;
+	if (n == 0)
+		return (2);
 	if (n < 0)
 	{
 		i++;
@@ -30,10 +32,6 @@ static int	size_malloc(int n)
 	{
 		ret = ret / 10;
 		i++;
-	}
-	if (n == 0)
-	{
-		return (2);
 	}
 	return (i + 1);
 }

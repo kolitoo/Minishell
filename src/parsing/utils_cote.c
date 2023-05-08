@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:56:44 by abourdon          #+#    #+#             */
-/*   Updated: 2023/04/14 11:23:59 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:26:50 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ int	check_fine_cote(char *line, char c, char cote)
 			i++;
 			while (line[i] != c)
 			{
-				i++;
+				if (line[i] != '\0')
+					i++;
 				if (line[i] == '\0')
 					return (ERR);
 			}

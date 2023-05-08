@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   no_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 17:05:08 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:00:59 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 		cmd.wpid = waitpid(cmd.off, &status, 0);
 		if (cmd.wpid == -1)
 			error_management(8, &cmd);
+		if (status == 2 && ms->cat_grep != 0)
+			ms->builtin_code = 130;
 		if (WIFEXITED(status) != 0)
 			cmd.exit_status = WEXITSTATUS(status);
 	}
