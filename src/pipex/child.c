@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:07:42 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 13:42:54 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:01:46 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms)
 	}
 	else
 		free_cmd2(cmd, envp, cmd_lst);
-	close_fichier(*cmd, cmd_lst);
+	close_fichier(*cmd, cmd_lst, ms->env);
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");

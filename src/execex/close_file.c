@@ -6,13 +6,31 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 13:29:09 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 13:41:42 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:23:07 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	close_tab_out(t_cmd cmd, t_cmd_lst *cmd_lst)
+static void	free_closefile(t_cmd cmd, t_cmd_lst *cmd_lst, char **env)
+{
+	if (cmd.tab_close_outfile != NULL)
+		free(cmd.tab_close_outfile);
+	if (cmd.tab_close_infile != NULL)
+		free(cmd.tab_close_infile);
+	if (cmd.cmd != NULL)
+		free(cmd.cmd);
+	if (cmd.pipefd != NULL)
+		free(cmd.pipefd);
+	if (cmd.pid)
+		free(cmd.pid);
+	lstclear(&cmd_lst);
+	if (env != NULL)
+		free_tab(env, 0);
+	exit (1);
+}
+
+static void	close_tab_out(t_cmd cmd, t_cmd_lst *cmd_lst, char **env)
 {
 	int	i;
 
@@ -24,14 +42,15 @@ static void	close_tab_out(t_cmd cmd, t_cmd_lst *cmd_lst)
 		{
 			if (close(cmd.tab_close_outfile[i]) == -1)
 			{
-				ft_printf(2, "PB outfile close\n");//gerer close echec
+				ft_printf(2, "PB outfile close\n");
+				free_closefile(cmd, cmd_lst, env);
 			}
 			i++;
 		}
 	}
 }
 
-static void	close_tab_in(t_cmd cmd, t_cmd_lst *cmd_lst)
+static void	close_tab_in(t_cmd cmd, t_cmd_lst *cmd_lst, char **env)
 {
 	int	i;
 
@@ -43,17 +62,18 @@ static void	close_tab_in(t_cmd cmd, t_cmd_lst *cmd_lst)
 		{
 			if (close(cmd.tab_close_infile[i]) == -1)
 			{
-				ft_printf(2, "PB infile close\n");//gerer close echec
+				ft_printf(2, "PB infile close\n");
+				free_closefile(cmd, cmd_lst, env);
 			}
 			i++;
 		}
 	}
 }
 
-void	close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst)
+void	close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst, char **env)
 {
-	close_tab_out(cmd, cmd_lst);
-	close_tab_in(cmd, cmd_lst);
+	close_tab_out(cmd, cmd_lst, env);
+	close_tab_in(cmd, cmd_lst, env);
 	if (cmd.tab_close_outfile != NULL)
 		free(cmd.tab_close_outfile);
 	if (cmd.tab_close_infile != NULL)

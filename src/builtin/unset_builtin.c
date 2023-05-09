@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:40 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 17:18:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:25:16 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static char	**unset_env2(char *str, t_ms *ms, t_cmd_lst *cmd_lst, t_var var)
 	var.tab[var.k] = NULL;
 	return (var.tab);
 }
-/*peut etre pb var.j++*/
 
 char	**unset_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst)
 {

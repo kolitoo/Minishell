@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:16:37 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 16:59:11 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:21:47 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	open_outfile_trunc(t_cmd *cmd, t_cmd_lst *cmd_lst, int i, t_ms *ms)
 	if (cmd->fd_outfile == -1)
 	{
 		ms->builtin_code = 1;
-		file_error(9, cmd_lst, i, *cmd);
+		ms->i_file = i;
+		file_error(9, cmd_lst, *cmd, ms);
 		return (ERR);
 	}
 	cmd->tab_close_outfile[i] = cmd->fd_outfile;
@@ -41,7 +42,8 @@ int	open_outfile_append(t_cmd *cmd, t_cmd_lst *cmd_lst, int i, t_ms *ms)
 	if (cmd->fd_outfile == -1)
 	{
 		ms->builtin_code = 1;
-		file_error(9, cmd_lst, i, *cmd);
+		ms->i_file = i;
+		file_error(9, cmd_lst, *cmd, ms);
 		return (ERR);
 	}
 	cmd->tab_close_outfile[i] = cmd->fd_outfile;

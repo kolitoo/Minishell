@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 16:59:47 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:23:39 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*low(char *str)
 	return (s);
 }
 
-void	file_error(int code_error, t_cmd_lst *cmd_lst, int i, t_cmd cmd)
+void	file_error(int code_error, t_cmd_lst *cmd_lst, t_cmd cmd, t_ms *ms)
 {
 	char	*test;
 
@@ -43,21 +43,18 @@ void	file_error(int code_error, t_cmd_lst *cmd_lst, int i, t_cmd cmd)
 		test = low(strerror(errno));
 		write(2, test, ft_strlen(test));
 		write(2, ": ", 2);
-		write(2, cmd_lst->infile_name[i], ft_strlen(cmd_lst->infile_name[i]));
+		write(2, cmd_lst->infile_name[ms->i_file],
+			ft_strlen(cmd_lst->infile_name[ms->i_file]));
 		write(2, "\n", 1);
 	}
 	if (code_error == 9)
 	{
 		write(2, "zsh: ", 5);
 		test = low(strerror(errno));
-		ft_printf(2, "%s: %s\n", test, cmd_lst->outfile_name[i]);
+		ft_printf(2, "%s: %s\n", test, cmd_lst->outfile_name[ms->i_file]);
 	}
 	if (cmd.nbr_cmd == 1)
-		close_fichier(cmd, cmd_lst);
-	// if (cmd.tab_close_outfile != NULL && cmd.nbr_cmd == 1)
-	// 	free(cmd.tab_close_outfile);
-	// if (cmd.tab_close_infile != NULL && cmd.nbr_cmd == 1)
-	// 	free(cmd.tab_close_infile);
+		close_fichier(cmd, cmd_lst, ms->env);
 	free(test);
 }
 

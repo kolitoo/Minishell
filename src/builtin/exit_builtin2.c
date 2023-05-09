@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:26:03 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 12:34:49 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:01:14 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_atoi2(t_atoi *var, t_ms *ms, const char *str)
 void	exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms,
 			long long arg_exit, t_cmd cmd)
 {
-	close_fichier(cmd, cmd_lst);
+	close_fichier(cmd, cmd_lst, ms->env);
 	if (cmd.tab_close_outfile != NULL)
 		free(cmd.tab_close_outfile);
 	if (cmd.tab_close_infile != NULL)

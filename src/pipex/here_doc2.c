@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 14:47:11 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 14:54:57 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:35:31 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	ctrld(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	if (ms->temp == NULL && ms->sig != 1)
 	{
-		close_fichier(*cmd, cmd_lst);
+		close_fichier(*cmd, cmd_lst, ms->env);
 		close(cmd->fd_infile);
 		if (cmd->nbr_cmd > 1)
 			close_all(cmd);
@@ -32,7 +32,7 @@ static void	ctrlc(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	if (ms->temp == NULL && ms->sig == 1)
 	{
-		close_fichier(*cmd, cmd_lst);
+		close_fichier(*cmd, cmd_lst, ms->env);
 		close(cmd->fd_infile);
 		if (cmd->nbr_cmd > 1)
 			close_all(cmd);
@@ -50,7 +50,7 @@ void	read_prompt_condition(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	ctrlc(cmd, cmd_lst, ms);
 	if (ft_strcmp_n(cmd_lst->infile_name[ms->i_heredoc], ms->temp) == 0)
 	{
-		close_fichier(*cmd, cmd_lst);
+		close_fichier(*cmd, cmd_lst, ms->env);
 		close(cmd->fd_infile);
 		if (cmd->nbr_cmd > 1)
 			close_all(cmd);

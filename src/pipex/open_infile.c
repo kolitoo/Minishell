@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_infile.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:32:38 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 16:26:49 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:22:20 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	{
 		while (cmd_lst->infile_name[ms->i_heredoc] != NULL)
 		{
+			ms->i_file = ms->i_heredoc;
 			if (cmd_lst->infile_mode == 1)
 			{
 				cmd->fd_infile
@@ -56,10 +57,10 @@ int	open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 			}
 			open_infile_heredoc(cmd, cmd_lst, &j, ms);
 			if (cmd->fd_infile == -1)
-				return (file_error(1, cmd_lst, ms->i_heredoc,
-						*cmd), ms->builtin_code = 1, ERR);
+				return (file_error(1, cmd_lst,
+						*cmd, ms), ms->builtin_code = 1, ERR);
 			if (ms->sig == 1)
-				return (close_fichier(*cmd, cmd_lst), ERR);
+				return (close_fichier(*cmd, cmd_lst, ms->env), ERR);
 			ms->i_heredoc++;
 		}
 	}

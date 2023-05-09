@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 16:55:57 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:34:50 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 void	init_tab(t_cmd *cmd, t_cmd_lst *cmd_lst)
 {
 	(void)cmd_lst;
+	cmd->nbr_cmd = 1;
 	cmd->pipefd = NULL;
 	cmd->pid = NULL;
 	cmd->cmd = NULL;

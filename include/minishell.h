@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/08 17:01:35 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:21:18 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_ms
 	int		builtin_code;
 	int		cat_grep;
 	int		lock_cat;
+	int		i_file;
 }t_ms;
 
 typedef struct s_cmd_lst
@@ -185,14 +186,14 @@ void		free_cmd4(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void		here_doc(int argc, char **argv, t_cmd *cmd);
 void		close_all(t_cmd *cmd);
 void		free_cmd1(t_cmd *cmd);
-void		file_error(int code_error, t_cmd_lst *cmd_lst, int i, t_cmd cmd);
+void		file_error(int code_error, t_cmd_lst *cmd_lst, t_cmd cmd, t_ms *ms);
 void		close_fd(t_cmd *cmd);
 void		init_tab(t_cmd *cmd, t_cmd_lst *cmd_lst);
 void		find_path(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst);
 void		clear_lst(t_cmd_lst **cmd_lst);
 void		child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms);
 void		init_tab_closefile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
-void		close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst);
+void		close_fichier(t_cmd cmd, t_cmd_lst *cmd_lst, char **env);
 int			redir(int start, int end, t_cmd *cmd);
 int			first_space(char *cmd);
 int			ft_strcmp_n(char *str1, char *str2);

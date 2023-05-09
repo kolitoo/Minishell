@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 16:59:28 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:02:58 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 			error_management(2, &cmd);
 		if (cmd.pid[cmd.i] == 0)
 			child(&cmd, (*ms).env, cmd_lst, ms);
-		close_fichier(cmd, cmd_lst);
-		only_last(cmd_lst, ms, &cmd, 1);//Apres verif dans bash aucun builtin ne se fait pourtant si commande incorrect ca le dit donc enlever cmd_lst-> == NULL et mis cmd->nbr_arg == 1 dans onlylast
+		close_fichier(cmd, cmd_lst, ms->env);
+		only_last(cmd_lst, ms, &cmd, 1);
 		if (access("/tmp/.file_temp.txt", F_OK) == 0)
 			if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
 				if (unlink("/tmp/.file_temp.txt") == -1)

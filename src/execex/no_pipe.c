@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   no_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 14:00:59 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:45:14 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 	}
 	else
 		free_cmd2(cmd, envp, cmd_lst);
-	close_fichier(*cmd, cmd_lst);
+	close_fichier(*cmd, cmd_lst, ms->env);
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
 	{
 		perror("Error fonction execve");
@@ -57,7 +57,6 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 	int		status;
 
 	status = 0;
-	cmd.nbr_cmd = 1;
 	init_tab(&cmd, cmd_lst);
 	init_tab_closefile(&cmd, cmd_lst, ms);
 	if (for_open(cmd_lst, &cmd, ms) != 1)
@@ -68,7 +67,7 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 			error_management(2, &cmd);
 		if (cmd.off == 0)
 			child_no_pipe(&cmd, cmd_lst, (*ms).env, ms);
-		close_fichier(cmd, cmd_lst);
+		close_fichier(cmd, cmd_lst, ms->env);
 		only_last(cmd_lst, ms, &cmd, status);
 		cmd.wpid = waitpid(cmd.off, &status, 0);
 		if (cmd.wpid == -1)
