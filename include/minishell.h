@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/09 09:21:18 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:09:25 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ char		*set_dollar(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**find_file(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
 char		*find_variable(char *str, int i);
 char		*comp_env(char *str, t_ms **ms, int i, t_cmd_lst *cmd_lst);
-char		*replace_variable(char *str, char *envstring, char *variable);
-char		*replace_variable2(char *str, char *variable);
+char		*replace_variable(char *str, char *envstring, char *variable, int k);
+char		*replace_variable2(char *str, char *variable, int k);
 char		*put_space(char *str, char c, int *i, char *str2);
 char		**clean_str(char **double_tab, t_ms *ms, t_cmd_lst *cmd_lst);
 char		*clear_quote(char *str, t_ms *ms, t_cmd_lst *cmd_lst);
@@ -245,7 +245,7 @@ void		cd_alone(char **envp, t_ms *ms, t_cmd_lst *cmd_lst);
 void		pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
 void		only_last(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd, int status);
 void		export_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
-void		env_builtin(t_ms *ms);
+void		env_builtin(t_ms *ms, t_cmd_lst *cmd_lst);
 void		solo_export(t_ms *ms, t_cmd_lst *cmd_lst);
 void		ft_atoi2(t_atoi *var, t_ms *ms, const char *str);
 void		cd_localise( t_ms *ms, t_cmd_lst *cmd_lst);

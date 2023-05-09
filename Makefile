@@ -6,7 +6,7 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/05/09 09:46:42 by lgirault         ###   ########.fr        #
+#    Updated: 2023/05/09 10:56:59 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC = src/minishell.c \
 	src/parsing/utils_cote.c \
 	src/parsing/utils_cote2.c \
 	src/parsing/file.c \
+	src/parsing/pipe.c \
 	src/parsing/env_utils.c \
 	src/parsing/env_utils2.c \
 	src/utils/free.c \

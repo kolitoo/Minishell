@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 13:43:25 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:07:54 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ char	**parsing(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst)
 			if (!double_tab)
 				free_parsing(*ms, cmd_lst, one_cmd);
 		}
-		double_tab = clean_str(double_tab, *ms, cmd_lst);
+		if (ft_strcmp(double_tab[0], "export") != 0)
+			double_tab = clean_str(double_tab, *ms, cmd_lst);
 	}
 	else
 		write(2, "Probleme cote\n", 15);

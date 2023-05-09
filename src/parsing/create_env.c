@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:16:17 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/08 15:56:36 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:09:44 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,32 +56,36 @@ char	**set_env(char	**envp)
 	return (env);
 }
 
-void	solo_export(t_ms *ms, t_cmd_lst *cmd_lst)
+void    solo_export(t_ms *ms, t_cmd_lst *cmd_lst)
 {
-	int	j;
-	int	i;
+    int    j;
+    int    i;
+    char    **print_env;
 
-	j = 0;
-	i = 0;
-	(void)cmd_lst;
-	while (ms->env[j] != NULL)
-	{
-		i = 0;
-		ft_printf(1, "declare -x ");
-		while (ms->env[j][i] != '=')
-		{
-			ft_printf(1, "%c", ms->env[j][i]);
-			i++;
-			if (ms->env[j][i] == '=')
-				ft_printf(1, "%c", ms->env[j][i]);
-		}
-		ft_printf(1, "\"");
-		i = i + 1;
-		while (ms->env[j][i] != '\0')
-			ft_printf(1, "%c", ms->env[j][i++]);
-		ft_printf(1, "\"\n");
-		j++;
-	}
+    j = 0;
+    i = 0;
+    print_env = NULL;
+    print_env = set_env(ms->env);
+    print_env = clean_str(print_env, ms, cmd_lst);
+    while (print_env[j] != NULL)
+    {
+        i = 0;
+        ft_printf(1, "declare -x ");
+        while (print_env[j][i] != '=')
+        {
+            ft_printf(1, "%c", print_env[j][i]);
+            i++;
+            if (print_env[j][i] == '=')
+                ft_printf(1, "%c", print_env[j][i]);
+        }
+        ft_printf(1, "\"");
+        i = i + 1;
+        while (print_env[j][i] != '\0')
+            ft_printf(1, "%c", print_env[j][i++]);
+        ft_printf(1, "\"\n");
+        j++;
+    }
+    free(print_env);
 }
 
 void	set_dollar3(char *str, int *i)

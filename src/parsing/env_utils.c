@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:54:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 17:13:47 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 11:18:56 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*create_newstr(char *str, char *newstr, int l, int k)
 	return (newstr);
 }
 
-char	*replace_variable(char *str, char *envstring, char *variable)
+char	*replace_variable(char *str, char *envstring, char *variable, int k)
 {
 	t_var	var;
 
@@ -42,7 +42,7 @@ char	*replace_variable(char *str, char *envstring, char *variable)
 		free_env_utils(var.new_variable, variable, str, 0);
 		return (NULL);
 	}
-	while (str[++var.i] != '$')
+	while (++var.i != k)
 		var.newstr[var.i] = str[var.i];
 	var.k = var.i;
 	while (var.new_variable[var.j] != '\0')
@@ -52,7 +52,7 @@ char	*replace_variable(char *str, char *envstring, char *variable)
 	return (var.newstr);
 }
 
-char	*replace_variable2(char *str, char *variable)
+char	*replace_variable2(char *str, char *variable, int k)
 {
 	t_var	var;
 
@@ -65,7 +65,7 @@ char	*replace_variable2(char *str, char *variable)
 		free_env_utils2(variable, str);
 		return (NULL);
 	}
-	while (str[++var.i] != '$')
+	while (++var.i != k)
 		var.newstr[var.i] = str[var.i];
 	var.k = var.i;
 	while (variable[var.j] != '\0')

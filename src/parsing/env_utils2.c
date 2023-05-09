@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:59:41 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/08 14:20:23 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:54:29 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	*comp_env(char *str, t_ms **ms, int i, t_cmd_lst *cmd_lst)
 	{
 		if (strncmp((*ms)->env[j], variable, ft_strlen(variable)) == 0)
 		{
-			str = replace_variable(str, (*ms)->env[j], variable);
+			str = replace_variable(str, (*ms)->env[j], variable, i);
 			if (!str)
 				free_parsing(*ms, cmd_lst, str);
 			break ;
@@ -132,7 +132,7 @@ char	*comp_env(char *str, t_ms **ms, int i, t_cmd_lst *cmd_lst)
 	}
 	if ((*ms)->env[j] == NULL)
 	{
-		str = replace_variable2(str, variable);
+		str = replace_variable2(str, variable, i);
 		if (!str)
 			free_parsing(*ms, cmd_lst, str);
 	}
