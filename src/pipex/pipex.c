@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 15:44:28 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:59:28 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
 {
 	cmd->fd_infile = 0;
 	cmd->fd_outfile = 0;
-	if (open_outfile(cmd, cmd_lst, ms) == ERR)
-	{
-		return (ERR);
-	}
 	if (open_infile(cmd, cmd_lst, ms) == ERR)
+		return (ERR);
+	if (open_outfile(cmd, cmd_lst, ms) == ERR)
 		return (ERR);
 	return (SUC);
 }

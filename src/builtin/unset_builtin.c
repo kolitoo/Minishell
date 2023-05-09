@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:40 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 12:15:17 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:18:43 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_unset(t_cmd_lst *cmd_lst)
 	{
 		if (cmd_lst->cmd_option[1] == NULL)
 			ft_printf(2, "unset need argument\n");
-		if (cmd_lst->cmd_option[1][0] == '-')
+		if (cmd_lst->cmd_option[1] != NULL && cmd_lst->cmd_option[1][0] == '-')
 			return (1);
 		return (0);
 	}

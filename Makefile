@@ -6,13 +6,13 @@
 #    By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/07 12:41:59 by abourdon          #+#    #+#              #
-#    Updated: 2023/05/07 16:27:14 by lgirault         ###   ########.fr        #
+#    Updated: 2023/05/08 17:16:26 by lgirault         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 LIBFT_PATH = ./libft/
 LIBFT = libft/libft.a
 RM = rm -rf

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/08 16:01:39 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:01:35 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ int			check_backslashzero(t_var *var, char *str, t_ms *ms,
 int			str_is_dig(char *str);
 int			check_nbr(char *str);
 int			pos_plus(char *str);
+int			check_forbiden_cara(char *str);
 char		**unset_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
 char		**create_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool);
 char		**replac_env(char *str, t_ms *ms, t_cmd_lst *cmd_lst, int bool);

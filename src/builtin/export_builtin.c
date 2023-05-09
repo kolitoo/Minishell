@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:29 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 16:29:06 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:03:08 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,35 +61,6 @@ int	check_crt_or_rplc(char *str, t_ms *ms)
 		j++;
 	}
 	return (1);
-}
-
-static int	check_forbiden_cara2(char *str, int i, int j)
-{
-	while (str[i] != '=' && str[i] != '\0')
-	{
-		if ((str[i] >= 0 && str[i] <= 35) || (str[i] >= 37 && str[i] < 43)
-			|| (str[i] > 43 && str[i] <= 47) || (str[i] >= 58 && str[i] <= 60)
-			|| (str[i] >= 62 && str[i] <= 64) || (str[i] >= 91 && str[i] <= 94)
-			|| (str[i] == 96) || (str[i] >= 123 && str[i] <= 127))
-			return (1);
-		if ((str[i] >= 48 && str[i] <= 57))
-		{
-			j = i;
-			while (j >= 0)
-			{
-				if ((str[j] >= 65 && str[j] <= 90)
-					|| (str[j] >= 97 && str[j] <= 122))
-					break ;
-				j--;
-			}
-			if (j == -1)
-				return (1);
-		}
-		if ((str[i] == '_') && i == 0 && str[i + 1] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 static	void	export_builtin2(t_cmd_lst *cmd_lst, t_ms *ms, int *i)
