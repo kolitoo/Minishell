@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/09 12:09:06 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:17:22 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ void	env_builtin(t_ms *ms, t_cmd_lst *cmd_lst)
 		ft_printf(1, "\n");
 		j++;
 	}
-	free(print_env);
+	free_tab(print_env, 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:16:17 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/09 12:09:44 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:17:37 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void    solo_export(t_ms *ms, t_cmd_lst *cmd_lst)
         ft_printf(1, "\"\n");
         j++;
     }
-    free(print_env);
+    free_tab(print_env, 0);
 }
 
 void	set_dollar3(char *str, int *i)
