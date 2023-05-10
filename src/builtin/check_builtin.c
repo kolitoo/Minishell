@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:55 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/10 13:26:44 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:11:16 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_builtin(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd)
 	if (ft_strcmp(cmd_lst->cmd_option[0], "export") == SUC)
 	{
 		if (cmd_lst->cmd_option[1] == NULL)
-			solo_export(ms, cmd_lst);
+			solo_export(ms, cmd_lst, 0, 0);
 		return (0);
 	}
 	if (check_env(cmd_lst, ms) == SUC)

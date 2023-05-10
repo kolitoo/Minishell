@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 12:16:17 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/09 12:17:37 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:11:27 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,36 +56,32 @@ char	**set_env(char	**envp)
 	return (env);
 }
 
-void    solo_export(t_ms *ms, t_cmd_lst *cmd_lst)
+void	solo_export(t_ms *ms, t_cmd_lst *cmd_lst, int i, int j)
 {
-    int    j;
-    int    i;
-    char    **print_env;
+	char	**print_env;
 
-    j = 0;
-    i = 0;
-    print_env = NULL;
-    print_env = set_env(ms->env);
-    print_env = clean_str(print_env, ms, cmd_lst);
-    while (print_env[j] != NULL)
-    {
-        i = 0;
-        ft_printf(1, "declare -x ");
-        while (print_env[j][i] != '=')
-        {
-            ft_printf(1, "%c", print_env[j][i]);
-            i++;
-            if (print_env[j][i] == '=')
-                ft_printf(1, "%c", print_env[j][i]);
-        }
-        ft_printf(1, "\"");
-        i = i + 1;
-        while (print_env[j][i] != '\0')
-            ft_printf(1, "%c", print_env[j][i++]);
-        ft_printf(1, "\"\n");
-        j++;
-    }
-    free_tab(print_env, 0);
+	print_env = NULL;
+	print_env = set_env(ms->env);
+	print_env = clean_str(print_env, ms, cmd_lst);
+	while (print_env[j] != NULL)
+	{
+		i = 0;
+		ft_printf(1, "declare -x ");
+		while (print_env[j][i] != '=')
+		{
+			ft_printf(1, "%c", print_env[j][i]);
+			i++;
+			if (print_env[j][i] == '=')
+				ft_printf(1, "%c", print_env[j][i]);
+		}
+		ft_printf(1, "\"");
+		i = i + 1;
+		while (print_env[j][i] != '\0')
+			ft_printf(1, "%c", print_env[j][i++]);
+		ft_printf(1, "\"\n");
+		j++;
+	}
+	free_tab(print_env, 0);
 }
 
 void	set_dollar3(char *str, int *i)

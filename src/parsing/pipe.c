@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:55:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/10 13:14:35 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:54:12 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	check_pipe2(char *str, int *i)
 
 static int	space_pipe_start(char *str, int *i)
 {
-	while ((str[*i] == 32 || (str[*i] >= 9 && str[*i] <= 13)) && bool_cote(str, *i) == ERR)
+	while ((str[*i] == 32 || (str[*i] >= 9 && str[*i] <= 13))
+		&& bool_cote(str, *i) == ERR)
 		*i = *i + 1;
 	if (str[*i] == '|')
 		return (ERR);

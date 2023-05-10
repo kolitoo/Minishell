@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:35:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/10 13:26:06 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:52:42 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	check_echo(t_cmd_lst *cmd_lst, t_ms *ms, int i, t_cmd cmd)
 	{
 		if (cmd_lst->cmd_option[1] == NULL || cmd_lst->cmd_option[1][0] == '\0')
 		{
-			echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms, cmd);
+			echo_builtin(1, cmd_lst, ms, cmd);
 			return (0);
 		}
 		cmd_lst->cmd_option[1] = check_n(cmd_lst->cmd_option[1], ms, cmd_lst);
@@ -90,20 +90,20 @@ int	check_echo(t_cmd_lst *cmd_lst, t_ms *ms, int i, t_cmd cmd)
 			&& check_e(cmd_lst->cmd_option[1], i) == ERR
 			&& check_e(cmd_lst->cmd_option[2], i) == ERR)
 		{
-			echo_builtin(cmd_lst->cmd_option, 0, cmd_lst, ms, cmd);
+			echo_builtin(0, cmd_lst, ms, cmd);
 			return (0);
 		}
 		else if (check_e(cmd_lst->cmd_option[1], i) == ERR
 			&& check_e(cmd_lst->cmd_option[2], i) == ERR)
 		{
-			echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms, cmd);
+			echo_builtin(1, cmd_lst, ms, cmd);
 			return (0);
 		}
 	}
 	return (1);
 }
 
-void	echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms, t_cmd cmd)
+void	echo_builtin(int bool, t_cmd_lst *cmd_lst, t_ms *ms, t_cmd cmd)
 {
 	int	j;
 	int	i;
@@ -112,17 +112,18 @@ void	echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms, t_cmd cmd)
 	j = 1;
 	i = 0;
 	k = 0;
-	while (tab[j] != NULL)
+	while (cmd_lst->cmd_option[j] != NULL)
 	{
-		tab[j] = check_n(tab[j], ms, cmd_lst);
-		if (ft_strcmp(tab[j], "-n") != SUC && check_e(tab[j], i) == 1)
+		cmd_lst->cmd_option[j] = check_n(cmd_lst->cmd_option[j], ms, cmd_lst);
+		if (ft_strcmp(cmd_lst->cmd_option[j], "-n") != SUC
+			&& check_e(cmd_lst->cmd_option[j], i) == 1)
 		{
-			if (ft_printf(1, "%s", tab[j]) == -2)
+			if (ft_printf(1, "%s", cmd_lst->cmd_option[j]) == -2)
 			{
 				k = 1;
-				free_cmd4(&cmd, ms->env, cmd_lst);//leak surement
+				free_cmd4(&cmd, ms->env, cmd_lst);
 			}
-			if (tab[j + 1] != NULL)
+			if (cmd_lst->cmd_option[j + 1] != NULL)
 				ft_printf(1, " ");
 		}
 		j++;

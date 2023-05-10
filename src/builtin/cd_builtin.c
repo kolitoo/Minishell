@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:38:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/10 14:09:00 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:24:50 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ void	cd_alone(char **envp, t_ms *ms, t_cmd_lst *cmd_lst)
 	}
 	if (chdir(var.newstr) != 0)
 		return (free(var.new_variable), free(var.newstr), (void)0);
-	free(var.new_variable);
-	free(var.newstr);
+	free_cd(var.new_variable, var.newstr);
 }
 
 void	cd_builtin2(char **tab, t_ms *ms, t_cmd_lst *cmd_lst, t_var var)

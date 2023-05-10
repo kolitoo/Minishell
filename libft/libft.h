@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:59:05 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/10 13:12:23 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:58:01 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ int		no_new_line(char *buff, char **line, int fd, int *red);
 int		init_read(char *buff, char **line, int *red, int fd);
 int		ft_printf(int fd, const char *str, ...);
 int		ft_strcmp(char *str1, char *str2);
+int		ft_putnbr(int n, int *len, int fd);
+int		ft_putchar_fd_printf(char c, int *len, int fd);
+int		ft_putstr(char *str, int *len, int fd);
+int		ft_putnbr_unsi(unsigned int n, int *len, int fd);
+int		ft_putnb_base(unsigned int n, char *base, int *len, int fd);
+int		ft_putvoid(void *ptr, int *len, int fd);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *s);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
@@ -80,12 +86,6 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
-int	ft_putnbr(int n, int *len, int fd);
-int	ft_putchar_fd_printf(char c, int *len, int fd);
-int	ft_putstr(char *str, int *len, int fd);
-int	ft_putnbr_unsi(unsigned int n, int *len, int fd);
-int	ft_putnb_base(unsigned int n, char *base, int *len, int fd);
-int	ft_putvoid(void *ptr, int *len, int fd);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 size_t	ft_strlcpy(char *dest, const char *src, size_t n);
 size_t	ft_strlen(const char *str);

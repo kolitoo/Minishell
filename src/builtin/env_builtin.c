@@ -6,7 +6,7 @@
 /*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:51 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/09 12:17:22 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:52:58 by abourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_env(t_cmd_lst *cmd_lst, t_ms *ms)
 
 void	env_builtin(t_ms *ms, t_cmd_lst *cmd_lst)
 {
-	int	j;
+	int		j;
 	char	**print_env;
 
 	j = 0;
