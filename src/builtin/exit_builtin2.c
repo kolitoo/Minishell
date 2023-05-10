@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:26:03 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/09 09:01:14 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:09:23 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms,
 	free(ms->line);
 	rl_clear_history();
 	free_tab(ms->env, 0);
+	ft_printf(1, "exit\n");
 	exit (arg_exit);
 }
 

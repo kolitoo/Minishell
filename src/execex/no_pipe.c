@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:21:08 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/09 09:45:14 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:22:21 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	child_no_pipe(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp, t_ms *ms)
 		redir(0, cmd->fd_outfile, cmd);
 	if (cmd->fd_infile != 0 && cmd->fd_outfile != 0)
 		redir(cmd->fd_infile, cmd->fd_outfile, cmd);
-	if (check_builtin(cmd_lst, ms) == 1)
+	if (check_builtin(cmd_lst, ms, cmd) == 1)
 	{
 		find_path(cmd, envp, cmd_lst);
 		if (cmd->cmd == NULL)
@@ -61,21 +61,24 @@ int	no_pipe(t_cmd_lst *cmd_lst, t_ms *ms)
 	init_tab_closefile(&cmd, cmd_lst, ms);
 	if (for_open(cmd_lst, &cmd, ms) != 1)
 	{
-		ms->cat_grep = check_cat_grep(cmd_lst, ms);
 		cmd.off = fork();
 		if (cmd.off == -1)
 			error_management(2, &cmd);
+		else
+			signal(SIGINT, SIG_IGN);
 		if (cmd.off == 0)
+		{
+			sig_for_child();
 			child_no_pipe(&cmd, cmd_lst, (*ms).env, ms);
+		}
 		close_fichier(cmd, cmd_lst, ms->env);
 		only_last(cmd_lst, ms, &cmd, status);
 		cmd.wpid = waitpid(cmd.off, &status, 0);
 		if (cmd.wpid == -1)
 			error_management(8, &cmd);
-		if (status == 2 && ms->cat_grep != 0)
-			ms->builtin_code = 130;
 		if (WIFEXITED(status) != 0)
 			cmd.exit_status = WEXITSTATUS(status);
+		signal(SIGINT, handler_sigint);
 	}
 	return (no_pipe2(&cmd, cmd_lst, ms));
 }

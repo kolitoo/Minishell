@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:11:22 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/09 11:58:19 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:19:21 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	read_prompt(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 	test = 0;
 	ms->here = 1;
 	ms->filed = fork();
+	signal(SIGINT, handler_sigint);
 	if (ms->filed == 0)
 	{
 		while (ms->sig != 1)

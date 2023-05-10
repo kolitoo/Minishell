@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:23:46 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/09 12:07:54 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:08:58 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ static int	launch_check(t_ms *ms, t_cmd_lst *cmd_lst)
 	ms->boolean_outfile = 0;
 	if (check_fine_cote(ms->line, '\'', '\"') == ERR)
 	{
-		write(2, "dquote\n", 7);
+		write(2, "Syntax Error: near unexpected token quote\n", 42);
 		ms->code_erreur = 1;
 		return (ERR);
 	}
 	if (check_space_chevron(ms->line, ms, cmd_lst) == ERR)
 	{
-		write(2, "chevron\n", 8);
+		write(2, "syntax error near unexpected token '>'\n", 39);
 		ms->code_erreur = 1;
 		return (ERR);
 	}
-	if (check_pipe(ms->line) == ERR)
+	if (check_pipe(ms->line, 0) == ERR)
 	{
-		write(2, "dpipe\n", 7);
+		write(2, "syntax error near unexpected token '|'\n", 39);
 		ms->code_erreur = 1;
 		return (ERR);
 	}
@@ -107,26 +107,21 @@ char	**parsing(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst)
 	char	**double_tab;
 
 	double_tab = NULL;
-	if (check_fine_cote(one_cmd, '\'', '\"') == 0)
+	one_cmd = make_one_cmd(one_cmd, ms, cmd_lst);
+	if (nb_cote(one_cmd) == 0)
 	{
-		one_cmd = make_one_cmd(one_cmd, ms, cmd_lst);
-		if (nb_cote(one_cmd) == 0)
-		{
-			double_tab = ft_split(one_cmd, ' ');
-			if (!double_tab)
-				free_parsing(*ms, cmd_lst, one_cmd);
-		}
-		else
-		{
-			double_tab = split_incurv3(one_cmd, ' ', *ms, cmd_lst);
-			if (!double_tab)
-				free_parsing(*ms, cmd_lst, one_cmd);
-		}
-		if (ft_strcmp(double_tab[0], "export") != 0)
-			double_tab = clean_str(double_tab, *ms, cmd_lst);
+		double_tab = ft_split(one_cmd, ' ');
+		if (!double_tab)
+			free_parsing(*ms, cmd_lst, one_cmd);
 	}
 	else
-		write(2, "Probleme cote\n", 15);
+	{
+		double_tab = split_incurv3(one_cmd, ' ', *ms, cmd_lst);
+		if (!double_tab)
+			free_parsing(*ms, cmd_lst, one_cmd);
+	}
+	if (ft_strcmp(double_tab[0], "export") != 0)
+		double_tab = clean_str(double_tab, *ms, cmd_lst);
 	free(one_cmd);
 	return (double_tab);
 }

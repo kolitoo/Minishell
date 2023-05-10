@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:39:14 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/04 17:49:54 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:47:30 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	pwd_builtin(t_ms *ms, t_cmd_lst *cmd_lst)
 	str = malloc(sizeof(char) * PATH_MAX + 1);
 	if (str == NULL)
 		free_builtin(ms, cmd_lst);
-	getcwd(str, PATH_MAX);
+	if (getcwd(str, PATH_MAX) == NULL)
+	{
+		free(str);
+		return ;
+	}
 	ft_printf(1, "%s\n", str);
 	free(str);
 }

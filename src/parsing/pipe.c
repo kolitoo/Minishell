@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:55:33 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/09 11:00:49 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:14:35 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,29 @@ static int	space_pipe_start(char *str, int *i)
 		return (SUC);
 }
 
-int    check_pipe(char *str)
+int	check_pipe(char *str, int i)
 {
-	int    i;
-
-	i = 0;
 	if (space_pipe_start(str, &i) == ERR)
 		return (ERR);
 	check_pipe2(str, &i);
 	while (str[i] != '\0')
 	{
-		if ((str[i] == '|' && bool_cote(str, i) == ERR) && str[i + 1] == '\0')
+		if ((str[i] == '|' && bool_cote(str, i) == ERR)
+			&& str[i + 1] == '\0')
 			return (ERR);
-		if ((str[i] == '|' && bool_cote(str, i) == ERR) && str[i + 1] <= ' ')
+		if ((str[i] == '|' && bool_cote(str, i) == ERR)
+			&& str[i + 1] <= ' ')
 		{
 			i++;
-			 while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+			while (str[i] == ' ' || (str[i] >= 9
+					&& str[i] <= 13))
 				i++;
-			if ((str[i] == '|' && bool_cote(str, i) == ERR) || str[i] == '\0')
+			if ((str[i] == '|' && bool_cote(str, i) == ERR)
+				|| str[i] == '\0')
 				return (ERR);
 		}
-        	if (str[i] != '\0')
-        		i++;
+		if (str[i] != '\0')
+			i++;
 	}
 	return (SUC);
 }

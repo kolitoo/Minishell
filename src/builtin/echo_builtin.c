@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:35:07 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/08 14:04:02 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:26:06 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ int	check_e(char *str, int i)
 		return (ERR);
 }
 
-int	check_echo(t_cmd_lst *cmd_lst, t_ms *ms, int i)
+int	check_echo(t_cmd_lst *cmd_lst, t_ms *ms, int i, t_cmd cmd)
 {
 	if (ft_strcmp(cmd_lst->cmd_option[0], "echo") == SUC)
 	{
 		if (cmd_lst->cmd_option[1] == NULL || cmd_lst->cmd_option[1][0] == '\0')
 		{
-			echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms);
+			echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms, cmd);
 			return (0);
 		}
 		cmd_lst->cmd_option[1] = check_n(cmd_lst->cmd_option[1], ms, cmd_lst);
@@ -90,37 +90,43 @@ int	check_echo(t_cmd_lst *cmd_lst, t_ms *ms, int i)
 			&& check_e(cmd_lst->cmd_option[1], i) == ERR
 			&& check_e(cmd_lst->cmd_option[2], i) == ERR)
 		{
-			echo_builtin(cmd_lst->cmd_option, 0, cmd_lst, ms);
+			echo_builtin(cmd_lst->cmd_option, 0, cmd_lst, ms, cmd);
 			return (0);
 		}
 		else if (check_e(cmd_lst->cmd_option[1], i) == ERR
 			&& check_e(cmd_lst->cmd_option[2], i) == ERR)
 		{
-			echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms);
+			echo_builtin(cmd_lst->cmd_option, 1, cmd_lst, ms, cmd);
 			return (0);
 		}
 	}
 	return (1);
 }
 
-void	echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms)
+void	echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms, t_cmd cmd)
 {
 	int	j;
 	int	i;
+	int	k;
 
 	j = 1;
 	i = 0;
+	k = 0;
 	while (tab[j] != NULL)
 	{
 		tab[j] = check_n(tab[j], ms, cmd_lst);
 		if (ft_strcmp(tab[j], "-n") != SUC && check_e(tab[j], i) == 1)
 		{
-			ft_printf(1, "%s", tab[j]);
+			if (ft_printf(1, "%s", tab[j]) == -2)
+			{
+				k = 1;
+				free_cmd4(&cmd, ms->env, cmd_lst);//leak surement
+			}
 			if (tab[j + 1] != NULL)
 				ft_printf(1, " ");
 		}
 		j++;
 	}
-	if (bool == 1)
+	if (bool == 1 && k == 0)
 		ft_printf(1, "\n");
 }

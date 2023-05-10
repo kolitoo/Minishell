@@ -6,35 +6,75 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 12:58:03 by lgirault          #+#    #+#             */
-/*   Updated: 2023/04/05 11:14:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:10:20 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_modulo_check(char c, va_list arg, int *len, int fd)
+static int	ft_modulo_check3(char c, va_list arg, int *len, int fd)
+{
+	if (c == 'X')
+	{
+		if (ft_putnb_base((int) va_arg(arg, int),
+				"0123456789ABCDEF", len, fd) == -2)
+			return (-2);
+	}
+	else if (c == '%')
+	{
+		if (ft_putchar_fd_printf('%', len, fd) == -2)
+			return (-2);
+	}
+	return (0);
+}
+
+static int	ft_modulo_check2(char c, va_list arg, int *len, int fd)
+{
+	if (c == 'd' || c == 'i')
+	{
+		if (ft_putnbr((int) va_arg(arg, int), len, fd) == -2)
+			return (-2);
+	}
+	else if (c == 'u')
+	{
+		if (ft_putnbr_unsi((unsigned int)
+				va_arg(arg, unsigned int), len, fd) == -2)
+			return (-2);
+	}
+	else if (c == 'x')
+	{
+		if (ft_putnb_base((int) va_arg(arg, int),
+				"0123456789abcdef", len, fd) == -2)
+			return (-2);
+	}
+	return (0);
+}
+
+static int	ft_modulo_check(char c, va_list arg, int *len, int fd)
 {
 	char	ch;
 
 	if (c == 'c')
 	{
 		ch = (char) va_arg(arg, int);
-		ft_putchar_fd_printf(ch, len, fd);
+		if (ft_putchar_fd_printf(ch, len, fd) == -2)
+			return (-2);
 	}
 	else if (c == 's')
-		ft_putstr((char *) va_arg(arg, char *), len, fd);
+	{
+		if (ft_putstr((char *) va_arg(arg, char *), len, fd) == -2)
+			return (-2);
+	}
 	else if (c == 'p')
-		ft_putvoid((void *) va_arg(arg, void *), len, fd);
-	else if (c == 'd' || c == 'i')
-		ft_putnbr((int) va_arg(arg, int), len, fd);
-	else if (c == 'u')
-		ft_putnbr_unsi((unsigned int) va_arg(arg, unsigned int), len, fd);
-	else if (c == 'x')
-		ft_putnb_base((int) va_arg(arg, int), "0123456789abcdef", len, fd);
-	else if (c == 'X')
-		ft_putnb_base((int) va_arg(arg, int), "0123456789ABCDEF", len, fd);
-	else if (c == '%')
-		ft_putchar_fd_printf('%', len, fd);
+	{
+		if (ft_putvoid((void *) va_arg(arg, void *), len, fd) == -2)
+			return (-2);
+	}
+	if (ft_modulo_check2(c, arg, len, fd) == -2)
+		return (-2);
+	if (ft_modulo_check3(c, arg, len, fd) == -2)
+		return (2);
+	return (0);
 }
 
 int	ft_printf(int fd, const char *str, ...)
@@ -51,11 +91,13 @@ int	ft_printf(int fd, const char *str, ...)
 		if (str[i] == '%')
 		{
 			i++;
-			ft_modulo_check(str[i], arg, &len, fd);
+			if (ft_modulo_check(str[i], arg, &len, fd) == -2)
+				return (-2);
 		}
 		else
 		{
-			ft_putchar_fd_printf(str[i], &len, fd);
+			if (ft_putchar_fd_printf(str[i], &len, fd) == -2)
+				return (-2);
 		}
 		if (str[i] != '\0')
 			i++;

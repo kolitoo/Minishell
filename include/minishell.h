@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:51:32 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/09 12:09:25 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:27:30 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ typedef struct s_ms
 	int		i_heredoc;
 	int		j_heredoc;
 	int		builtin_code;
-	int		cat_grep;
-	int		lock_cat;
 	int		i_file;
 }t_ms;
 
@@ -127,13 +125,12 @@ int			her_doc_check(char *str);
 int			check_fine_cote(char *line, char c, char cote);
 int			check_cote(char *line, char c);
 int			exist_chevron(char *str);
-int			check_pipe(char *str);
+int			check_pipe(char *str, int i);
 int			malloc_clear_quote(char *str, int i);
 int			limit_mode_malloc(char *str);
 int			len_dbl_tab(char *str, char c);
 int			len_file(char *str, int i, char c);
 int			rights_check_util(char *str, int *i, t_ms **ms, char c);
-int			check_cat_grep(t_cmd_lst *cmd_lst, t_ms *ms);
 char		*strspace_cpy(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**parsing(char *one_cmd, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**split_incurve(char *str, char c, t_ms *ms, t_cmd_lst *cmd_lst);
@@ -152,6 +149,7 @@ char		*join2(char *s1, char *s2);
 char		*warning_error(char *str, int i, t_ms **ms, t_cmd_lst *cmd_lst);
 char		**set_env(char	**envp);
 char		*neww_variable(char *new_variable, char *variable, char *envstring);
+void		sig_for_child(void);
 void		lstadd_back(t_cmd_lst **lst, t_cmd_lst *new);
 void		lstclear(t_cmd_lst **cmd_lst);
 void		free_tab(char	**tab, int i);
@@ -212,11 +210,11 @@ int			open_outfile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms);
 
 //Builtin
 int			check_cd(t_cmd_lst *cmd_lst);
-int			check_echo(t_cmd_lst *cmd_lst, t_ms *ms, int i);
+int			check_echo(t_cmd_lst *cmd_lst, t_ms *ms, int i, t_cmd cmd);
 int			check_pwd(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_env(t_cmd_lst *cmd_lst, t_ms *ms);
 int			check_unset(t_cmd_lst *cmd_lst);
-int			check_builtin(t_cmd_lst *cmd_lst, t_ms *ms);
+int			check_builtin(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd);
 int			check_exit(t_cmd_lst *cmd_lst);
 int			check_replace(char *str, t_ms *ms, int i, int bool);
 int			check_egal(char *str);
@@ -238,7 +236,7 @@ void		exit_builtin_execex(t_cmd_lst *cmd_lst, t_cmd *cmd,
 void		exit_builtin_pipex(t_cmd_lst *cmd_lst, t_ms *ms);
 void		exit_builtin_free(t_cmd_lst *cmd_lst, t_ms *ms,
 				long long arg_exit, t_cmd cmd);
-void		echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms);
+void		echo_builtin(char **tab, int bool, t_cmd_lst *cmd_lst, t_ms *ms, t_cmd cmd);
 char		*dollar_last_check(char *str, t_ms **ms, t_cmd_lst *cmd_lst);
 void		cd_builtin(char **tab, t_ms *ms, t_cmd_lst *cmd_lst);
 void		cd_alone(char **envp, t_ms *ms, t_cmd_lst *cmd_lst);

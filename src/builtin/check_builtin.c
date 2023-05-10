@@ -6,15 +6,15 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:55 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 15:38:35 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:26:44 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	check_builtin(t_cmd_lst *cmd_lst, t_ms *ms)
+int	check_builtin(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd *cmd)
 {
-	if (check_echo(cmd_lst, ms, 0) == SUC)
+	if (check_echo(cmd_lst, ms, 0, *cmd) == SUC)
 		return (0);
 	if (check_cd(cmd_lst) == SUC)
 		return (0);

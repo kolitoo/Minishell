@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:38:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/07 13:27:03 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:09:00 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,13 @@ void	cd_alone(char **envp, t_ms *ms, t_cmd_lst *cmd_lst)
 	var.newstr = ft_substr(envp[var.i], 5, ft_strlen(envp[var.i]) - 5);
 	if (var.newstr == NULL)
 		return (free_builtin(ms, cmd_lst), free(var.new_variable), (void)0);
-	getcwd(var.new_variable, PATH_MAX + 1);
-	var.new_variable = join2("OLDPWD=", var.new_variable);
-	if (var.new_variable == NULL)
-		return (free_builtin(ms, cmd_lst), free(var.newstr), (void)0);
-	ms->env = replac_env(var.new_variable, ms, cmd_lst, 1);
+	if (getcwd(var.new_variable, PATH_MAX + 1) != NULL)
+	{
+		var.new_variable = join2("OLDPWD=", var.new_variable);
+		if (var.new_variable == NULL)
+			return (free_builtin(ms, cmd_lst), free(var.newstr), (void)0);
+		ms->env = replac_env(var.new_variable, ms, cmd_lst, 1);
+	}
 	if (chdir(var.newstr) != 0)
 		return (free(var.new_variable), free(var.newstr), (void)0);
 	free(var.new_variable);
@@ -116,11 +118,13 @@ void	cd_builtin(char **tab, t_ms *ms, t_cmd_lst *cmd_lst)
 	var.new_variable = malloc(sizeof(char) * PATH_MAX + 1);
 	if (!var.new_variable)
 		free_builtin(ms, cmd_lst);
-	getcwd(var.new_variable, PATH_MAX + 1);
-	var.new_variable = join2("OLDPWD=", var.new_variable);
-	if (var.new_variable == NULL)
-		free_builtin(ms, cmd_lst);
-	ms->env = replac_env(var.new_variable, ms, cmd_lst, 1);
+	if (getcwd(var.new_variable, PATH_MAX + 1) != NULL)
+	{
+		var.new_variable = join2("OLDPWD=", var.new_variable);
+		if (var.new_variable == NULL)
+			free_builtin(ms, cmd_lst);
+		ms->env = replac_env(var.new_variable, ms, cmd_lst, 1);
+	}
 	cd_builtin2(tab, ms, cmd_lst, var);
 	return (free(var.new_variable), (void)0);
 }

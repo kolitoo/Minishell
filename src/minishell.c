@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/09 08:49:01 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 12:06:46 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ $$/      $$/ $$$$$$/ $$/   $$/ $$$$$$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$$$$$$$/ $
 void	handler_sigint(int signal)
 {
 	(void)signal;
-	if (g_ms.here != 1 && g_ms.cat_grep != 0)
-		ft_printf(1, "\n");
-	else if (g_ms.here != 1)
+	if (g_ms.here != 1)
 	{
+		printf("SALUT\n");
 		ft_printf(1, "\n");
 		ft_printf(1, "\033[36m \033[1m");
 		rl_replace_line("", 0);
@@ -78,8 +77,6 @@ void	init_minishell(void)
 {
 	g_ms.builtin_code = 0;
 	g_ms.here = 0;
-	g_ms.cat_grep = 0;
-	g_ms.lock_cat = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
