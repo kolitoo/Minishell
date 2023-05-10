@@ -6,22 +6,11 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 16:37:23 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/10 15:38:15 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:29:39 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
-{
-	cmd->fd_infile = 0;
-	cmd->fd_outfile = 0;
-	if (open_infile(cmd, cmd_lst, ms) == ERR)
-		return (ERR);
-	if (open_outfile(cmd, cmd_lst, ms) == ERR)
-		return (ERR);
-	return (SUC);
-}
 
 void	init(t_cmd *cmd, t_cmd_lst *cmd_lst, char **envp)
 {
@@ -71,56 +60,47 @@ int	parent(t_cmd *cmd, t_ms *ms)
 		return (ms->builtin_code);
 }
 
+void	heredoc_ok(t_cmd_lst *cmd_lst, t_cmd cmd)
+{
+	if (access("/tmp/.file_temp.txt", F_OK) == 0)
+		if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
+			if (unlink("/tmp/.file_temp.txt") == -1)
+				error_management(7, &cmd);
+}
+
+void	start_fils(t_cmd_lst *cmd_lst, t_ms *ms, t_cmd cmd)
+{
+	cmd.pid[cmd.i] = fork();
+	if (cmd.pid[cmd.i] == -1)
+		error_management(2, &cmd);
+	else
+		signal(SIGINT, SIG_IGN);
+	if (cmd.pid[cmd.i] == 0)
+		child(&cmd, (*ms).env, cmd_lst, ms);
+	close_fichier(cmd, cmd_lst, ms->env);
+	only_last(cmd_lst, ms, &cmd, 1);
+	heredoc_ok(cmd_lst, cmd);
+}
+
 int	pipex(t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	t_cmd	cmd;
 
 	init_tab(&cmd, cmd_lst);
 	init(&cmd, cmd_lst, (*ms).env);
-	// init_tab_closefile(&cmd, cmd_lst, ms);
-	// open_infile_heredoc(cmd, cmd_lst, ms);
-	///check heredoc ici si pas ctrl c lance boucle sinon on quitte en supprimant le heredoc
 	while (cmd_lst != NULL)
 	{
-		// printf("%s\n", cmd_lst->cmd_option[0]);
-		// if (cmd_lst->infile_name != NULL)
-		// {
-		// 	printf("%s\n", cmd_lst->infile_name[0]);
-		// }
-		// if (cmd_lst->limit_mode != NULL)
-		// {
-		// 	printf("%d\n", cmd_lst->limit_mode[0]);
-		// }
-		//printf("%d\n", cmd_lst->limit_mode[0]);
 		init_tab_closefile(&cmd, cmd_lst, ms);
 		for_open(cmd_lst, &cmd, ms);
 		if (ms->builtin_code != 130)
 		{
-			cmd.pid[cmd.i] = fork();
-			if (cmd.pid[cmd.i] == -1)
-				error_management(2, &cmd);
-			else
-				signal(SIGINT, SIG_IGN);
-			if (cmd.pid[cmd.i] == 0)
-			{
-				sig_for_child();
-				child(&cmd, (*ms).env, cmd_lst, ms);
-			}
-			close_fichier(cmd, cmd_lst, ms->env);
-			only_last(cmd_lst, ms, &cmd, 1);
-			if (access("/tmp/.file_temp.txt", F_OK) == 0)
-				if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
-					if (unlink("/tmp/.file_temp.txt") == -1)
-						error_management(7, &cmd);
+			start_fils(cmd_lst, ms, cmd);
 			clear_lst(&cmd_lst);
 		}
 		else
 		{
 			close_fichier(cmd, cmd_lst, ms->env);
-			if (access("/tmp/.file_temp.txt", F_OK) == 0)
-				if (cmd_lst->limit_mode[tab_len(cmd_lst->infile_name)] == 2)
-					if (unlink("/tmp/.file_temp.txt") == -1)
-						error_management(7, &cmd);
+			heredoc_ok(cmd_lst, cmd);
 			lstclear(&cmd_lst);
 			break ;
 		}

@@ -6,11 +6,22 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:32:38 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/10 15:30:35 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:28:59 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	for_open(t_cmd_lst *cmd_lst, t_cmd *cmd, t_ms *ms)
+{
+	cmd->fd_infile = 0;
+	cmd->fd_outfile = 0;
+	if (open_infile(cmd, cmd_lst, ms) == ERR)
+		return (ERR);
+	if (open_outfile(cmd, cmd_lst, ms) == ERR)
+		return (ERR);
+	return (SUC);
+}
 
 void	open_infile_heredoc(t_cmd *cmd, t_cmd_lst *cmd_lst, int *j, t_ms *ms)
 {
@@ -38,6 +49,13 @@ void	open_infile_heredoc(t_cmd *cmd, t_cmd_lst *cmd_lst, int *j, t_ms *ms)
 	}
 }
 
+static void	open_infile2(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
+{
+	cmd->fd_infile
+		= open(cmd_lst->infile_name[ms->i_heredoc], O_RDONLY);
+	cmd->tab_close_infile[ms->i_heredoc] = cmd->fd_infile;
+}
+
 int	open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 {
 	int	j;
@@ -50,11 +68,7 @@ int	open_infile(t_cmd *cmd, t_cmd_lst *cmd_lst, t_ms *ms)
 		{
 			ms->i_file = ms->i_heredoc;
 			if (cmd_lst->infile_mode == 1)
-			{
-				cmd->fd_infile
-					= open(cmd_lst->infile_name[ms->i_heredoc], O_RDONLY);
-				cmd->tab_close_infile[ms->i_heredoc] = cmd->fd_infile;
-			}
+				open_infile2(cmd, cmd_lst, ms);
 			open_infile_heredoc(cmd, cmd_lst, &j, ms);
 			if (cmd->fd_infile == -1)
 				return (file_error(1, cmd_lst,

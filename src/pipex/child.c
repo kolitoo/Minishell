@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:07:42 by lgirault          #+#    #+#             */
-/*   Updated: 2023/05/10 13:27:45 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:44:34 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,17 @@ void	middle_child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst)
 			free_cmd4(cmd, envp, cmd_lst);
 }
 
+void	exit_exec(t_cmd *cmd, t_cmd_lst *cmd_lst)
+{
+	perror("Error fonction execve");
+	free_cmd1(cmd);
+	lstclear(&cmd_lst);
+	exit(127);
+}
+
 void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms)
 {
+	sig_for_child();
 	if (cmd->i == 0)
 		first_child(cmd, envp, cmd_lst);
 	else if (cmd->i == cmd->nbr_cmd - 1)
@@ -79,10 +88,5 @@ void	child(t_cmd *cmd, char **envp, t_cmd_lst *cmd_lst, t_ms *ms)
 		free_cmd2(cmd, envp, cmd_lst);
 	close_fichier(*cmd, cmd_lst, ms->env);
 	if (execve(cmd->cmd, cmd->options, envp) == -1)
-	{
-		perror("Error fonction execve");
-		free_cmd1(cmd);
-		lstclear(&cmd_lst);
-		exit(127);
-	}
+		exit_exec(cmd, cmd_lst);
 }

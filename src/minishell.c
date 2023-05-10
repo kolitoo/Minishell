@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourdon <abourdon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:53:27 by abourdon          #+#    #+#             */
-/*   Updated: 2023/05/10 15:58:15 by abourdon         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:31:46 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	handler_sigint(int signal)
 	(void)signal;
 	if (g_ms.here != 1)
 	{
-		printf("SALUT\n");
 		ft_printf(1, "\n");
 		ft_printf(1, "\033[36m \033[1m");
 		rl_replace_line("", 0);
